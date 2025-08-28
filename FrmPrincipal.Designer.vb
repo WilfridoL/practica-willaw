@@ -27,7 +27,8 @@ Partial Class FrmPrincipal
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmPrincipal))
         MenuStrip = New MenuStrip()
         FileMenu = New ToolStripMenuItem()
-        NewToolStripMenuItem = New ToolStripMenuItem()
+        ToolStripMenuItem1 = New ToolStripMenuItem()
+        btnRegistro = New ToolStripMenuItem()
         ToolStripSeparator5 = New ToolStripSeparator()
         ExitToolStripMenuItem = New ToolStripMenuItem()
         ViewMenu = New ToolStripMenuItem()
@@ -45,9 +46,13 @@ Partial Class FrmPrincipal
         StatusStrip = New StatusStrip()
         ToolStripStatusLabel = New ToolStripStatusLabel()
         ToolTip = New ToolTip(components)
+        BaseDatosBindingSource = New BindingSource(components)
+        DataGridView1 = New DataGridView()
         MenuStrip.SuspendLayout()
         ToolStrip.SuspendLayout()
         StatusStrip.SuspendLayout()
+        CType(BaseDatosBindingSource, ComponentModel.ISupportInitialize).BeginInit()
+        CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' MenuStrip
@@ -62,28 +67,35 @@ Partial Class FrmPrincipal
         ' 
         ' FileMenu
         ' 
-        FileMenu.DropDownItems.AddRange(New ToolStripItem() {NewToolStripMenuItem, ToolStripSeparator5, ExitToolStripMenuItem})
+        FileMenu.DropDownItems.AddRange(New ToolStripItem() {ToolStripMenuItem1, btnRegistro, ToolStripSeparator5, ExitToolStripMenuItem})
         FileMenu.ImageTransparentColor = SystemColors.ActiveBorder
         FileMenu.Name = "FileMenu"
         FileMenu.Size = New Size(48, 20)
         FileMenu.Text = "&Inicio"
         ' 
-        ' NewToolStripMenuItem
+        ' ToolStripMenuItem1
         ' 
-        NewToolStripMenuItem.ImageTransparentColor = Color.Black
-        NewToolStripMenuItem.Name = "NewToolStripMenuItem"
-        NewToolStripMenuItem.Size = New Size(180, 22)
-        NewToolStripMenuItem.Text = "&Calculo de notas"
+        ToolStripMenuItem1.ImageTransparentColor = Color.Black
+        ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        ToolStripMenuItem1.Size = New Size(162, 22)
+        ToolStripMenuItem1.Text = "&Calculo de notas"
+        ' 
+        ' btnRegistro
+        ' 
+        btnRegistro.ImageTransparentColor = Color.Black
+        btnRegistro.Name = "btnRegistro"
+        btnRegistro.Size = New Size(162, 22)
+        btnRegistro.Text = "&Registrar"
         ' 
         ' ToolStripSeparator5
         ' 
         ToolStripSeparator5.Name = "ToolStripSeparator5"
-        ToolStripSeparator5.Size = New Size(177, 6)
+        ToolStripSeparator5.Size = New Size(159, 6)
         ' 
         ' ExitToolStripMenuItem
         ' 
         ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        ExitToolStripMenuItem.Size = New Size(180, 22)
+        ExitToolStripMenuItem.Size = New Size(162, 22)
         ExitToolStripMenuItem.Text = "&Salir"
         ' 
         ' ViewMenu
@@ -200,11 +212,24 @@ Partial Class FrmPrincipal
         ToolStripStatusLabel.Size = New Size(42, 17)
         ToolStripStatusLabel.Text = "Estado"
         ' 
+        ' BaseDatosBindingSource
+        ' 
+        BaseDatosBindingSource.DataSource = GetType(BaseDatos)
+        ' 
+        ' DataGridView1
+        ' 
+        DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridView1.Location = New Point(58, 118)
+        DataGridView1.Name = "DataGridView1"
+        DataGridView1.Size = New Size(240, 150)
+        DataGridView1.TabIndex = 11
+        ' 
         ' FrmPrincipal
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(737, 523)
+        Controls.Add(DataGridView1)
         Controls.Add(ToolStrip)
         Controls.Add(MenuStrip)
         Controls.Add(StatusStrip)
@@ -219,6 +244,8 @@ Partial Class FrmPrincipal
         ToolStrip.PerformLayout()
         StatusStrip.ResumeLayout(False)
         StatusStrip.PerformLayout()
+        CType(BaseDatosBindingSource, ComponentModel.ISupportInitialize).EndInit()
+        CType(DataGridView1, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
 
@@ -237,11 +264,14 @@ Partial Class FrmPrincipal
     Friend WithEvents ToolStripSeparator1 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents ExitToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripSeparator5 As System.Windows.Forms.ToolStripSeparator
-    Friend WithEvents NewToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents btnRegistro As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents FileMenu As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents MenuStrip As System.Windows.Forms.MenuStrip
     Friend WithEvents ViewMenu As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolBarToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents StatusBarToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
+    Friend WithEvents BaseDatosBindingSource As BindingSource
+    Friend WithEvents DataGridView1 As DataGridView
 
 End Class

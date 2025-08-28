@@ -38,7 +38,6 @@ Partial Class Frm_login
         txtclave = New TextBox()
         OK = New Button()
         Cancel = New Button()
-        linkReg = New Label()
         CType(LogoPictureBox, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -103,16 +102,6 @@ Partial Class Frm_login
         Cancel.TabIndex = 5
         Cancel.Text = "&Cancelar"
         ' 
-        ' linkReg
-        ' 
-        linkReg.ForeColor = SystemColors.Highlight
-        linkReg.Location = New Point(174, 129)
-        linkReg.Name = "linkReg"
-        linkReg.Size = New Size(220, 23)
-        linkReg.TabIndex = 6
-        linkReg.Text = "Registrar nuevo usuario"
-        linkReg.TextAlign = ContentAlignment.MiddleLeft
-        ' 
         ' Frm_login
         ' 
         AcceptButton = OK
@@ -120,7 +109,6 @@ Partial Class Frm_login
         AutoScaleMode = AutoScaleMode.Font
         CancelButton = Cancel
         ClientSize = New Size(401, 192)
-        Controls.Add(linkReg)
         Controls.Add(Cancel)
         Controls.Add(OK)
         Controls.Add(txtclave)
@@ -140,7 +128,5 @@ Partial Class Frm_login
         PerformLayout()
 
     End Sub
-
-    Friend WithEvents linkReg As Label
 
 End Class

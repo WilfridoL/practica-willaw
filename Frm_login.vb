@@ -20,9 +20,4 @@ Public Class Frm_login
     Private Sub Frm_login_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         BaseDatos.conectar("root", "")
     End Sub
-
-    Private Sub linkReg_Click(sender As Object, e As EventArgs) Handles linkReg.Click
-        FrmRegistrar.Show()
-        Me.Close()
-    End Sub
 End Class

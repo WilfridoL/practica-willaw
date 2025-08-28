@@ -1,4 +1,5 @@
 ﻿Imports System.Data.Odbc
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Mysqlx.Crud
 Public Class BaseDatos
     Public Shared conexion As Odbc.OdbcConnection
@@ -16,6 +17,11 @@ Public Class BaseDatos
             Return False
         End Try
     End Function
+    Public Shared Function obtenerDatos(ByVal user As String, ByVal pass As String) As OdbcConnection
+        conexion = New OdbcConnection("dsn=data;uid=" & user & ";pwd=" & pass & ";")
+        conexion.Open()
+        Return conexion
+    End Function
     Public Shared Function leer_Registro(ByVal sql As String) As OdbcDataReader
         Try
             orden = New OdbcCommand(sql, conexion)
@@ -26,7 +32,7 @@ Public Class BaseDatos
             Return Nothing
         End Try
     End Function
-    Public Shared Function ingresar_registros(ByVal sql As String) As Boolean
+    Public Shared Function ingresar_registros(ByVal sql As String, ByVal result As String) As Boolean
         Try
             insertar = New OdbcCommand(sql, conexion)
             'MsgBox(insertar)
@@ -35,7 +41,7 @@ Public Class BaseDatos
             Return True
         Catch ex As Exception
             MsgBox(ex.Message)
-            MessageBox.Show("No se insertaron los datos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Error al " & result & " l", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Return False
         End Try
     End Function

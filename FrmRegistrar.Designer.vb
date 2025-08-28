@@ -42,8 +42,9 @@ Partial Class FrmRegistrar
         Label1 = New Label()
         txtemail = New TextBox()
         Label2 = New Label()
-        btnLog = New Label()
         Label3 = New Label()
+        Label4 = New Label()
+        txtRol = New ComboBox()
         CType(LogoPictureBox, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -52,7 +53,7 @@ Partial Class FrmRegistrar
         LogoPictureBox.Image = CType(resources.GetObject("LogoPictureBox.Image"), Image)
         LogoPictureBox.Location = New Point(2, -2)
         LogoPictureBox.Name = "LogoPictureBox"
-        LogoPictureBox.Size = New Size(166, 352)
+        LogoPictureBox.Size = New Size(166, 192)
         LogoPictureBox.TabIndex = 0
         LogoPictureBox.TabStop = False
         ' 
@@ -92,7 +93,7 @@ Partial Class FrmRegistrar
         ' 
         ' btnEnviar
         ' 
-        btnEnviar.Location = New Point(179, 156)
+        btnEnviar.Location = New Point(420, 156)
         btnEnviar.Name = "btnEnviar"
         btnEnviar.Size = New Size(94, 23)
         btnEnviar.TabIndex = 4
@@ -101,7 +102,7 @@ Partial Class FrmRegistrar
         ' btnCancel
         ' 
         btnCancel.DialogResult = DialogResult.Cancel
-        btnCancel.Location = New Point(282, 156)
+        btnCancel.Location = New Point(523, 156)
         btnCancel.Name = "btnCancel"
         btnCancel.Size = New Size(94, 23)
         btnCancel.TabIndex = 5
@@ -142,16 +143,6 @@ Partial Class FrmRegistrar
         Label2.Text = "&Correo Electronico"
         Label2.TextAlign = ContentAlignment.MiddleLeft
         ' 
-        ' btnLog
-        ' 
-        btnLog.ForeColor = SystemColors.Highlight
-        btnLog.Location = New Point(174, 124)
-        btnLog.Name = "btnLog"
-        btnLog.Size = New Size(220, 23)
-        btnLog.TabIndex = 12
-        btnLog.Text = "&Iniciar sesion"
-        btnLog.TextAlign = ContentAlignment.MiddleLeft
-        ' 
         ' Label3
         ' 
         Label3.BackColor = Color.Transparent
@@ -163,15 +154,34 @@ Partial Class FrmRegistrar
         Label3.Text = "Max 15 caracteres"
         Label3.TextAlign = ContentAlignment.MiddleLeft
         ' 
+        ' Label4
+        ' 
+        Label4.Location = New Point(172, 130)
+        Label4.Name = "Label4"
+        Label4.Size = New Size(220, 23)
+        Label4.TabIndex = 14
+        Label4.Text = "&Rol"
+        Label4.TextAlign = ContentAlignment.MiddleLeft
+        ' 
+        ' txtRol
+        ' 
+        txtRol.FormattingEnabled = True
+        txtRol.Location = New Point(174, 156)
+        txtRol.Name = "txtRol"
+        txtRol.Size = New Size(218, 23)
+        txtRol.TabIndex = 15
+        txtRol.Text = "Seleccionar rol del usuario"
+        ' 
         ' FrmRegistrar
         ' 
         AcceptButton = btnEnviar
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         CancelButton = btnCancel
-        ClientSize = New Size(688, 191)
+        ClientSize = New Size(688, 190)
+        Controls.Add(txtRol)
+        Controls.Add(Label4)
         Controls.Add(Label3)
-        Controls.Add(btnLog)
         Controls.Add(txtemail)
         Controls.Add(Label2)
         Controls.Add(txtcontra)
@@ -200,7 +210,8 @@ Partial Class FrmRegistrar
     Friend WithEvents Label1 As Label
     Friend WithEvents txtemail As TextBox
     Friend WithEvents Label2 As Label
-    Friend WithEvents btnLog As Label
     Friend WithEvents Label3 As Label
+    Friend WithEvents Label4 As Label
+    Friend WithEvents txtRol As ComboBox
 
 End Class
