@@ -26,15 +26,17 @@ Public Class BaseDatos
             Return Nothing
         End Try
     End Function
-    Public Shared Function ingresar_registros(ByVal sql As String) As OdbcDataReader
+    Public Shared Function ingresar_registros(ByVal sql As String) As Boolean
         Try
             insertar = New OdbcCommand(sql, conexion)
             'MsgBox(insertar)
             insertar.ExecuteNonQuery()
             MsgBox("Datos insertados correctamente")
+            Return True
         Catch ex As Exception
             MsgBox(ex.Message)
             MessageBox.Show("No se insertaron los datos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return False
         End Try
     End Function
 End Class
