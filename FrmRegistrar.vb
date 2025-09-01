@@ -4,7 +4,7 @@ Public Class FrmRegistrar
     Private Sub btn_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnEnviar.Click
 
         SQL = "INSERT tb_usuarios (nombre, apellido, contraseña, correo, rol, estado)
-        VALUE ('" & txtname.Text & "', '" & txtape.Text & "', '" & txtcontra.Text & "', '" & txtemail.Text & "', '" & txtRol.SelectedItem.ToString & "', 'ACTIVO')"
+        VALUE ('" & txtname.Text & "', '" & txtape.Text & "', '" & txtcontra.Text & "', '" & txtemail.Text & "', '" & txtRol.SelectedItem.ToString & "', 'A')"
         ' MsgBox(SQL)
         If (txtname.Text = "" Or
             txtape.Text = "" Or
