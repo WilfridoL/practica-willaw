@@ -164,7 +164,7 @@ Partial Class FrmUsuario
         ' 
         ' ToolStrip1
         ' 
-        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripButton2, ToolStripButton3})
+        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripButton3, ToolStripButton2})
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
         ToolStrip1.Size = New Size(396, 25)
@@ -178,7 +178,7 @@ Partial Class FrmUsuario
         ToolStripButton1.ImageTransparentColor = Color.Magenta
         ToolStripButton1.Name = "ToolStripButton1"
         ToolStripButton1.Size = New Size(23, 22)
-        ToolStripButton1.Text = "ToolStripButton1"
+        ToolStripButton1.Text = "Agregar"
         ' 
         ' ToolStripButton2
         ' 
@@ -187,7 +187,7 @@ Partial Class FrmUsuario
         ToolStripButton2.ImageTransparentColor = Color.Magenta
         ToolStripButton2.Name = "ToolStripButton2"
         ToolStripButton2.Size = New Size(23, 22)
-        ToolStripButton2.Text = "ToolStripButton2"
+        ToolStripButton2.Text = "Salir"
         ' 
         ' ToolStripButton3
         ' 
@@ -196,7 +196,7 @@ Partial Class FrmUsuario
         ToolStripButton3.ImageTransparentColor = Color.Magenta
         ToolStripButton3.Name = "ToolStripButton3"
         ToolStripButton3.Size = New Size(23, 22)
-        ToolStripButton3.Text = "ToolStripButton3"
+        ToolStripButton3.Text = "Limpiar"
         ' 
         ' FrmUsuario
         ' 
