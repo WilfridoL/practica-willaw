@@ -17,11 +17,6 @@ Public Class BaseDatos
             Return False
         End Try
     End Function
-    Public Shared Function obtenerDatos(ByVal user As String, ByVal pass As String) As OdbcConnection
-        conexion = New OdbcConnection("dsn=data;uid=" & user & ";pwd=" & pass & ";")
-        conexion.Open()
-        Return conexion
-    End Function
     Public Shared Function leer_Registro(ByVal sql As String) As OdbcDataReader
         Try
             orden = New OdbcCommand(sql, conexion)
@@ -37,7 +32,7 @@ Public Class BaseDatos
             insertar = New OdbcCommand(sql, conexion)
             'MsgBox(insertar)
             insertar.ExecuteNonQuery()
-            MsgBox("Datos insertados correctamente")
+            'MsgBox("Datos insertados correctamente")
             Return True
         Catch ex As Exception
             MsgBox(ex.Message)

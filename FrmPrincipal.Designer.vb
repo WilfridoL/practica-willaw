@@ -28,7 +28,6 @@ Partial Class FrmPrincipal
         MenuStrip = New MenuStrip()
         FileMenu = New ToolStripMenuItem()
         ToolStripMenuItem1 = New ToolStripMenuItem()
-        btnRegistro = New ToolStripMenuItem()
         ToolStripSeparator5 = New ToolStripSeparator()
         ExitToolStripMenuItem = New ToolStripMenuItem()
         ViewMenu = New ToolStripMenuItem()
@@ -48,6 +47,10 @@ Partial Class FrmPrincipal
         ToolTip = New ToolTip(components)
         BaseDatosBindingSource = New BindingSource(components)
         DataGridView1 = New DataGridView()
+        btnRegPri = New Button()
+        btnActPri = New Button()
+        btnEliPri = New Button()
+        btnCerSes = New Button()
         MenuStrip.SuspendLayout()
         ToolStrip.SuspendLayout()
         StatusStrip.SuspendLayout()
@@ -67,7 +70,7 @@ Partial Class FrmPrincipal
         ' 
         ' FileMenu
         ' 
-        FileMenu.DropDownItems.AddRange(New ToolStripItem() {ToolStripMenuItem1, btnRegistro, ToolStripSeparator5, ExitToolStripMenuItem})
+        FileMenu.DropDownItems.AddRange(New ToolStripItem() {ToolStripMenuItem1, ToolStripSeparator5, ExitToolStripMenuItem})
         FileMenu.ImageTransparentColor = SystemColors.ActiveBorder
         FileMenu.Name = "FileMenu"
         FileMenu.Size = New Size(48, 20)
@@ -79,13 +82,6 @@ Partial Class FrmPrincipal
         ToolStripMenuItem1.Name = "ToolStripMenuItem1"
         ToolStripMenuItem1.Size = New Size(162, 22)
         ToolStripMenuItem1.Text = "&Calculo de notas"
-        ' 
-        ' btnRegistro
-        ' 
-        btnRegistro.ImageTransparentColor = Color.Black
-        btnRegistro.Name = "btnRegistro"
-        btnRegistro.Size = New Size(162, 22)
-        btnRegistro.Text = "&Registrar"
         ' 
         ' ToolStripSeparator5
         ' 
@@ -199,7 +195,7 @@ Partial Class FrmPrincipal
         ' StatusStrip
         ' 
         StatusStrip.Items.AddRange(New ToolStripItem() {ToolStripStatusLabel})
-        StatusStrip.Location = New Point(0, 501)
+        StatusStrip.Location = New Point(0, 355)
         StatusStrip.Name = "StatusStrip"
         StatusStrip.Padding = New Padding(1, 0, 16, 0)
         StatusStrip.Size = New Size(737, 22)
@@ -219,16 +215,56 @@ Partial Class FrmPrincipal
         ' DataGridView1
         ' 
         DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridView1.Location = New Point(58, 118)
+        DataGridView1.Location = New Point(12, 62)
         DataGridView1.Name = "DataGridView1"
-        DataGridView1.Size = New Size(240, 150)
+        DataGridView1.Size = New Size(548, 276)
         DataGridView1.TabIndex = 11
+        ' 
+        ' btnRegPri
+        ' 
+        btnRegPri.Location = New Point(566, 62)
+        btnRegPri.Name = "btnRegPri"
+        btnRegPri.Size = New Size(159, 45)
+        btnRegPri.TabIndex = 13
+        btnRegPri.Text = "Agregar"
+        btnRegPri.UseVisualStyleBackColor = True
+        ' 
+        ' btnActPri
+        ' 
+        btnActPri.Location = New Point(566, 124)
+        btnActPri.Name = "btnActPri"
+        btnActPri.Size = New Size(159, 45)
+        btnActPri.TabIndex = 14
+        btnActPri.Text = "Actualizar"
+        btnActPri.UseVisualStyleBackColor = True
+        ' 
+        ' btnEliPri
+        ' 
+        btnEliPri.Location = New Point(566, 187)
+        btnEliPri.Name = "btnEliPri"
+        btnEliPri.Size = New Size(159, 45)
+        btnEliPri.TabIndex = 15
+        btnEliPri.Text = "Eliminar"
+        btnEliPri.UseVisualStyleBackColor = True
+        ' 
+        ' btnCerSes
+        ' 
+        btnCerSes.Location = New Point(566, 248)
+        btnCerSes.Name = "btnCerSes"
+        btnCerSes.Size = New Size(159, 45)
+        btnCerSes.TabIndex = 16
+        btnCerSes.Text = "Cerrar sesion"
+        btnCerSes.UseVisualStyleBackColor = True
         ' 
         ' FrmPrincipal
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(737, 523)
+        ClientSize = New Size(737, 377)
+        Controls.Add(btnCerSes)
+        Controls.Add(btnEliPri)
+        Controls.Add(btnActPri)
+        Controls.Add(btnRegPri)
         Controls.Add(DataGridView1)
         Controls.Add(ToolStrip)
         Controls.Add(MenuStrip)
@@ -264,7 +300,6 @@ Partial Class FrmPrincipal
     Friend WithEvents ToolStripSeparator1 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents ExitToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripSeparator5 As System.Windows.Forms.ToolStripSeparator
-    Friend WithEvents btnRegistro As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents FileMenu As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents MenuStrip As System.Windows.Forms.MenuStrip
     Friend WithEvents ViewMenu As System.Windows.Forms.ToolStripMenuItem
@@ -273,5 +308,9 @@ Partial Class FrmPrincipal
     Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents BaseDatosBindingSource As BindingSource
     Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents btnRegPri As Button
+    Friend WithEvents btnActPri As Button
+    Friend WithEvents btnEliPri As Button
+    Friend WithEvents btnCerSes As Button
 
 End Class
