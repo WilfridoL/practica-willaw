@@ -1,4 +1,5 @@
 ﻿Imports System.Diagnostics.Eventing.Reader
+Imports Google.Protobuf.WellKnownTypes
 
 Public Class FrmUsuario
     Public Function VerEstado(ByVal est As String, ByVal name As String, ByVal ob As String)
@@ -15,7 +16,7 @@ Public Class FrmUsuario
         Else
             txtIdUsu.ReadOnly = True
         End If
-
+        Return True
     End Function
     Public Function limpiar(ByVal e As Integer)
         txtNomUsu.Text = ""
@@ -31,12 +32,13 @@ Public Class FrmUsuario
         If e = 1 Then
             txtIdUsu.Text = ""
         End If
+        Return True
     End Function
     Public Function BuscarUsuario()
         SQL = "SELECT usuId AS ID, nombre, apellido, correo, contraseña, rol, observacion, estado FROM tb_usuarios  
         LEFT JOIN observaciones ON idUsuFk = usuId  
         WHERE usuId = " & txtIdUsu.Text
-        MsgBox(SQL)
+        ' MsgBox(SQL)
         rst = BaseDatos.leer_Registro(SQL)
         If txtIdUsu.Text = "" Then
             MsgBox("Por Favor ingresar identificacion para hacer la busqueda")
@@ -46,11 +48,7 @@ Public Class FrmUsuario
             txtApeUsu.Text = rst("apellido")
             txtCorUsu.Text = rst("correo")
             txtRolUsu.SelectedItem = rst("rol")
-            If rst("observacion") Then
-                txtObsUsu.Text = ""
-            Else
-                txtObsUsu.Text = rst("observacion")
-            End If
+            txtObsUsu.Text = rst("observacion")
             VerEstado(rst("estado"), rst("nombre") & " " & rst("apellido"), rst("observacion"))
         Else
                 MsgBox("Usuario no existe en la base de datos", MsgBoxStyle.Critical)
