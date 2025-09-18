@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Mysqlx.Crud
 Public Class BaseDatos
+    Private Shared adaptador As OdbcDataAdapter
     Public Shared conexion As Odbc.OdbcConnection
     Public Shared orden As OdbcCommand
     Public Shared insertar As OdbcCommand
@@ -40,4 +41,16 @@ Public Class BaseDatos
             Return False
         End Try
     End Function
+    Public Shared Function Listar_datos(ByVal sql As String) As DataTable
+        Try
+            Dim tab As New DataTable 'Representa una tabla de datos en Memoria
+            adaptador = New OdbcDataAdapter(sql, conexion)
+            adaptador.Fill(tab) 'Funcion que Llena el Datatable
+            Return tab
+        Catch ex As Exception
+            MsgBox("! No se encontraron Datos a Listar ¡", MsgBoxStyle.Exclamation)
+            Return Nothing
+        End Try
+    End Function
+
 End Class

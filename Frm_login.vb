@@ -6,7 +6,7 @@ Public Class Frm_login
         rst = BaseDatos.leer_Registro(SQL)
         If rst.Read() Then
             codusuario = rst(0)
-            FrmPrincipal.Show()
+            seleccionar.Show()
             Me.Close()
         Else
             MsgBox("Usuario no existe en la base de datos", MsgBoxStyle.Critical)

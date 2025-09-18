@@ -1,7 +1,9 @@
 ﻿Imports System.Diagnostics.Eventing.Reader
+Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 Imports Google.Protobuf.WellKnownTypes
 
 Public Class FrmUsuario
+    Dim c_Varias As New Varias
     Public Function VerEstado(ByVal est As String, ByVal name As String, ByVal ob As String)
         If est = "I" Then
             MsgBox("El usuario " & name & " Se encuentra inactivo")
@@ -51,7 +53,7 @@ Public Class FrmUsuario
             txtObsUsu.Text = rst("observacion")
             VerEstado(rst("estado"), rst("nombre") & " " & rst("apellido"), rst("observacion"))
         Else
-                MsgBox("Usuario no existe en la base de datos", MsgBoxStyle.Critical)
+            MsgBox("Usuario no existe en la base de datos", MsgBoxStyle.Critical)
         End If
         Return True
     End Function
@@ -61,12 +63,16 @@ Public Class FrmUsuario
     End Sub
 
     Private Sub FrmUsuario_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        txtIdUsu.Focus()
         BaseDatos.conectar("root", "")
+        txtIdUsu.Focus()
         txtRolUsu.Items.Add("ADMIN")
         txtRolUsu.Items.Add("USER")
         txtRolUsu.Items.Add("INVITADO")
+        txtRolUsu.Items.Add("SELECCIONAR ROL")
+        txtRolUsu.SelectedItem = "SELECCIONAR ROL"
         txtRolUsu.DropDownStyle = ComboBoxStyle.DropDownList
+        SQL = "SELECT * FROM departamentos;"
+        c_Varias.llena_combo(txtDepa, SQL, "DepId", "DepNom")
     End Sub
 
     Private Sub txtIdUsu_TextChanged(sender As Object, e As KeyEventArgs) Handles txtIdUsu.KeyDown
@@ -77,5 +83,37 @@ Public Class FrmUsuario
 
     Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
         limpiar(1)
+    End Sub
+
+    Private Sub ComboBox1_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles txtDepa.SelectionChangeCommitted
+        SQL = "Select * FROM municipios WHERE depIdFk=" & txtDepa.SelectedValue
+        c_Varias.llena_combo(txtMun, SQL, "munId", "munNom")
+    End Sub
+
+    Private Sub ToolStripButton5_Click(sender As Object, e As EventArgs) Handles btnDel.Click
+        SQL = "DELETE FROM cliente WHERE cliCed=" & txtIdUsu.Text
+        If BaseDatos.ingresar_registros(SQL, "Eliminar") Then
+            limpiar(0)
+            msjErr.Text = "datos eliminados"
+        End If
+    End Sub
+
+    Private Sub ToolStripButton4_Click(sender As Object, e As EventArgs) Handles btnUpd.Click
+        SQL = "UPDATE tb_usuarios SET " &
+        "nombre = '" & txtNomUsu.Text & "', " &
+        "apellido = '" & txtApeUsu.Text & "', " &
+        "correo = '" & txtCorUsu.Text & "', " &
+        "rol = '" & txtRolUsu.SelectedItem.ToString() & "' " &
+        "WHERE cliCed = " & txtIdUsu.Text
+        ' MsgBox(SQL)
+        If BaseDatos.ingresar_registros(SQL, "actualizar") Then
+            limpiar(0)
+            msjErr.Text = "Datos actualizados"
+        End If
+    End Sub
+
+    Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
+        seleccionar.Show()
+        Me.Close()
     End Sub
 End Class
