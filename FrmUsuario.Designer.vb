@@ -38,7 +38,7 @@ Partial Class FrmUsuario
         Label5 = New Label()
         Button1 = New Button()
         ToolStrip1 = New ToolStrip()
-        ToolStripButton1 = New ToolStripButton()
+        btnAdd = New ToolStripButton()
         ToolStripButton3 = New ToolStripButton()
         btnUpd = New ToolStripButton()
         btnDel = New ToolStripButton()
@@ -50,6 +50,10 @@ Partial Class FrmUsuario
         BaseDatosBindingSource = New BindingSource(components)
         StatusStrip1 = New StatusStrip()
         msjErr = New ToolStripStatusLabel()
+        txtConUsu = New TextBox()
+        Label8 = New Label()
+        Label9 = New Label()
+        txtEstUsu = New ComboBox()
         ToolStrip1.SuspendLayout()
         CType(BaseDatosBindingSource, ComponentModel.ISupportInitialize).BeginInit()
         StatusStrip1.SuspendLayout()
@@ -111,7 +115,7 @@ Partial Class FrmUsuario
         ' 
         ' txtCorUsu
         ' 
-        txtCorUsu.Location = New Point(114, 137)
+        txtCorUsu.Location = New Point(114, 162)
         txtCorUsu.Name = "txtCorUsu"
         txtCorUsu.Size = New Size(220, 23)
         txtCorUsu.TabIndex = 19
@@ -120,7 +124,7 @@ Partial Class FrmUsuario
         ' 
         Label3.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         Label3.ForeColor = SystemColors.Desktop
-        Label3.Location = New Point(12, 137)
+        Label3.Location = New Point(12, 162)
         Label3.Name = "Label3"
         Label3.Size = New Size(63, 23)
         Label3.TabIndex = 18
@@ -131,7 +135,7 @@ Partial Class FrmUsuario
         ' 
         Label4.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         Label4.ForeColor = SystemColors.Desktop
-        Label4.Location = New Point(12, 224)
+        Label4.Location = New Point(12, 249)
         Label4.Name = "Label4"
         Label4.Size = New Size(42, 23)
         Label4.TabIndex = 21
@@ -141,15 +145,16 @@ Partial Class FrmUsuario
         ' txtRolUsu
         ' 
         txtRolUsu.FormattingEnabled = True
-        txtRolUsu.Location = New Point(114, 224)
+        txtRolUsu.Location = New Point(114, 249)
         txtRolUsu.Name = "txtRolUsu"
         txtRolUsu.Size = New Size(220, 23)
         txtRolUsu.TabIndex = 20
         ' 
         ' txtObsUsu
         ' 
-        txtObsUsu.Location = New Point(114, 253)
+        txtObsUsu.Location = New Point(114, 307)
         txtObsUsu.Name = "txtObsUsu"
+        txtObsUsu.ReadOnly = True
         txtObsUsu.Size = New Size(220, 96)
         txtObsUsu.TabIndex = 22
         txtObsUsu.Text = ""
@@ -158,7 +163,7 @@ Partial Class FrmUsuario
         ' 
         Label5.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         Label5.ForeColor = SystemColors.Desktop
-        Label5.Location = New Point(12, 253)
+        Label5.Location = New Point(12, 307)
         Label5.Name = "Label5"
         Label5.Size = New Size(96, 23)
         Label5.TabIndex = 23
@@ -176,21 +181,21 @@ Partial Class FrmUsuario
         ' 
         ' ToolStrip1
         ' 
-        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripButton3, btnUpd, btnDel, ToolStripButton2})
+        ToolStrip1.Items.AddRange(New ToolStripItem() {btnAdd, ToolStripButton3, btnUpd, btnDel, ToolStripButton2})
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
         ToolStrip1.Size = New Size(396, 25)
         ToolStrip1.TabIndex = 26
         ToolStrip1.Text = "ToolStrip1"
         ' 
-        ' ToolStripButton1
+        ' btnAdd
         ' 
-        ToolStripButton1.DisplayStyle = ToolStripItemDisplayStyle.Image
-        ToolStripButton1.Image = CType(resources.GetObject("ToolStripButton1.Image"), Image)
-        ToolStripButton1.ImageTransparentColor = Color.Magenta
-        ToolStripButton1.Name = "ToolStripButton1"
-        ToolStripButton1.Size = New Size(23, 22)
-        ToolStripButton1.Text = "Agregar"
+        btnAdd.DisplayStyle = ToolStripItemDisplayStyle.Image
+        btnAdd.Image = CType(resources.GetObject("btnAdd.Image"), Image)
+        btnAdd.ImageTransparentColor = Color.Magenta
+        btnAdd.Name = "btnAdd"
+        btnAdd.Size = New Size(23, 22)
+        btnAdd.Text = "Agregar"
         ' 
         ' ToolStripButton3
         ' 
@@ -234,7 +239,7 @@ Partial Class FrmUsuario
         ' 
         Label6.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         Label6.ForeColor = SystemColors.Desktop
-        Label6.Location = New Point(12, 166)
+        Label6.Location = New Point(12, 191)
         Label6.Name = "Label6"
         Label6.Size = New Size(96, 23)
         Label6.TabIndex = 28
@@ -244,7 +249,7 @@ Partial Class FrmUsuario
         ' txtDepa
         ' 
         txtDepa.FormattingEnabled = True
-        txtDepa.Location = New Point(114, 166)
+        txtDepa.Location = New Point(114, 191)
         txtDepa.Name = "txtDepa"
         txtDepa.Size = New Size(220, 23)
         txtDepa.TabIndex = 27
@@ -253,7 +258,7 @@ Partial Class FrmUsuario
         ' 
         Label7.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         Label7.ForeColor = SystemColors.Desktop
-        Label7.Location = New Point(12, 195)
+        Label7.Location = New Point(12, 220)
         Label7.Name = "Label7"
         Label7.Size = New Size(63, 23)
         Label7.TabIndex = 30
@@ -263,7 +268,7 @@ Partial Class FrmUsuario
         ' txtMun
         ' 
         txtMun.FormattingEnabled = True
-        txtMun.Location = New Point(114, 195)
+        txtMun.Location = New Point(114, 220)
         txtMun.Name = "txtMun"
         txtMun.Size = New Size(220, 23)
         txtMun.TabIndex = 29
@@ -275,7 +280,7 @@ Partial Class FrmUsuario
         ' StatusStrip1
         ' 
         StatusStrip1.Items.AddRange(New ToolStripItem() {msjErr})
-        StatusStrip1.Location = New Point(0, 369)
+        StatusStrip1.Location = New Point(0, 433)
         StatusStrip1.Name = "StatusStrip1"
         StatusStrip1.Size = New Size(396, 22)
         StatusStrip1.TabIndex = 43
@@ -287,11 +292,54 @@ Partial Class FrmUsuario
         msjErr.Size = New Size(42, 17)
         msjErr.Text = "Estado"
         ' 
+        ' txtConUsu
+        ' 
+        txtConUsu.Location = New Point(114, 137)
+        txtConUsu.Name = "txtConUsu"
+        txtConUsu.PasswordChar = "*"c
+        txtConUsu.Size = New Size(220, 23)
+        txtConUsu.TabIndex = 45
+        ' 
+        ' Label8
+        ' 
+        Label8.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        Label8.ForeColor = SystemColors.Desktop
+        Label8.Location = New Point(12, 137)
+        Label8.Name = "Label8"
+        Label8.Size = New Size(82, 23)
+        Label8.TabIndex = 44
+        Label8.Text = "&Contraseña"
+        Label8.TextAlign = ContentAlignment.MiddleLeft
+        ' 
+        ' Label9
+        ' 
+        Label9.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        Label9.ForeColor = SystemColors.Desktop
+        Label9.Location = New Point(12, 278)
+        Label9.Name = "Label9"
+        Label9.Size = New Size(51, 23)
+        Label9.TabIndex = 47
+        Label9.Text = "&Estado"
+        Label9.TextAlign = ContentAlignment.MiddleLeft
+        ' 
+        ' txtEstUsu
+        ' 
+        txtEstUsu.Enabled = False
+        txtEstUsu.FormattingEnabled = True
+        txtEstUsu.Location = New Point(114, 278)
+        txtEstUsu.Name = "txtEstUsu"
+        txtEstUsu.Size = New Size(220, 23)
+        txtEstUsu.TabIndex = 46
+        ' 
         ' FrmUsuario
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(396, 391)
+        ClientSize = New Size(396, 455)
+        Controls.Add(Label9)
+        Controls.Add(txtEstUsu)
+        Controls.Add(txtConUsu)
+        Controls.Add(Label8)
         Controls.Add(StatusStrip1)
         Controls.Add(Label7)
         Controls.Add(txtMun)
@@ -336,7 +384,7 @@ Partial Class FrmUsuario
     Friend WithEvents Label5 As Label
     Friend WithEvents Button1 As Button
     Friend WithEvents ToolStrip1 As ToolStrip
-    Friend WithEvents ToolStripButton1 As ToolStripButton
+    Friend WithEvents btnAdd As ToolStripButton
     Friend WithEvents ToolStripButton2 As ToolStripButton
     Friend WithEvents ToolStripButton3 As ToolStripButton
     Friend WithEvents Label6 As Label
@@ -348,4 +396,8 @@ Partial Class FrmUsuario
     Friend WithEvents btnDel As ToolStripButton
     Friend WithEvents StatusStrip1 As StatusStrip
     Friend WithEvents msjErr As ToolStripStatusLabel
+    Friend WithEvents txtConUsu As TextBox
+    Friend WithEvents Label8 As Label
+    Friend WithEvents Label9 As Label
+    Friend WithEvents txtEstUsu As ComboBox
 End Class
