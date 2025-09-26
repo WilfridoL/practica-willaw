@@ -152,6 +152,7 @@ Partial Class FrmUsuario
         ' 
         ' txtObsUsu
         ' 
+        txtObsUsu.BackColor = SystemColors.ControlLightLight
         txtObsUsu.Location = New Point(114, 307)
         txtObsUsu.Name = "txtObsUsu"
         txtObsUsu.ReadOnly = True

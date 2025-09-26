@@ -5,16 +5,18 @@ Imports Google.Protobuf.WellKnownTypes
 Public Class FrmUsuario
     Dim c_Varias As New Varias
     Public Function VerEstado(ByVal est As String, ByVal name As String, ByVal ob As String)
-        If est = 2 Then
-            MsgBox("El usuario " & name & " Se encuentra inactivo")
-        ElseIf est = 3 Then
-            txtNomUsu.ReadOnly = True
-            txtApeUsu.ReadOnly = True
-            txtCorUsu.ReadOnly = True
-            txtObsUsu.ReadOnly = True
-            txtRolUsu.Enabled = False
-            MsgBox("El usuario " & name & " Se encuentra bloqueado por el motivo " & ob, MsgBoxStyle.Critical)
-
+        If est > 1 Then
+            txtObsUsu.ReadOnly = False
+            If est = 2 Then
+                MsgBox("El usuario " & name & " Se encuentra inactivo")
+            Else
+                txtNomUsu.ReadOnly = True
+                txtApeUsu.ReadOnly = True
+                txtCorUsu.ReadOnly = True
+                txtObsUsu.ReadOnly = True
+                txtRolUsu.Enabled = False
+                MsgBox("El usuario " & name & " Se encuentra bloqueado por el motivo " & ob, MsgBoxStyle.Critical)
+            End If
         Else
             txtIdUsu.ReadOnly = True
         End If
@@ -170,6 +172,10 @@ Public Class FrmUsuario
         "WHERE usuId = " & txtIdUsu.Text
         ' MsgBox(SQL)
         If BaseDatos.ingresar_registros(SQL, "actualizar") Then
+            SQL = "UPDATE observaciones SET " &
+                "observacion= '" & txtObsUsu.Text & "' " &
+                "WHERE idUsuFK=" & txtIdUsu.Text
+            controlObservaciones(SQL)
             limpiar(0)
             msjErr.Text = "Datos actualizados"
         End If
@@ -186,8 +192,19 @@ Public Class FrmUsuario
         "', " & txtDepa.SelectedValue & ", " & txtMun.SelectedValue & ", " & txtRolUsu.SelectedValue & ", " & txtEstUsu.SelectedValue & ");"
         'MsgBox(SQL)
         If validacion() And BaseDatos.ingresar_registros(SQL, "guardar") Then
+            SQL = "INSERT observaciones (idUsuFk, observacion)
+            VALUE (" & txtIdUsu.Text & ", 'No tiene observaciones...');"
+            BaseDatos.ingresar_registros(SQL, "guardar")
             limpiar(1)
             msjErr.Text = "Datos guardados"
+        End If
+    End Sub
+
+    Private Sub txtEstUsu_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles txtEstUsu.SelectionChangeCommitted
+        If txtEstUsu.SelectedValue <> 1 Then
+            txtObsUsu.ReadOnly = False
+        Else
+            txtObsUsu.ReadOnly = True
         End If
     End Sub
 End Class
