@@ -281,7 +281,7 @@ Partial Class FrmCliente
         Controls.Add(txtIdCli)
         Controls.Add(UsernameLabel)
         Name = "FrmCliente"
-        Text = "FrmCliente"
+        Text = "Control de clientes"
         ToolStrip1.ResumeLayout(False)
         ToolStrip1.PerformLayout()
         StatusStrip1.ResumeLayout(False)

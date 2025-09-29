@@ -7,15 +7,22 @@
         txtApeCli.Text = ""
         txtCorCli.Text = ""
         txtTelCli.Text = ""
+        txtDepa.SelectedValue = 0
+        txtMun.SelectedValue = 0
         btnAdd.Enabled = True
         btnDel.Enabled = False
         btnUpd.Enabled = False
+        Return True
     End Function
     Private Sub FrmCliente_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         txtIdCli.Focus()
         BaseDatos.conectar("root", "")
         SQL = "SELECT * FROM departamentos;"
         c_Varias.llena_combo(txtDepa, SQL, "DepId", "DepNom")
+        txtMun.DropDownStyle = ComboBoxStyle.DropDownList
+        txtDepa.DropDownStyle = ComboBoxStyle.DropDownList
+        txtDepa.SelectedValue = 0
+        txtMun.SelectedValue = 0
     End Sub
 
     Public Function BuscarCliario()
@@ -24,12 +31,14 @@
         rst = BaseDatos.leer_Registro(SQL)
         If txtIdCli.Text = "" Then
             msjErr.Text = "Por Favor ingresar identificacion para hacer la busqueda"
-        ElseIf BaseDatos.leer_Registro(SQL).Read() Then
+        ElseIf rst.Read() Then
             limpiar()
             txtNomCli.Text = rst("cliNom")
             txtApeCli.Text = rst("cliApe")
             txtCorCli.Text = rst("cliEma")
             txtTelCli.Text = rst("cliTel")
+            txtDepa.SelectedValue = rst("cliDep")
+            txtMun.SelectedValue = rst("cliMun")
             btnAdd.Enabled = False
             btnDel.Enabled = True
             btnUpd.Enabled = True
@@ -40,8 +49,9 @@
     End Function
 
     Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
-        SQL = "INSERT cliente (cliCed, cliNom, cliApe, cliEma, cliTel) 
-        VALUE (" & txtIdCli.Text & ", '" & txtNomCli.Text.ToUpper & "', '" & txtApeCli.Text.ToUpper & "', '" & txtCorCli.Text & "', " & txtTelCli.Text & ");"
+        SQL = "INSERT cliente (cliCed, cliNom, cliApe, cliEma, cliTel, cliDep, cliMun) 
+        VALUE (" & txtIdCli.Text & ", '" & txtNomCli.Text.ToUpper & "', '" & txtApeCli.Text.ToUpper &
+        "', '" & txtCorCli.Text & "', " & txtTelCli.Text & ", " & txtDepa.SelectedValue & ", " & txtMun.SelectedValue & ");"
         MsgBox(SQL)
         If BaseDatos.ingresar_registros(SQL, "registrar") Then
             limpiar()
@@ -65,10 +75,12 @@
 
     Private Sub ToolStripButton4_Click(sender As Object, e As EventArgs) Handles btnUpd.Click
         SQL = "UPDATE cliente SET " &
-       "clinom = '" & txtNomCli.Text & "', " &
-       "cliape = '" & txtApeCli.Text & "', " &
+       "clinom = '" & txtNomCli.Text.ToUpper() & "', " &
+       "cliape = '" & txtApeCli.Text.ToUpper() & "', " &
        "cliEma = '" & txtCorCli.Text & "', " &
-       "cliTel = " & txtTelCli.Text & " " &
+       "cliTel = " & txtTelCli.Text & ", " &
+       "cliDep = " & txtDepa.SelectedValue & ", " &
+       "cliMun = " & txtMun.SelectedValue & " " &
        "WHERE cliCed = " & txtIdCli.Text
         ' MsgBox(SQL)
         If BaseDatos.ingresar_registros(SQL, "actualizar") Then
