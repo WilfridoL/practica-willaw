@@ -1,7 +1,7 @@
 ﻿Public Class FrmCliente
     Dim c_Varias As New Varias
 
-    Public Function limpiar()
+    Public Function limpiar(ByVal e As Integer)
         'txtIdCli.Text = ""
         txtNomCli.Text = ""
         txtApeCli.Text = ""
@@ -12,6 +12,10 @@
         btnAdd.Enabled = True
         btnDel.Enabled = False
         btnUpd.Enabled = False
+        msjErr.Text = ""
+        If e = 1 Then
+            txtIdCli.Text = ""
+        End If
         Return True
     End Function
     Function validacion() As Boolean
@@ -68,7 +72,7 @@
         'MsgBox(SQL)
         rst = BaseDatos.leer_Registro(SQL)
         If rst.Read() Then
-            limpiar()
+            limpiar(0)
             municipios(rst("cliDep"))
             txtNomCli.Text = rst("cliNom")
             txtApeCli.Text = rst("cliApe")
@@ -79,6 +83,7 @@
             btnAdd.Enabled = False
             btnDel.Enabled = True
             btnUpd.Enabled = True
+            msjErr.Text = "Cliente encontrado"
         Else
             msjErr.Text = "El usuario con la identificacion " & id & " no se encuentra registrado"
         End If
@@ -92,21 +97,23 @@
         'MsgBox(SQL)
         If validacion() Then
             If BaseDatos.ingresar_registros(SQL, "registrar") Then
-                limpiar()
+                limpiar(1)
                 msjErr.Text = "datos ingresados"
             End If
         End If
     End Sub
 
     Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles btnLim.Click
-        limpiar()
+        limpiar(1)
     End Sub
 
     Private Sub ToolStripButton5_Click(sender As Object, e As EventArgs) Handles btnDel.Click
         SQL = "DELETE FROM cliente WHERE cliCed=" & txtIdCli.Text
         If BaseDatos.ingresar_registros(SQL, "Eliminar") Then
-            limpiar()
+            limpiar(1)
             msjErr.Text = "datos eliminados"
+        Else
+            msjErr.Text = "No se pudo eliminar el usuario"
         End If
     End Sub
 
@@ -121,7 +128,7 @@
        " WHERE cliCed = " & txtIdCli.Text
         'MsgBox(SQL)
         If BaseDatos.ingresar_registros(SQL, "actualizar") Then
-            limpiar()
+            limpiar(1)
             msjErr.Text = "Datos actualizados"
         End If
     End Sub
@@ -132,12 +139,21 @@
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        BuscarCliente(txtIdCli.Text)
+        If txtIdCli.Text = "" Then
+            msjErr.Text = "Ingrese una identificacion"
+        Else
+            BuscarCliente(txtIdCli.Text)
+        End If
     End Sub
 
     Private Sub txtIdCli_TextChanged(sender As Object, e As KeyEventArgs) Handles txtIdCli.KeyDown
         If e.KeyCode = Keys.Enter Then
-            BuscarCliente(txtIdCli.Text)
+            If txtIdCli.Text = "" Then
+                msjErr.Text = "Ingrese una identificacion"
+            Else
+                BuscarCliente(txtIdCli.Text)
+                msjErr.Text = ""
+            End If
         End If
     End Sub
 

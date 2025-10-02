@@ -23,7 +23,7 @@ Public Class FrmUsuario
         End If
         Return True
     End Function
-    Function validacion() As Boolean
+    Function validacion(ByVal conAct As Boolean) As Boolean
         If txtIdUsu.Text = "" Then
             msjErr.Text = "Por favor ingrese la identificacion del usuario"
             txtIdUsu.Focus()
@@ -40,7 +40,7 @@ Public Class FrmUsuario
             msjErr.Text = "Por favor ingrese el correo del usuario"
             txtCorUsu.Focus()
             Return False
-        ElseIf txtConUsu.Text = "" And SQL.Contains("INSERT") Then
+        ElseIf txtConUsu.Text = "" And conAct = True Then
             msjErr.Text = "Por favor ingrese la contraseña del usuario"
             txtConUsu.Focus()
             Return False
@@ -80,6 +80,7 @@ Public Class FrmUsuario
         btnAdd.Enabled = True
         btnDel.Enabled = False
         btnUpd.Enabled = False
+        msjErr.Text = ""
         If e = 1 Then
             txtIdUsu.Text = ""
         End If
@@ -96,7 +97,7 @@ Public Class FrmUsuario
             txtNomUsu.Text = rst("nombre")
             txtApeUsu.Text = rst("apellido")
             txtCorUsu.Text = rst("correo")
-            txtConUsu.Text = rst("contraseña")
+            'txtConUsu.Text = rst("contraseña")
             txtRolUsu.SelectedValue = rst("rol")
             txtDepa.SelectedValue = rst("departamento")
             txtMun.SelectedValue = rst("municipio")
@@ -108,6 +109,7 @@ Public Class FrmUsuario
             btnDel.Enabled = True
             btnUpd.Enabled = True
             VerEstado(rst("estado"), rst("nombre") & " " & rst("apellido"), rst("observacion"))
+            msjErr.Text = "Usuario encontrado"
         Else
             msjErr.Text = "El usuario con la identificacion " & id & " no se encuentra registrado"
         End If
@@ -115,11 +117,19 @@ Public Class FrmUsuario
     End Function
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        BuscarUsuario(txtIdUsu.Text)
+        If txtIdUsu.Text = "" Then
+            msjErr.Text = "Ingrese una identificacion"
+        Else
+            BuscarUsuario(txtIdUsu.Text)
+        End If
     End Sub
     Private Sub txtIdCli_TextChanged(sender As Object, e As KeyEventArgs) Handles txtIdUsu.KeyDown
         If e.KeyCode = Keys.Enter Then
-            BuscarUsuario(txtIdUsu.Text)
+            If txtIdUsu.Text = "" Then
+                msjErr.Text = "Ingrese una identificacion"
+            Else
+                BuscarUsuario(txtIdUsu.Text)
+            End If
         End If
     End Sub
 
@@ -163,6 +173,8 @@ Public Class FrmUsuario
             SQL = "DELETE FROM tb_usuarios WHERE usuId=" & txtIdUsu.Text
             BaseDatos.ingresar_registros(SQL, "Eliminar")
             msjErr.Text = "datos eliminados"
+        Else
+            msjErr.Text = "No se pudo eliminar el usuario"
         End If
     End Sub
 
@@ -177,7 +189,7 @@ Public Class FrmUsuario
         "municipio = " & txtMun.SelectedValue & " " &
         " WHERE usuId = " & txtIdUsu.Text
         'MsgBox(SQL)
-        If validacion() Then
+        If validacion(False) Then
             If BaseDatos.ingresar_registros(SQL, "actualizar") Then
                 SQL = "UPDATE observaciones SET " &
                     "observacion= '" & txtObsUsu.Text & "' " &
@@ -199,7 +211,7 @@ Public Class FrmUsuario
         VALUE (" & txtIdUsu.Text & ", '" & txtNomUsu.Text.ToUpper() & "', '" & txtApeUsu.Text.ToUpper() & "', '" & txtConUsu.Text & "', '" & txtCorUsu.Text &
         "', " & txtDepa.SelectedValue & ", " & txtMun.SelectedValue & ", " & txtRolUsu.SelectedValue & ", " & txtEstUsu.SelectedValue & ");"
         'MsgBox(SQL)
-        If validacion() = True Then
+        If validacion(True) = True Then
             If BaseDatos.ingresar_registros(SQL, "guardar") Then
                 SQL = "INSERT observaciones (idUsuFk, observacion)
             VALUE (" & txtIdUsu.Text & ", 'No tiene observaciones...');"

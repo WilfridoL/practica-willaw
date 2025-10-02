@@ -85,7 +85,7 @@ Partial Class FrmCliente
         ToolStripButton1.ImageTransparentColor = Color.Magenta
         ToolStripButton1.Name = "ToolStripButton1"
         ToolStripButton1.Size = New Size(23, 22)
-        ToolStripButton1.Text = "ToolStripButton1"
+        ToolStripButton1.Text = "Consultar"
         ' 
         ' btnDel
         ' 
@@ -196,7 +196,7 @@ Partial Class FrmCliente
         ' txtIdCli
         ' 
         txtIdCli.Location = New Point(112, 37)
-        txtIdCli.MaxLength = 11
+        txtIdCli.MaxLength = 9
         txtIdCli.Name = "txtIdCli"
         txtIdCli.Size = New Size(135, 23)
         txtIdCli.TabIndex = 28
@@ -215,7 +215,7 @@ Partial Class FrmCliente
         ' txtTelCli
         ' 
         txtTelCli.Location = New Point(112, 154)
-        txtTelCli.MaxLength = 11
+        txtTelCli.MaxLength = 9
         txtTelCli.Name = "txtTelCli"
         txtTelCli.Size = New Size(220, 23)
         txtTelCli.TabIndex = 41

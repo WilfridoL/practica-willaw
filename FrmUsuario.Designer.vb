@@ -63,7 +63,7 @@ Partial Class FrmUsuario
         ' txtIdUsu
         ' 
         txtIdUsu.Location = New Point(114, 50)
-        txtIdUsu.MaxLength = 11
+        txtIdUsu.MaxLength = 9
         txtIdUsu.Name = "txtIdUsu"
         txtIdUsu.Size = New Size(135, 23)
         txtIdUsu.TabIndex = 13
@@ -220,7 +220,7 @@ Partial Class FrmUsuario
         btnBuscar.ImageTransparentColor = Color.Magenta
         btnBuscar.Name = "btnBuscar"
         btnBuscar.Size = New Size(23, 22)
-        btnBuscar.Text = "ToolStripButton1"
+        btnBuscar.Text = "consultar"
         ' 
         ' btnUpd
         ' 
