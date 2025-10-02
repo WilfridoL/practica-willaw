@@ -73,6 +73,7 @@ Public Class FrmUsuario
         txtNomUsu.ReadOnly = False
         txtApeUsu.ReadOnly = False
         txtCorUsu.ReadOnly = False
+        txtConUsu.ReadOnly = False
         txtObsUsu.ReadOnly = True
         txtRolUsu.Enabled = True
         txtEstUsu.Enabled = False
@@ -91,6 +92,7 @@ Public Class FrmUsuario
         rst = BaseDatos.leer_Registro(SQL)
         If rst.Read() Then
             limpiar(0)
+            municipios(rst("departamento"))
             txtNomUsu.Text = rst("nombre")
             txtApeUsu.Text = rst("apellido")
             txtCorUsu.Text = rst("correo")
@@ -106,6 +108,8 @@ Public Class FrmUsuario
             btnDel.Enabled = True
             btnUpd.Enabled = True
             VerEstado(rst("estado"), rst("nombre") & " " & rst("apellido"), rst("observacion"))
+        Else
+            msjErr.Text = "El usuario con la identificacion " & id & " no se encuentra registrado"
         End If
         Return True
     End Function
@@ -140,10 +144,15 @@ Public Class FrmUsuario
         limpiar(1)
     End Sub
 
-    Private Sub ComboBox1_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles txtDepa.SelectionChangeCommitted
-        SQL = "Select * FROM municipios WHERE depIdFk=" & txtDepa.SelectedValue
+    Public Function municipios(ByVal depa As Integer)
+        SQL = "Select * FROM municipios WHERE depIdFk=" & depa
         c_Varias.llena_combo(txtMun, SQL, "munId", "munNom")
         txtMun.SelectedValue = 0
+        Return True
+    End Function
+
+    Private Sub ComboBox1_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles txtDepa.SelectionChangeCommitted
+        municipios(txtDepa.SelectedValue)
     End Sub
 
     Private Sub ToolStripButton5_Click(sender As Object, e As EventArgs) Handles btnDel.Click
@@ -163,16 +172,20 @@ Public Class FrmUsuario
         "apellido = '" & txtApeUsu.Text & "', " &
         "correo = '" & txtCorUsu.Text & "', " &
         "rol = '" & txtRolUsu.SelectedValue & "', " &
-        "estado = '" & txtEstUsu.SelectedValue & "' " &
-        "WHERE usuId = " & txtIdUsu.Text
-        ' MsgBox(SQL)
-        If BaseDatos.ingresar_registros(SQL, "actualizar") Then
-            SQL = "UPDATE observaciones SET " &
-                "observacion= '" & txtObsUsu.Text & "' " &
-                "WHERE idUsuFK=" & txtIdUsu.Text
-            controlObservaciones(SQL)
-            limpiar(0)
-            msjErr.Text = "Datos actualizados"
+        "estado = '" & txtEstUsu.SelectedValue & "', " &
+        "departamento = " & txtDepa.SelectedValue & ", " &
+        "municipio = " & txtMun.SelectedValue & " " &
+        " WHERE usuId = " & txtIdUsu.Text
+        'MsgBox(SQL)
+        If validacion() Then
+            If BaseDatos.ingresar_registros(SQL, "actualizar") Then
+                SQL = "UPDATE observaciones SET " &
+                    "observacion= '" & txtObsUsu.Text & "' " &
+                    "WHERE idUsuFK=" & txtIdUsu.Text
+                controlObservaciones(SQL)
+                limpiar(0)
+                msjErr.Text = "Datos actualizados"
+            End If
         End If
     End Sub
 
@@ -186,12 +199,14 @@ Public Class FrmUsuario
         VALUE (" & txtIdUsu.Text & ", '" & txtNomUsu.Text.ToUpper() & "', '" & txtApeUsu.Text.ToUpper() & "', '" & txtConUsu.Text & "', '" & txtCorUsu.Text &
         "', " & txtDepa.SelectedValue & ", " & txtMun.SelectedValue & ", " & txtRolUsu.SelectedValue & ", " & txtEstUsu.SelectedValue & ");"
         'MsgBox(SQL)
-        If validacion() And BaseDatos.ingresar_registros(SQL, "guardar") Then
-            SQL = "INSERT observaciones (idUsuFk, observacion)
+        If validacion() = True Then
+            If BaseDatos.ingresar_registros(SQL, "guardar") Then
+                SQL = "INSERT observaciones (idUsuFk, observacion)
             VALUE (" & txtIdUsu.Text & ", 'No tiene observaciones...');"
-            BaseDatos.ingresar_registros(SQL, "guardar")
-            limpiar(1)
-            msjErr.Text = "Datos guardados"
+                BaseDatos.ingresar_registros(SQL, "guardar")
+                limpiar(1)
+                msjErr.Text = "Datos guardados"
+            End If
         End If
     End Sub
 

@@ -40,6 +40,7 @@ Partial Class FrmUsuario
         ToolStrip1 = New ToolStrip()
         btnAdd = New ToolStripButton()
         ToolStripButton3 = New ToolStripButton()
+        btnBuscar = New ToolStripButton()
         btnUpd = New ToolStripButton()
         btnDel = New ToolStripButton()
         ToolStripButton2 = New ToolStripButton()
@@ -54,7 +55,6 @@ Partial Class FrmUsuario
         Label8 = New Label()
         Label9 = New Label()
         txtEstUsu = New ComboBox()
-        btnBuscar = New ToolStripButton()
         ToolStrip1.SuspendLayout()
         CType(BaseDatosBindingSource, ComponentModel.ISupportInitialize).BeginInit()
         StatusStrip1.SuspendLayout()
@@ -213,6 +213,15 @@ Partial Class FrmUsuario
         ToolStripButton3.Size = New Size(23, 22)
         ToolStripButton3.Text = "Limpiar"
         ' 
+        ' btnBuscar
+        ' 
+        btnBuscar.DisplayStyle = ToolStripItemDisplayStyle.Image
+        btnBuscar.Image = CType(resources.GetObject("btnBuscar.Image"), Image)
+        btnBuscar.ImageTransparentColor = Color.Magenta
+        btnBuscar.Name = "btnBuscar"
+        btnBuscar.Size = New Size(23, 22)
+        btnBuscar.Text = "ToolStripButton1"
+        ' 
         ' btnUpd
         ' 
         btnUpd.DisplayStyle = ToolStripItemDisplayStyle.Image
@@ -338,15 +347,6 @@ Partial Class FrmUsuario
         txtEstUsu.Name = "txtEstUsu"
         txtEstUsu.Size = New Size(220, 23)
         txtEstUsu.TabIndex = 46
-        ' 
-        ' btnBuscar
-        ' 
-        btnBuscar.DisplayStyle = ToolStripItemDisplayStyle.Image
-        btnBuscar.Image = CType(resources.GetObject("btnBuscar.Image"), Image)
-        btnBuscar.ImageTransparentColor = Color.Magenta
-        btnBuscar.Name = "btnBuscar"
-        btnBuscar.Size = New Size(23, 22)
-        btnBuscar.Text = "ToolStripButton1"
         ' 
         ' FrmUsuario
         ' 

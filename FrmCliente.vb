@@ -14,6 +14,38 @@
         btnUpd.Enabled = False
         Return True
     End Function
+    Function validacion() As Boolean
+        If txtIdCli.Text = "" Then
+            msjErr.Text = "Por favor ingrese la identificacion del cliente"
+            txtIdCli.Focus()
+            Return False
+        ElseIf txtNomCli.Text = "" Then
+            msjErr.Text = "Por favor ingrese el nombre del cliente"
+            txtNomCli.Focus()
+            Return False
+        ElseIf txtApeCli.Text = "" Then
+            msjErr.Text = "Por favor ingrese el apellido del cliente"
+            txtApeCli.Focus()
+            Return False
+        ElseIf txtCorCli.Text = "" Then
+            msjErr.Text = "Por favor ingrese el correo del cliente"
+            txtCorCli.Focus()
+            Return False
+        ElseIf txtTelCli.Text = "" Then
+            msjErr.Text = "Por favor ingrese el telefono del cliente"
+            txtTelCli.Focus()
+            Return False
+        ElseIf txtDepa.Text = "" Then
+            msjErr.Text = "Por favor ingrese el deparamento del cliente"
+            txtDepa.Focus()
+            Return False
+        ElseIf txtMun.Text = "" Then
+            msjErr.Text = "Por favor ingrese el municipio del cliente"
+            txtMun.Focus()
+            Return False
+        End If
+        Return True
+    End Function
     Private Sub FrmCliente_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         txtIdCli.Focus()
         BaseDatos.conectar("root", "")
@@ -24,6 +56,12 @@
         txtDepa.SelectedValue = 0
         txtMun.SelectedValue = 0
     End Sub
+    Public Function municipios(ByVal depa As Integer)
+        SQL = "Select * FROM municipios WHERE depIdFk=" & depa
+        c_Varias.llena_combo(txtMun, SQL, "munId", "munNom")
+        txtMun.SelectedValue = 0
+        Return True
+    End Function
 
     Public Function BuscarCliente(ByVal id As Integer)
         SQL = "SELECT * FROM cliente WHERE cliCed=" & id
@@ -31,6 +69,7 @@
         rst = BaseDatos.leer_Registro(SQL)
         If rst.Read() Then
             limpiar()
+            municipios(rst("cliDep"))
             txtNomCli.Text = rst("cliNom")
             txtApeCli.Text = rst("cliApe")
             txtCorCli.Text = rst("cliEma")
@@ -40,6 +79,8 @@
             btnAdd.Enabled = False
             btnDel.Enabled = True
             btnUpd.Enabled = True
+        Else
+            msjErr.Text = "El usuario con la identificacion " & id & " no se encuentra registrado"
         End If
         Return True
     End Function
@@ -48,12 +89,12 @@
         SQL = "INSERT cliente (cliCed, cliNom, cliApe, cliEma, cliTel, cliDep, cliMun) 
         VALUE (" & txtIdCli.Text & ", '" & txtNomCli.Text.ToUpper & "', '" & txtApeCli.Text.ToUpper &
         "', '" & txtCorCli.Text & "', " & txtTelCli.Text & ", " & txtDepa.SelectedValue & ", " & txtMun.SelectedValue & ");"
-        MsgBox(SQL)
-        If BaseDatos.ingresar_registros(SQL, "registrar") Then
-            limpiar()
-            msjErr.Text = "datos ingresados"
-        Else
-            MsgBox("error")
+        'MsgBox(SQL)
+        If validacion() Then
+            If BaseDatos.ingresar_registros(SQL, "registrar") Then
+                limpiar()
+                msjErr.Text = "datos ingresados"
+            End If
         End If
     End Sub
 
@@ -76,9 +117,9 @@
        "cliEma = '" & txtCorCli.Text & "', " &
        "cliTel = " & txtTelCli.Text & ", " &
        "cliDep = " & txtDepa.SelectedValue & ", " &
-       "cliMun = " & txtMun.SelectedValue & " " &
-       "WHERE cliCed = " & txtIdCli.Text
-        ' MsgBox(SQL)
+       "cliMun = " & txtMun.SelectedValue &
+       " WHERE cliCed = " & txtIdCli.Text
+        'MsgBox(SQL)
         If BaseDatos.ingresar_registros(SQL, "actualizar") Then
             limpiar()
             msjErr.Text = "Datos actualizados"
@@ -101,8 +142,7 @@
     End Sub
 
     Private Sub txtDepa_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles txtDepa.SelectionChangeCommitted
-        SQL = "Select * FROM municipios WHERE depIdFk=" & txtDepa.SelectedValue
-        c_Varias.llena_combo(txtMun, SQL, "munId", "munNom")
+        municipios(txtDepa.SelectedValue)
     End Sub
 
     Private Sub ToolStripButton1_Click_1(sender As Object, e As EventArgs) Handles ToolStripButton1.Click

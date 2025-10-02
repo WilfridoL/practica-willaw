@@ -38,6 +38,7 @@ Partial Class Frm_login
         txtclave = New TextBox()
         OK = New Button()
         Cancel = New Button()
+        msjErr = New Label()
         CType(LogoPictureBox, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -102,6 +103,17 @@ Partial Class Frm_login
         Cancel.TabIndex = 5
         Cancel.Text = "&Cancelar"
         ' 
+        ' msjErr
+        ' 
+        msjErr.BackColor = SystemColors.Control
+        msjErr.Location = New Point(174, 127)
+        msjErr.Name = "msjErr"
+        msjErr.Size = New Size(220, 23)
+        msjErr.TabIndex = 6
+        msjErr.Text = "error"
+        msjErr.TextAlign = ContentAlignment.MiddleLeft
+        msjErr.Visible = False
+        ' 
         ' Frm_login
         ' 
         AcceptButton = OK
@@ -109,6 +121,7 @@ Partial Class Frm_login
         AutoScaleMode = AutoScaleMode.Font
         CancelButton = Cancel
         ClientSize = New Size(401, 192)
+        Controls.Add(msjErr)
         Controls.Add(Cancel)
         Controls.Add(OK)
         Controls.Add(txtclave)
@@ -128,5 +141,7 @@ Partial Class Frm_login
         PerformLayout()
 
     End Sub
+
+    Friend WithEvents msjErr As Label
 
 End Class
