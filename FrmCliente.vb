@@ -25,13 +25,11 @@
         txtMun.SelectedValue = 0
     End Sub
 
-    Public Function BuscarCliario()
-        SQL = "SELECT * FROM cliente WHERE cliCed=" & txtIdCli.Text
-        MsgBox(SQL)
+    Public Function BuscarCliente(ByVal id As Integer)
+        SQL = "SELECT * FROM cliente WHERE cliCed=" & id
+        'MsgBox(SQL)
         rst = BaseDatos.leer_Registro(SQL)
-        If txtIdCli.Text = "" Then
-            msjErr.Text = "Por Favor ingresar identificacion para hacer la busqueda"
-        ElseIf rst.Read() Then
+        If rst.Read() Then
             limpiar()
             txtNomCli.Text = rst("cliNom")
             txtApeCli.Text = rst("cliApe")
@@ -42,8 +40,6 @@
             btnAdd.Enabled = False
             btnDel.Enabled = True
             btnUpd.Enabled = True
-        Else
-            msjErr.Text = "Cliente no existe en la base de datos"
         End If
         Return True
     End Function
@@ -95,17 +91,38 @@
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        BuscarCliario()
+        BuscarCliente(txtIdCli.Text)
     End Sub
 
     Private Sub txtIdCli_TextChanged(sender As Object, e As KeyEventArgs) Handles txtIdCli.KeyDown
         If e.KeyCode = Keys.Enter Then
-            BuscarCliario()
+            BuscarCliente(txtIdCli.Text)
         End If
     End Sub
 
     Private Sub txtDepa_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles txtDepa.SelectionChangeCommitted
         SQL = "Select * FROM municipios WHERE depIdFk=" & txtDepa.SelectedValue
         c_Varias.llena_combo(txtMun, SQL, "munId", "munNom")
+    End Sub
+
+    Private Sub ToolStripButton1_Click_1(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
+        frmConsulta.Text = "Buscar Cliente"
+        frmConsulta.DgvConsulta.DataSource = ""
+        SQL = "SELECT cliCed as Cedula, cliNom AS Nombres, cliApe as Apellidos, cliEma as Correo, cliTel as Telefono FROM cliente"
+        frmConsulta.DgvConsulta.RowTemplate.Height = 17
+        frmConsulta.DgvConsulta.DataSource = BaseDatos.Listar_datos(SQL)
+        frmConsulta.DgvConsulta.Columns(0).Width = 70
+        frmConsulta.DgvConsulta.Columns(1).Width = 150
+        frmConsulta.DgvConsulta.Columns(2).Width = 150
+        frmConsulta.DgvConsulta.Columns(3).Width = 150
+        frmConsulta.DgvConsulta.Columns(4).Width = 120
+        frmConsulta.ShowDialog()
+        If sw_regreso = 1 Then
+            txtIdCli.Text = CedCli
+            BuscarCliente(CedCli)
+            SendKeys.Send("{ENTER}")
+        Else
+            txtIdCli.Focus()
+        End If
     End Sub
 End Class

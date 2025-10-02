@@ -17,7 +17,7 @@ Public Class FrmRegistrar
                 MsgBoxStyle.Information)
             Else
                 BaseDatos.ingresar_registros(SQL, "insertar")
-                FrmPrincipal.CargarUsuarios()
+                'FrmConsulta.CargarUsuarios()
                 txtname.Text = ""
                 txtape.Text = ""
                 txtcontra.Text = ""

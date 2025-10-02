@@ -54,6 +54,7 @@ Partial Class FrmUsuario
         Label8 = New Label()
         Label9 = New Label()
         txtEstUsu = New ComboBox()
+        btnBuscar = New ToolStripButton()
         ToolStrip1.SuspendLayout()
         CType(BaseDatosBindingSource, ComponentModel.ISupportInitialize).BeginInit()
         StatusStrip1.SuspendLayout()
@@ -62,6 +63,7 @@ Partial Class FrmUsuario
         ' txtIdUsu
         ' 
         txtIdUsu.Location = New Point(114, 50)
+        txtIdUsu.MaxLength = 11
         txtIdUsu.Name = "txtIdUsu"
         txtIdUsu.Size = New Size(135, 23)
         txtIdUsu.TabIndex = 13
@@ -80,6 +82,7 @@ Partial Class FrmUsuario
         ' txtNomUsu
         ' 
         txtNomUsu.Location = New Point(114, 79)
+        txtNomUsu.MaxLength = 150
         txtNomUsu.Name = "txtNomUsu"
         txtNomUsu.Size = New Size(220, 23)
         txtNomUsu.TabIndex = 15
@@ -98,6 +101,7 @@ Partial Class FrmUsuario
         ' txtApeUsu
         ' 
         txtApeUsu.Location = New Point(114, 108)
+        txtApeUsu.MaxLength = 150
         txtApeUsu.Name = "txtApeUsu"
         txtApeUsu.Size = New Size(220, 23)
         txtApeUsu.TabIndex = 17
@@ -115,7 +119,9 @@ Partial Class FrmUsuario
         ' 
         ' txtCorUsu
         ' 
+        txtCorUsu.ImeMode = ImeMode.NoControl
         txtCorUsu.Location = New Point(114, 162)
+        txtCorUsu.MaxLength = 254
         txtCorUsu.Name = "txtCorUsu"
         txtCorUsu.Size = New Size(220, 23)
         txtCorUsu.TabIndex = 19
@@ -182,7 +188,7 @@ Partial Class FrmUsuario
         ' 
         ' ToolStrip1
         ' 
-        ToolStrip1.Items.AddRange(New ToolStripItem() {btnAdd, ToolStripButton3, btnUpd, btnDel, ToolStripButton2})
+        ToolStrip1.Items.AddRange(New ToolStripItem() {btnAdd, ToolStripButton3, btnBuscar, btnUpd, btnDel, ToolStripButton2})
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
         ToolStrip1.Size = New Size(396, 25)
@@ -296,6 +302,7 @@ Partial Class FrmUsuario
         ' txtConUsu
         ' 
         txtConUsu.Location = New Point(114, 137)
+        txtConUsu.MaxLength = 15
         txtConUsu.Name = "txtConUsu"
         txtConUsu.PasswordChar = "*"c
         txtConUsu.Size = New Size(220, 23)
@@ -331,6 +338,15 @@ Partial Class FrmUsuario
         txtEstUsu.Name = "txtEstUsu"
         txtEstUsu.Size = New Size(220, 23)
         txtEstUsu.TabIndex = 46
+        ' 
+        ' btnBuscar
+        ' 
+        btnBuscar.DisplayStyle = ToolStripItemDisplayStyle.Image
+        btnBuscar.Image = CType(resources.GetObject("btnBuscar.Image"), Image)
+        btnBuscar.ImageTransparentColor = Color.Magenta
+        btnBuscar.Name = "btnBuscar"
+        btnBuscar.Size = New Size(23, 22)
+        btnBuscar.Text = "ToolStripButton1"
         ' 
         ' FrmUsuario
         ' 
@@ -401,4 +417,5 @@ Partial Class FrmUsuario
     Friend WithEvents Label8 As Label
     Friend WithEvents Label9 As Label
     Friend WithEvents txtEstUsu As ComboBox
+    Friend WithEvents btnBuscar As ToolStripButton
 End Class

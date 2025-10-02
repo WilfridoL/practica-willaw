@@ -13,6 +13,7 @@ Public Class FrmUsuario
                 txtNomUsu.ReadOnly = True
                 txtApeUsu.ReadOnly = True
                 txtCorUsu.ReadOnly = True
+                txtConUsu.ReadOnly = True
                 txtObsUsu.ReadOnly = True
                 txtRolUsu.Enabled = False
                 MsgBox("El usuario " & name & " Se encuentra bloqueado por el motivo " & ob, MsgBoxStyle.Critical)
@@ -83,15 +84,12 @@ Public Class FrmUsuario
         End If
         Return True
     End Function
-    Public Function BuscarUsuario()
+    Public Function BuscarUsuario(ByVal id As Integer)
         SQL = "SELECT nombre, apellido, correo, contraseña, rol, observacion, estado, departamento, municipio FROM tb_usuarios  
         LEFT JOIN observaciones ON idUsuFk = usuId  
-        WHERE usuId = " & txtIdUsu.Text
-        ' MsgBox(SQL)
+        WHERE usuId = " & id
         rst = BaseDatos.leer_Registro(SQL)
-        If txtIdUsu.Text = "" Then
-            MsgBox("Por Favor ingresar identificacion para hacer la busqueda")
-        ElseIf rst.Read() Then
+        If rst.Read() Then
             limpiar(0)
             txtNomUsu.Text = rst("nombre")
             txtApeUsu.Text = rst("apellido")
@@ -108,14 +106,17 @@ Public Class FrmUsuario
             btnDel.Enabled = True
             btnUpd.Enabled = True
             VerEstado(rst("estado"), rst("nombre") & " " & rst("apellido"), rst("observacion"))
-        Else
-            MsgBox("Usuario no existe en la base de datos", MsgBoxStyle.Critical)
         End If
         Return True
     End Function
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        BuscarUsuario()
+        BuscarUsuario(txtIdUsu.Text)
+    End Sub
+    Private Sub txtIdCli_TextChanged(sender As Object, e As KeyEventArgs) Handles txtIdUsu.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            BuscarUsuario(txtIdUsu.Text)
+        End If
     End Sub
 
     Private Sub FrmUsuario_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -133,12 +134,6 @@ Public Class FrmUsuario
         txtEstUsu.DropDownStyle = ComboBoxStyle.DropDownList
         txtDepa.SelectedValue = 0
         txtRolUsu.SelectedValue = 0
-    End Sub
-
-    Private Sub txtIdUsu_TextChanged(sender As Object, e As KeyEventArgs) Handles txtIdUsu.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            BuscarUsuario()
-        End If
     End Sub
 
     Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
@@ -205,6 +200,29 @@ Public Class FrmUsuario
             txtObsUsu.ReadOnly = False
         Else
             txtObsUsu.ReadOnly = True
+        End If
+    End Sub
+
+    Private Sub btnBuscar_Click(sender As Object, e As EventArgs) Handles btnBuscar.Click
+        frmConsulta.Text = "Buscar usuario"
+        frmConsulta.DgvConsulta.DataSource = ""
+        SQL = "SELECT usuId as cedula ,nombre, apellido, correo, nomrol AS rol, estNom AS estado FROM tb_usuarios  
+        JOIN rol ON rol = idRol
+        JOIN estados ON estado = idEst"
+        frmConsulta.DgvConsulta.RowTemplate.Height = 17
+        frmConsulta.DgvConsulta.DataSource = BaseDatos.Listar_datos(SQL)
+        frmConsulta.DgvConsulta.Columns(0).Width = 70
+        frmConsulta.DgvConsulta.Columns(1).Width = 150
+        frmConsulta.DgvConsulta.Columns(2).Width = 150
+        frmConsulta.DgvConsulta.Columns(3).Width = 150
+        frmConsulta.DgvConsulta.Columns(4).Width = 120
+        frmConsulta.ShowDialog()
+        If sw_regreso = 1 Then
+            txtIdUsu.Text = CedCli
+            BuscarUsuario(CedCli)
+            SendKeys.Send("{ENTER}")
+        Else
+            txtIdUsu.Focus()
         End If
     End Sub
 End Class

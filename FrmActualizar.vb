@@ -7,8 +7,8 @@ Public Class FrmActualizar
         "apellido = '" & txtApeAct.Text & "', " &
         "correo = '" & txtCorActu.Text & "', " &
         "contraseña = '" & txtConAct.Text & "', " &
-        "rol = '" & txtRolActu.SelectedItem.ToString() & "' " &
-        "WHERE usuId = " & FrmPrincipal.obtenerIdUsuario()
+        "rol = '" & txtRolActu.SelectedItem.ToString() & "' "
+        '"WHERE usuId = " & FrmConsulta.obtenerIdUsuario()
         MsgBox(SQL)
         If (txtNomAct.Text = "" Or
             txtApeAct.Text = "" Or
@@ -21,7 +21,7 @@ Public Class FrmActualizar
                 MsgBox("La contraseña no comple con el rango permitido, por favor vuelva a intentarlo",
                 MsgBoxStyle.Information)
             Else
-                FrmPrincipal.SeleccionarDatos(SQL, "actualizó")
+                'FrmConsulta.SeleccionarDatos(SQL, "actualizó")
                 Me.Close()
             End If
         End If

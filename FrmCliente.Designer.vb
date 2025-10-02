@@ -26,6 +26,7 @@ Partial Class FrmCliente
         ToolStrip1 = New ToolStrip()
         btnAdd = New ToolStripButton()
         btnLim = New ToolStripButton()
+        ToolStripButton1 = New ToolStripButton()
         btnDel = New ToolStripButton()
         btnUpd = New ToolStripButton()
         btnSal = New ToolStripButton()
@@ -52,7 +53,7 @@ Partial Class FrmCliente
         ' 
         ' ToolStrip1
         ' 
-        ToolStrip1.Items.AddRange(New ToolStripItem() {btnAdd, btnLim, btnDel, btnUpd, btnSal})
+        ToolStrip1.Items.AddRange(New ToolStripItem() {btnAdd, btnLim, ToolStripButton1, btnDel, btnUpd, btnSal})
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
         ToolStrip1.Size = New Size(376, 25)
@@ -76,6 +77,15 @@ Partial Class FrmCliente
         btnLim.Name = "btnLim"
         btnLim.Size = New Size(23, 22)
         btnLim.Text = "Limpiar"
+        ' 
+        ' ToolStripButton1
+        ' 
+        ToolStripButton1.DisplayStyle = ToolStripItemDisplayStyle.Image
+        ToolStripButton1.Image = CType(resources.GetObject("ToolStripButton1.Image"), Image)
+        ToolStripButton1.ImageTransparentColor = Color.Magenta
+        ToolStripButton1.Name = "ToolStripButton1"
+        ToolStripButton1.Size = New Size(23, 22)
+        ToolStripButton1.Text = "ToolStripButton1"
         ' 
         ' btnDel
         ' 
@@ -129,6 +139,7 @@ Partial Class FrmCliente
         ' txtCorCli
         ' 
         txtCorCli.Location = New Point(112, 124)
+        txtCorCli.MaxLength = 254
         txtCorCli.Name = "txtCorCli"
         txtCorCli.Size = New Size(220, 23)
         txtCorCli.TabIndex = 34
@@ -147,6 +158,7 @@ Partial Class FrmCliente
         ' txtApeCli
         ' 
         txtApeCli.Location = New Point(112, 95)
+        txtApeCli.MaxLength = 150
         txtApeCli.Name = "txtApeCli"
         txtApeCli.Size = New Size(220, 23)
         txtApeCli.TabIndex = 32
@@ -165,6 +177,7 @@ Partial Class FrmCliente
         ' txtNomCli
         ' 
         txtNomCli.Location = New Point(112, 66)
+        txtNomCli.MaxLength = 150
         txtNomCli.Name = "txtNomCli"
         txtNomCli.Size = New Size(220, 23)
         txtNomCli.TabIndex = 30
@@ -183,6 +196,7 @@ Partial Class FrmCliente
         ' txtIdCli
         ' 
         txtIdCli.Location = New Point(112, 37)
+        txtIdCli.MaxLength = 11
         txtIdCli.Name = "txtIdCli"
         txtIdCli.Size = New Size(135, 23)
         txtIdCli.TabIndex = 28
@@ -201,6 +215,7 @@ Partial Class FrmCliente
         ' txtTelCli
         ' 
         txtTelCli.Location = New Point(112, 154)
+        txtTelCli.MaxLength = 11
         txtTelCli.Name = "txtTelCli"
         txtTelCli.Size = New Size(220, 23)
         txtTelCli.TabIndex = 41
@@ -313,4 +328,5 @@ Partial Class FrmCliente
     Friend WithEvents txtMun As ComboBox
     Friend WithEvents Label6 As Label
     Friend WithEvents txtDepa As ComboBox
+    Friend WithEvents ToolStripButton1 As ToolStripButton
 End Class
