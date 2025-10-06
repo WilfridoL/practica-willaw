@@ -25,22 +25,26 @@ Partial Class seleccionar
         Button1 = New Button()
         Button2 = New Button()
         Label1 = New Label()
+        Button3 = New Button()
+        Button4 = New Button()
         SuspendLayout()
         ' 
         ' Button1
         ' 
+        Button1.Font = New Font("Segoe UI", 14.25F, FontStyle.Bold)
         Button1.Location = New Point(12, 76)
         Button1.Name = "Button1"
-        Button1.Size = New Size(179, 108)
+        Button1.Size = New Size(200, 50)
         Button1.TabIndex = 0
         Button1.Text = "Usuario"
         Button1.UseVisualStyleBackColor = True
         ' 
         ' Button2
         ' 
-        Button2.Location = New Point(197, 79)
+        Button2.Font = New Font("Segoe UI", 14.25F, FontStyle.Bold)
+        Button2.Location = New Point(218, 76)
         Button2.Name = "Button2"
-        Button2.Size = New Size(205, 103)
+        Button2.Size = New Size(200, 50)
         Button2.TabIndex = 1
         Button2.Text = "Cliente"
         Button2.UseVisualStyleBackColor = True
@@ -55,16 +59,39 @@ Partial Class seleccionar
         Label1.TabIndex = 2
         Label1.Text = "Seleccionar panel de control"
         ' 
+        ' Button3
+        ' 
+        Button3.Font = New Font("Segoe UI", 14.25F, FontStyle.Bold)
+        Button3.Location = New Point(218, 150)
+        Button3.Name = "Button3"
+        Button3.Size = New Size(200, 50)
+        Button3.TabIndex = 4
+        Button3.Text = "Factura"
+        Button3.UseVisualStyleBackColor = True
+        ' 
+        ' Button4
+        ' 
+        Button4.Font = New Font("Segoe UI", 14.25F, FontStyle.Bold)
+        Button4.Location = New Point(12, 150)
+        Button4.Name = "Button4"
+        Button4.Size = New Size(200, 50)
+        Button4.TabIndex = 3
+        Button4.Text = "Articulos"
+        Button4.UseVisualStyleBackColor = True
+        ' 
         ' seleccionar
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(414, 200)
+        ClientSize = New Size(444, 218)
+        Controls.Add(Button3)
+        Controls.Add(Button4)
         Controls.Add(Label1)
         Controls.Add(Button2)
         Controls.Add(Button1)
         Name = "seleccionar"
-        Text = "Form"
+        StartPosition = FormStartPosition.CenterScreen
+        Text = "Seleccionar panel"
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -72,4 +99,6 @@ Partial Class seleccionar
     Friend WithEvents Button1 As Button
     Friend WithEvents Button2 As Button
     Friend WithEvents Label1 As Label
+    Friend WithEvents Button3 As Button
+    Friend WithEvents Button4 As Button
 End Class
