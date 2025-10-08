@@ -215,6 +215,7 @@ Partial Class FrmArticulo
         ' 
         ' comCat
         ' 
+        comCat.DropDownStyle = ComboBoxStyle.DropDownList
         comCat.FormattingEnabled = True
         comCat.Location = New Point(12, 103)
         comCat.Name = "comCat"
