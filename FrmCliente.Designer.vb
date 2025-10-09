@@ -296,6 +296,7 @@ Partial Class FrmCliente
         Controls.Add(txtIdCli)
         Controls.Add(UsernameLabel)
         Name = "FrmCliente"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "Control de clientes"
         ToolStrip1.ResumeLayout(False)
         ToolStrip1.PerformLayout()

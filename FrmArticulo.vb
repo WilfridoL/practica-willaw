@@ -1,5 +1,6 @@
 ﻿Public Class FrmArticulo
     Dim c_Varias As New Varias
+    Dim idDisplay As New Integer
     Public txtboxArr() As Control
     Public btnArr() As ToolStripButton
 
@@ -8,58 +9,34 @@
         SQL = "Select * FROM categorias"
         c_Varias.llena_combo(comCat, SQL, "catId", "catNom")
         comCat.SelectedValue = 0
-        txtboxArr = {txtId, txtNom, txtDesc, txtPre, txtStock, comCat}
+        txtboxArr = {txtId, txtNom, txtDesc, txtPre, txtStock, comCat, txtIva, TxtDes}
         btnArr = {btnAdd, btnUpd, btnDel}
+        rst = BaseDatos.leer_Registro("SELECT MAX(artId) FROM articulo")
+        If rst.Read() Then
+            idDisplay = rst(0) + 1
+            txtId.Text = idDisplay
+        End If
     End Sub
 
-    Public Function buscar(sql As String, campos() As Control)
-        rst = BaseDatos.leer_Registro(sql)
-        If rst.Read() Then
-            For i As Integer = 0 To campos.Length - 1
-                If TypeOf campos(i) Is TextBox Or TypeOf campos(i) Is RichTextBox Then
-                    campos(i).Text = rst(i)
-                ElseIf TypeOf campos(i) Is ComboBox Then
-                    CType(campos(i), ComboBox).SelectedValue = rst(i)
-                End If
-            Next
-            Return True
-        Else
-            msjErr.Text = "No se encontro"
-            Return False
-        End If
-    End Function
-
-    Public Function limpiar(campos() As Control, btn() As ToolStripButton)
-        For i As Integer = 0 To campos.Length - 1
-            If TypeOf campos(i) Is TextBox Or TypeOf campos(i) Is RichTextBox Then
-                campos(i).Text = ""
-            ElseIf TypeOf campos(i) Is ComboBox Then
-                CType(campos(i), ComboBox).SelectedValue = 0
-            End If
-        Next
-
-        For j As Integer = 0 To btn.Length - 1
-            If btn(j).Enabled = True Then
-                btn(j).Enabled = False
-            Else
-                btn(j).Enabled = True
-            End If
-        Next
-        Return True
-    End Function
-
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
-        SQL = "INSERT articulo (artnom, artdesc, precio, stock, catIdFk)
+        SQL = "INSERT articulo (artnom, artdesc, precio, stock, catIdFk, artIva, artDescuento)
         VALUE ('" & txtNom.Text & "', '" & txtDesc.Text & "', " & txtPre.Text & ", " &
-        txtStock.Text & ", " & comCat.SelectedValue & ");"
+        txtStock.Text & ", " & comCat.SelectedValue & ", " & txtIva.Text & ", " & TxtDes.Text & ");"
         MsgBox(SQL)
         If BaseDatos.ingresar_registros(SQL, "insertar") Then
             msjErr.Text = "Se insertaron los datos correctamente"
+            limpiar(txtboxArr, btnArr, 0)
+            idDisplay = idDisplay + 1
+            txtId.Text = idDisplay
         End If
     End Sub
 
     Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
-        limpiar(txtboxArr, btnArr)
+        limpiar(txtboxArr, btnArr, 1)
+        txtId.Text = idDisplay
+        btnAdd.Enabled = True
+        btnDel.Enabled = False
+        btnUpd.Enabled = False
     End Sub
 
     ' mover este codigo a una funcion para poder reutilizarlo en otros formularios
@@ -83,7 +60,7 @@
         If sw_regreso = 1 Then
             txtId.Text = CedCli
             'MsgBox(txtboxArr)
-            limpiar(txtboxArr, btnArr)
+            limpiar(txtboxArr, btnArr, 0)
             buscar("SELECT * FROM articulo WHERE artId=" & CedCli, txtboxArr)
             SendKeys.Send("{ENTER}")
             btnAdd.Enabled = False
@@ -102,7 +79,7 @@
         " WHERE artId=" & txtId.Text
         MsgBox(SQL)
         If BaseDatos.ingresar_registros(SQL, "Actualizar") Then
-            limpiar(txtboxArr, btnArr)
+            limpiar(txtboxArr, btnArr, 1)
             msjErr.Text = "Articulo actualizado con exito"
         Else
             msjErr.Text = "Ocurrio un error al actualizar el articulo"
@@ -113,7 +90,8 @@
         SQL = "DELETE FROM articulo WHERE artId=" & txtId.Text
         If MsgBox("Quiere eliminar este articulo", MsgBoxStyle.YesNo) = vbYes Then
             If BaseDatos.ingresar_registros(SQL, "Eliminar") Then
-                limpiar(txtboxArr, btnArr)
+                limpiar(txtboxArr, btnArr, 1)
+                ' idDisplay = idDisplay - 1
                 msjErr.Text = "Articulo eliminado con exito"
             Else
                 msjErr.Text = "Ocurrio un error al eliminar el articulo"
@@ -125,4 +103,8 @@
         Me.Close()
     End Sub
 
+    Private Sub addCat_Click(sender As Object, e As EventArgs) Handles addCat.Click
+        FrmCategoria.Show()
+        Me.Close()
+    End Sub
 End Class

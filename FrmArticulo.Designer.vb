@@ -40,11 +40,18 @@ Partial Class FrmArticulo
         Label8 = New Label()
         StatusStrip1 = New StatusStrip()
         msjErr = New ToolStripStatusLabel()
-        txtId = New TextBox()
         comCat = New ComboBox()
         Label3 = New Label()
+        addCat = New PictureBox()
+        txtIva = New TextBox()
+        Label4 = New Label()
+        TxtDes = New TextBox()
+        Label6 = New Label()
+        txtId = New Label()
+        Label7 = New Label()
         ToolStrip1.SuspendLayout()
         StatusStrip1.SuspendLayout()
+        CType(addCat, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' ToolStrip1
@@ -52,7 +59,7 @@ Partial Class FrmArticulo
         ToolStrip1.Items.AddRange(New ToolStripItem() {btnAdd, ToolStripButton3, btnBuscar, btnUpd, btnDel, ToolStripButton2})
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
-        ToolStrip1.Size = New Size(700, 25)
+        ToolStrip1.Size = New Size(491, 25)
         ToolStrip1.TabIndex = 61
         ToolStrip1.Text = "ToolStrip1"
         ' 
@@ -116,7 +123,7 @@ Partial Class FrmArticulo
         ' 
         Label5.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         Label5.ForeColor = SystemColors.Desktop
-        Label5.Location = New Point(238, 77)
+        Label5.Location = New Point(245, 187)
         Label5.Name = "Label5"
         Label5.Size = New Size(199, 23)
         Label5.TabIndex = 59
@@ -126,15 +133,15 @@ Partial Class FrmArticulo
         ' txtDesc
         ' 
         txtDesc.BackColor = SystemColors.ControlLightLight
-        txtDesc.Location = New Point(238, 103)
+        txtDesc.Location = New Point(245, 213)
         txtDesc.Name = "txtDesc"
-        txtDesc.Size = New Size(446, 40)
+        txtDesc.Size = New Size(220, 40)
         txtDesc.TabIndex = 58
         txtDesc.Text = ""
         ' 
         ' txtPre
         ' 
-        txtPre.Location = New Point(238, 51)
+        txtPre.Location = New Point(245, 115)
         txtPre.MaxLength = 150
         txtPre.Name = "txtPre"
         txtPre.Size = New Size(220, 23)
@@ -144,7 +151,7 @@ Partial Class FrmArticulo
         ' 
         Label2.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         Label2.ForeColor = SystemColors.Desktop
-        Label2.Location = New Point(238, 25)
+        Label2.Location = New Point(245, 89)
         Label2.Name = "Label2"
         Label2.Size = New Size(63, 23)
         Label2.TabIndex = 52
@@ -153,7 +160,7 @@ Partial Class FrmArticulo
         ' 
         ' txtNom
         ' 
-        txtNom.Location = New Point(12, 51)
+        txtNom.Location = New Point(19, 115)
         txtNom.MaxLength = 150
         txtNom.Name = "txtNom"
         txtNom.Size = New Size(220, 23)
@@ -163,7 +170,7 @@ Partial Class FrmArticulo
         ' 
         Label1.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         Label1.ForeColor = SystemColors.Desktop
-        Label1.Location = New Point(12, 25)
+        Label1.Location = New Point(19, 89)
         Label1.Name = "Label1"
         Label1.Size = New Size(63, 23)
         Label1.TabIndex = 50
@@ -172,7 +179,7 @@ Partial Class FrmArticulo
         ' 
         ' txtStock
         ' 
-        txtStock.Location = New Point(464, 51)
+        txtStock.Location = New Point(19, 166)
         txtStock.MaxLength = 15
         txtStock.Name = "txtStock"
         txtStock.Size = New Size(220, 23)
@@ -182,7 +189,7 @@ Partial Class FrmArticulo
         ' 
         Label8.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         Label8.ForeColor = SystemColors.Desktop
-        Label8.Location = New Point(464, 25)
+        Label8.Location = New Point(19, 140)
         Label8.Name = "Label8"
         Label8.Size = New Size(82, 23)
         Label8.TabIndex = 67
@@ -192,9 +199,9 @@ Partial Class FrmArticulo
         ' StatusStrip1
         ' 
         StatusStrip1.Items.AddRange(New ToolStripItem() {msjErr})
-        StatusStrip1.Location = New Point(0, 152)
+        StatusStrip1.Location = New Point(0, 256)
         StatusStrip1.Name = "StatusStrip1"
-        StatusStrip1.Size = New Size(700, 22)
+        StatusStrip1.Size = New Size(491, 22)
         StatusStrip1.TabIndex = 66
         StatusStrip1.Text = "StatusStrip1"
         ' 
@@ -204,43 +211,111 @@ Partial Class FrmArticulo
         msjErr.Size = New Size(42, 17)
         msjErr.Text = "Estado"
         ' 
-        ' txtId
-        ' 
-        txtId.Location = New Point(12, 149)
-        txtId.MaxLength = 150
-        txtId.Name = "txtId"
-        txtId.Size = New Size(220, 23)
-        txtId.TabIndex = 69
-        txtId.Visible = False
-        ' 
         ' comCat
         ' 
         comCat.DropDownStyle = ComboBoxStyle.DropDownList
         comCat.FormattingEnabled = True
-        comCat.Location = New Point(12, 103)
+        comCat.Location = New Point(19, 61)
         comCat.Name = "comCat"
-        comCat.Size = New Size(220, 23)
+        comCat.Size = New Size(196, 23)
         comCat.TabIndex = 70
         ' 
         ' Label3
         ' 
         Label3.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         Label3.ForeColor = SystemColors.Desktop
-        Label3.Location = New Point(12, 77)
+        Label3.Location = New Point(19, 35)
         Label3.Name = "Label3"
         Label3.Size = New Size(63, 23)
         Label3.TabIndex = 71
         Label3.Text = "&Categoria"
         Label3.TextAlign = ContentAlignment.MiddleLeft
         ' 
+        ' addCat
+        ' 
+        addCat.BackColor = Color.Transparent
+        addCat.BackgroundImageLayout = ImageLayout.None
+        addCat.Image = CType(resources.GetObject("addCat.Image"), Image)
+        addCat.Location = New Point(218, 63)
+        addCat.Name = "addCat"
+        addCat.Size = New Size(16, 16)
+        addCat.SizeMode = PictureBoxSizeMode.AutoSize
+        addCat.TabIndex = 72
+        addCat.TabStop = False
+        ' 
+        ' txtIva
+        ' 
+        txtIva.Location = New Point(245, 166)
+        txtIva.MaxLength = 15
+        txtIva.Name = "txtIva"
+        txtIva.Size = New Size(220, 23)
+        txtIva.TabIndex = 74
+        ' 
+        ' Label4
+        ' 
+        Label4.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        Label4.ForeColor = SystemColors.Desktop
+        Label4.Location = New Point(245, 140)
+        Label4.Name = "Label4"
+        Label4.Size = New Size(82, 23)
+        Label4.TabIndex = 73
+        Label4.Text = "&IVA"
+        Label4.TextAlign = ContentAlignment.MiddleLeft
+        ' 
+        ' TxtDes
+        ' 
+        TxtDes.Location = New Point(19, 216)
+        TxtDes.MaxLength = 15
+        TxtDes.Name = "TxtDes"
+        TxtDes.Size = New Size(220, 23)
+        TxtDes.TabIndex = 76
+        ' 
+        ' Label6
+        ' 
+        Label6.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        Label6.ForeColor = SystemColors.Desktop
+        Label6.Location = New Point(19, 190)
+        Label6.Name = "Label6"
+        Label6.Size = New Size(82, 23)
+        Label6.TabIndex = 75
+        Label6.Text = "&Descuento"
+        Label6.TextAlign = ContentAlignment.MiddleLeft
+        ' 
+        ' txtId
+        ' 
+        txtId.AutoSize = True
+        txtId.Font = New Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        txtId.Location = New Point(277, 54)
+        txtId.Name = "txtId"
+        txtId.Size = New Size(23, 25)
+        txtId.TabIndex = 78
+        txtId.Text = "0"
+        ' 
+        ' Label7
+        ' 
+        Label7.AutoSize = True
+        Label7.BackColor = Color.Transparent
+        Label7.Font = New Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label7.Location = New Point(245, 52)
+        Label7.Name = "Label7"
+        Label7.Size = New Size(38, 30)
+        Label7.TabIndex = 79
+        Label7.Text = "N°"
+        ' 
         ' FrmArticulo
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(700, 174)
+        ClientSize = New Size(491, 278)
+        Controls.Add(txtId)
+        Controls.Add(Label7)
+        Controls.Add(TxtDes)
+        Controls.Add(Label6)
+        Controls.Add(txtIva)
+        Controls.Add(Label4)
+        Controls.Add(addCat)
         Controls.Add(Label3)
         Controls.Add(comCat)
-        Controls.Add(txtId)
         Controls.Add(ToolStrip1)
         Controls.Add(Label5)
         Controls.Add(txtDesc)
@@ -258,6 +333,7 @@ Partial Class FrmArticulo
         ToolStrip1.PerformLayout()
         StatusStrip1.ResumeLayout(False)
         StatusStrip1.PerformLayout()
+        CType(addCat, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -279,7 +355,13 @@ Partial Class FrmArticulo
     Friend WithEvents Label8 As Label
     Friend WithEvents StatusStrip1 As StatusStrip
     Friend WithEvents msjErr As ToolStripStatusLabel
-    Friend WithEvents txtId As TextBox
     Friend WithEvents comCat As ComboBox
     Friend WithEvents Label3 As Label
+    Friend WithEvents addCat As PictureBox
+    Friend WithEvents txtIva As TextBox
+    Friend WithEvents Label4 As Label
+    Friend WithEvents TxtDes As TextBox
+    Friend WithEvents Label6 As Label
+    Friend WithEvents txtId As Label
+    Friend WithEvents Label7 As Label
 End Class

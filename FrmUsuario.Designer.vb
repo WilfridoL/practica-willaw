@@ -377,6 +377,7 @@ Partial Class FrmUsuario
         Controls.Add(txtIdUsu)
         Controls.Add(UsernameLabel)
         Name = "FrmUsuario"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "Control de usuario"
         ToolStrip1.ResumeLayout(False)
         ToolStrip1.PerformLayout()
