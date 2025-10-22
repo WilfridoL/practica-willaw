@@ -108,6 +108,7 @@ Public Class FrmUsuario
             btnAdd.Enabled = False
             btnDel.Enabled = True
             btnUpd.Enabled = True
+
             VerEstado(rst("estado"), rst("nombre") & " " & rst("apellido"), rst("observacion"))
             msjErr.Text = "Usuario encontrado"
         Else
@@ -148,6 +149,7 @@ Public Class FrmUsuario
         txtEstUsu.DropDownStyle = ComboBoxStyle.DropDownList
         txtDepa.SelectedValue = 0
         txtRolUsu.SelectedValue = 0
+        MsgBox(txtConContra.Size.ToString)
     End Sub
 
     Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
@@ -251,5 +253,9 @@ Public Class FrmUsuario
         Else
             txtIdUsu.Focus()
         End If
+    End Sub
+
+    Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
+
     End Sub
 End Class

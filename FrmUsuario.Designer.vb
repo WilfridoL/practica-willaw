@@ -55,6 +55,9 @@ Partial Class FrmUsuario
         Label8 = New Label()
         Label9 = New Label()
         txtEstUsu = New ComboBox()
+        txtConContra = New TextBox()
+        Label10 = New Label()
+        LinkLabel1 = New LinkLabel()
         ToolStrip1.SuspendLayout()
         CType(BaseDatosBindingSource, ComponentModel.ISupportInitialize).BeginInit()
         StatusStrip1.SuspendLayout()
@@ -62,10 +65,10 @@ Partial Class FrmUsuario
         ' 
         ' txtIdUsu
         ' 
-        txtIdUsu.Location = New Point(114, 50)
+        txtIdUsu.Location = New Point(137, 50)
         txtIdUsu.MaxLength = 9
         txtIdUsu.Name = "txtIdUsu"
-        txtIdUsu.Size = New Size(135, 23)
+        txtIdUsu.Size = New Size(188, 23)
         txtIdUsu.TabIndex = 13
         ' 
         ' UsernameLabel
@@ -81,7 +84,7 @@ Partial Class FrmUsuario
         ' 
         ' txtNomUsu
         ' 
-        txtNomUsu.Location = New Point(114, 79)
+        txtNomUsu.Location = New Point(137, 79)
         txtNomUsu.MaxLength = 150
         txtNomUsu.Name = "txtNomUsu"
         txtNomUsu.Size = New Size(220, 23)
@@ -100,7 +103,7 @@ Partial Class FrmUsuario
         ' 
         ' txtApeUsu
         ' 
-        txtApeUsu.Location = New Point(114, 108)
+        txtApeUsu.Location = New Point(137, 108)
         txtApeUsu.MaxLength = 150
         txtApeUsu.Name = "txtApeUsu"
         txtApeUsu.Size = New Size(220, 23)
@@ -120,7 +123,7 @@ Partial Class FrmUsuario
         ' txtCorUsu
         ' 
         txtCorUsu.ImeMode = ImeMode.NoControl
-        txtCorUsu.Location = New Point(114, 162)
+        txtCorUsu.Location = New Point(137, 198)
         txtCorUsu.MaxLength = 254
         txtCorUsu.Name = "txtCorUsu"
         txtCorUsu.Size = New Size(220, 23)
@@ -130,7 +133,7 @@ Partial Class FrmUsuario
         ' 
         Label3.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         Label3.ForeColor = SystemColors.Desktop
-        Label3.Location = New Point(12, 162)
+        Label3.Location = New Point(12, 197)
         Label3.Name = "Label3"
         Label3.Size = New Size(63, 23)
         Label3.TabIndex = 18
@@ -141,7 +144,7 @@ Partial Class FrmUsuario
         ' 
         Label4.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         Label4.ForeColor = SystemColors.Desktop
-        Label4.Location = New Point(12, 249)
+        Label4.Location = New Point(12, 284)
         Label4.Name = "Label4"
         Label4.Size = New Size(42, 23)
         Label4.TabIndex = 21
@@ -151,7 +154,7 @@ Partial Class FrmUsuario
         ' txtRolUsu
         ' 
         txtRolUsu.FormattingEnabled = True
-        txtRolUsu.Location = New Point(114, 249)
+        txtRolUsu.Location = New Point(137, 285)
         txtRolUsu.Name = "txtRolUsu"
         txtRolUsu.Size = New Size(220, 23)
         txtRolUsu.TabIndex = 20
@@ -159,7 +162,7 @@ Partial Class FrmUsuario
         ' txtObsUsu
         ' 
         txtObsUsu.BackColor = SystemColors.ControlLightLight
-        txtObsUsu.Location = New Point(114, 307)
+        txtObsUsu.Location = New Point(137, 343)
         txtObsUsu.Name = "txtObsUsu"
         txtObsUsu.ReadOnly = True
         txtObsUsu.Size = New Size(220, 96)
@@ -170,7 +173,7 @@ Partial Class FrmUsuario
         ' 
         Label5.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         Label5.ForeColor = SystemColors.Desktop
-        Label5.Location = New Point(12, 307)
+        Label5.Location = New Point(12, 342)
         Label5.Name = "Label5"
         Label5.Size = New Size(96, 23)
         Label5.TabIndex = 23
@@ -180,7 +183,7 @@ Partial Class FrmUsuario
         ' Button1
         ' 
         Button1.Image = CType(resources.GetObject("Button1.Image"), Image)
-        Button1.Location = New Point(255, 50)
+        Button1.Location = New Point(331, 50)
         Button1.Name = "Button1"
         Button1.Size = New Size(26, 23)
         Button1.TabIndex = 25
@@ -255,7 +258,7 @@ Partial Class FrmUsuario
         ' 
         Label6.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         Label6.ForeColor = SystemColors.Desktop
-        Label6.Location = New Point(12, 191)
+        Label6.Location = New Point(12, 226)
         Label6.Name = "Label6"
         Label6.Size = New Size(96, 23)
         Label6.TabIndex = 28
@@ -265,7 +268,7 @@ Partial Class FrmUsuario
         ' txtDepa
         ' 
         txtDepa.FormattingEnabled = True
-        txtDepa.Location = New Point(114, 191)
+        txtDepa.Location = New Point(137, 227)
         txtDepa.Name = "txtDepa"
         txtDepa.Size = New Size(220, 23)
         txtDepa.TabIndex = 27
@@ -274,7 +277,7 @@ Partial Class FrmUsuario
         ' 
         Label7.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         Label7.ForeColor = SystemColors.Desktop
-        Label7.Location = New Point(12, 220)
+        Label7.Location = New Point(12, 255)
         Label7.Name = "Label7"
         Label7.Size = New Size(63, 23)
         Label7.TabIndex = 30
@@ -284,7 +287,7 @@ Partial Class FrmUsuario
         ' txtMun
         ' 
         txtMun.FormattingEnabled = True
-        txtMun.Location = New Point(114, 220)
+        txtMun.Location = New Point(137, 256)
         txtMun.Name = "txtMun"
         txtMun.Size = New Size(220, 23)
         txtMun.TabIndex = 29
@@ -296,7 +299,7 @@ Partial Class FrmUsuario
         ' StatusStrip1
         ' 
         StatusStrip1.Items.AddRange(New ToolStripItem() {msjErr})
-        StatusStrip1.Location = New Point(0, 433)
+        StatusStrip1.Location = New Point(0, 441)
         StatusStrip1.Name = "StatusStrip1"
         StatusStrip1.Size = New Size(396, 22)
         StatusStrip1.TabIndex = 43
@@ -310,7 +313,7 @@ Partial Class FrmUsuario
         ' 
         ' txtConUsu
         ' 
-        txtConUsu.Location = New Point(114, 137)
+        txtConUsu.Location = New Point(137, 137)
         txtConUsu.MaxLength = 15
         txtConUsu.Name = "txtConUsu"
         txtConUsu.PasswordChar = "*"c
@@ -332,7 +335,7 @@ Partial Class FrmUsuario
         ' 
         Label9.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         Label9.ForeColor = SystemColors.Desktop
-        Label9.Location = New Point(12, 278)
+        Label9.Location = New Point(12, 313)
         Label9.Name = "Label9"
         Label9.Size = New Size(51, 23)
         Label9.TabIndex = 47
@@ -343,16 +346,50 @@ Partial Class FrmUsuario
         ' 
         txtEstUsu.Enabled = False
         txtEstUsu.FormattingEnabled = True
-        txtEstUsu.Location = New Point(114, 278)
+        txtEstUsu.Location = New Point(137, 314)
         txtEstUsu.Name = "txtEstUsu"
         txtEstUsu.Size = New Size(220, 23)
         txtEstUsu.TabIndex = 46
+        ' 
+        ' txtConContra
+        ' 
+        txtConContra.Location = New Point(137, 166)
+        txtConContra.MaxLength = 15
+        txtConContra.Name = "txtConContra"
+        txtConContra.PasswordChar = "*"c
+        txtConContra.Size = New Size(220, 23)
+        txtConContra.TabIndex = 49
+        ' 
+        ' Label10
+        ' 
+        Label10.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        Label10.ForeColor = SystemColors.Desktop
+        Label10.Location = New Point(12, 166)
+        Label10.Name = "Label10"
+        Label10.Size = New Size(128, 23)
+        Label10.TabIndex = 48
+        Label10.Text = "&Confrimar Contraseña"
+        Label10.TextAlign = ContentAlignment.MiddleLeft
+        ' 
+        ' LinkLabel1
+        ' 
+        LinkLabel1.AutoSize = True
+        LinkLabel1.Location = New Point(12, 413)
+        LinkLabel1.Name = "LinkLabel1"
+        LinkLabel1.Size = New Size(113, 15)
+        LinkLabel1.TabIndex = 50
+        LinkLabel1.TabStop = True
+        LinkLabel1.Text = "Cambiar contraseña"
+        LinkLabel1.Visible = False
         ' 
         ' FrmUsuario
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(396, 455)
+        ClientSize = New Size(396, 463)
+        Controls.Add(LinkLabel1)
+        Controls.Add(txtConContra)
+        Controls.Add(Label10)
         Controls.Add(Label9)
         Controls.Add(txtEstUsu)
         Controls.Add(txtConUsu)
@@ -419,4 +456,7 @@ Partial Class FrmUsuario
     Friend WithEvents Label9 As Label
     Friend WithEvents txtEstUsu As ComboBox
     Friend WithEvents btnBuscar As ToolStripButton
+    Friend WithEvents txtConContra As TextBox
+    Friend WithEvents Label10 As Label
+    Friend WithEvents LinkLabel1 As LinkLabel
 End Class
