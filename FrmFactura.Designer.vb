@@ -54,6 +54,9 @@ Partial Class FrmFactura
         ToolStripStatusLabel3 = New ToolStripStatusLabel()
         barProgress = New ToolStripProgressBar()
         msjEst = New ToolStripStatusLabel()
+        artid = New DataGridViewTextBoxColumn()
+        artNom = New DataGridViewTextBoxColumn()
+        artCant = New DataGridViewTextBoxColumn()
         ToolStrip1.SuspendLayout()
         CType(DgvFac, ComponentModel.ISupportInitialize).BeginInit()
         StatusStrip1.SuspendLayout()
@@ -198,6 +201,7 @@ Partial Class FrmFactura
         ' DgvFac
         ' 
         DgvFac.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DgvFac.Columns.AddRange(New DataGridViewColumn() {artid, artNom, artCant})
         DgvFac.Location = New Point(12, 137)
         DgvFac.Name = "DgvFac"
         DgvFac.Size = New Size(481, 174)
@@ -307,6 +311,22 @@ Partial Class FrmFactura
         msjEst.Size = New Size(48, 18)
         msjEst.Text = "Estado: "
         ' 
+        ' artid
+        ' 
+        artid.HeaderText = "Cod Art"
+        artid.Name = "artid"
+        ' 
+        ' artNom
+        ' 
+        artNom.HeaderText = "Nombre"
+        artNom.Name = "artNom"
+        artNom.Width = 250
+        ' 
+        ' artCant
+        ' 
+        artCant.HeaderText = "Cantidad"
+        artCant.Name = "artCant"
+        ' 
         ' FrmFactura
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -377,4 +397,7 @@ Partial Class FrmFactura
     Friend WithEvents ToolStripStatusLabel3 As ToolStripStatusLabel
     Friend WithEvents barProgress As ToolStripProgressBar
     Friend WithEvents msjEst As ToolStripStatusLabel
+    Friend WithEvents artid As DataGridViewTextBoxColumn
+    Friend WithEvents artNom As DataGridViewTextBoxColumn
+    Friend WithEvents artCant As DataGridViewTextBoxColumn
 End Class

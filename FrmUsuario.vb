@@ -4,9 +4,9 @@ Imports System.Windows.Forms
 Imports Google.Protobuf.WellKnownTypes
 
 Public Class FrmUsuario
-    Dim c_Varias As New Varias
     Dim arrTextBox() As Control
     Dim arrLabel() As Label
+    Dim limitModFrm As Integer = 0
     Public Function VerEstado(ByVal est As String, ByVal name As String, ByVal ob As String)
         If est > 1 Then
             txtObsUsu.ReadOnly = False
@@ -148,22 +148,16 @@ Public Class FrmUsuario
         txtIdUsu.Focus()
         arrTextBox = {txtIdUsu, txtNomUsu, txtApeUsu, txtConUsu, txtCorUsu, txtDepa, txtMun, txtRolUsu, txtEstUsu, txtObsUsu}
         arrLabel = {lbCorr, lbDep, lbMun, lbRol, lbEst, lbObs}
-        SQL = "SELECT * FROM departamentos;"
-        c_Varias.llena_combo(txtDepa, SQL, "DepId", "DepNom")
-        SQL = "SELECT * FROM rol;"
-        c_Varias.llena_combo(txtRolUsu, SQL, "idRol", "nomRol")
-        SQL = "SELECT * FROM estados;"
-        c_Varias.llena_combo(txtEstUsu, SQL, "idEst", "estNom")
-        txtRolUsu.DropDownStyle = ComboBoxStyle.DropDownList
-        txtDepa.DropDownStyle = ComboBoxStyle.DropDownList
-        txtMun.DropDownStyle = ComboBoxStyle.DropDownList
-        txtEstUsu.DropDownStyle = ComboBoxStyle.DropDownList
+        cargar_combobox("SELECT * FROM departamentos", txtDepa, "depId", "DepNom")
+        cargar_combobox("SELECT * FROM rol", txtRolUsu, "idRol", "nomRol")
+        cargar_combobox("SELECT * FROM estados", txtEstUsu, "idEst", "estNom")
         txtDepa.SelectedValue = 0
         txtRolUsu.SelectedValue = 0
     End Sub
 
     Private Sub modInterfaz(val)
-        If val = "-" Then
+        If val = "-" And txtConUsu.Visible = False Then
+            limitModFrm = 1
             txtConUsu.Visible = False
             txtConContra.Visible = False
             lbCon.Visible = False
@@ -177,7 +171,8 @@ Public Class FrmUsuario
                 arrLabel(i).Location = New Point(arrLabel(i).Location.X, arrLabel(i).Location.Y - (29 * 2))
                 ' MsgBox(arrLabel(i).Location.Y + (29 * 2))
             Next
-        Else
+        ElseIf limitModFrm = 1 Then
+            limitModFrm = 0
             txtConUsu.Visible = True
             txtConContra.Visible = True
             lbCon.Visible = True
@@ -197,8 +192,7 @@ Public Class FrmUsuario
     End Sub
 
     Public Function municipios(ByVal depa As Integer)
-        SQL = "Select * FROM municipios WHERE depIdFk=" & depa
-        c_Varias.llena_combo(txtMun, SQL, "munId", "munNom")
+        cargar_combobox("Select * FROM municipios WHERE depIdFk=" & depa, txtMun, "munId", "munNom")
         txtMun.SelectedValue = 0
         Return True
     End Function

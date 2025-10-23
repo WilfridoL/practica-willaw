@@ -153,6 +153,7 @@ Partial Class FrmUsuario
         ' 
         ' txtRolUsu
         ' 
+        txtRolUsu.DropDownStyle = ComboBoxStyle.DropDownList
         txtRolUsu.FormattingEnabled = True
         txtRolUsu.Location = New Point(137, 285)
         txtRolUsu.Name = "txtRolUsu"
@@ -267,6 +268,7 @@ Partial Class FrmUsuario
         ' 
         ' txtDepa
         ' 
+        txtDepa.DropDownStyle = ComboBoxStyle.DropDownList
         txtDepa.FormattingEnabled = True
         txtDepa.Location = New Point(137, 227)
         txtDepa.Name = "txtDepa"
@@ -286,6 +288,7 @@ Partial Class FrmUsuario
         ' 
         ' txtMun
         ' 
+        txtMun.DropDownStyle = ComboBoxStyle.DropDownList
         txtMun.FormattingEnabled = True
         txtMun.Location = New Point(137, 256)
         txtMun.Name = "txtMun"
@@ -344,6 +347,7 @@ Partial Class FrmUsuario
         ' 
         ' txtEstUsu
         ' 
+        txtEstUsu.DropDownStyle = ComboBoxStyle.DropDownList
         txtEstUsu.Enabled = False
         txtEstUsu.FormattingEnabled = True
         txtEstUsu.Location = New Point(137, 314)

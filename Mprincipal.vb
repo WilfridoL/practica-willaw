@@ -6,6 +6,8 @@ Module Mprincipal
     Public codusuario As String
     Public CedCli As String
     Public sw_regreso As Integer = 0
+    Public c_Varias As New Varias
+    Public vec() As String
     Function controlObservaciones(ByVal SQL As String) As Boolean
         If FrmUsuario.txtEstUsu.SelectedValue <> 1 Then
             'MsgBox(SQL)
@@ -14,6 +16,11 @@ Module Mprincipal
         Else
             Return False
         End If
+    End Function
+
+    Function cargar_combobox(sql, combo, id, name)
+        c_Varias.llena_combo(combo, sql, id, name)
+        Return True
     End Function
 
     Public Function limpiar(campos() As Control, btn() As ToolStripButton, tip As Integer)
