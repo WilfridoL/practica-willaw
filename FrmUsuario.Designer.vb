@@ -25,17 +25,17 @@ Partial Class FrmUsuario
         components = New ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmUsuario))
         txtIdUsu = New TextBox()
-        UsernameLabel = New Label()
+        lbId = New Label()
         txtNomUsu = New TextBox()
-        Label1 = New Label()
+        lbNom = New Label()
         txtApeUsu = New TextBox()
-        Label2 = New Label()
+        lbApe = New Label()
         txtCorUsu = New TextBox()
-        Label3 = New Label()
-        Label4 = New Label()
+        lbCorr = New Label()
+        lbRol = New Label()
         txtRolUsu = New ComboBox()
         txtObsUsu = New RichTextBox()
-        Label5 = New Label()
+        lbObs = New Label()
         Button1 = New Button()
         ToolStrip1 = New ToolStrip()
         btnAdd = New ToolStripButton()
@@ -44,20 +44,20 @@ Partial Class FrmUsuario
         btnUpd = New ToolStripButton()
         btnDel = New ToolStripButton()
         ToolStripButton2 = New ToolStripButton()
-        Label6 = New Label()
+        lbDep = New Label()
         txtDepa = New ComboBox()
-        Label7 = New Label()
+        lbMun = New Label()
         txtMun = New ComboBox()
         BaseDatosBindingSource = New BindingSource(components)
         StatusStrip1 = New StatusStrip()
         msjErr = New ToolStripStatusLabel()
         txtConUsu = New TextBox()
-        Label8 = New Label()
-        Label9 = New Label()
+        lbCon = New Label()
+        lbEst = New Label()
         txtEstUsu = New ComboBox()
         txtConContra = New TextBox()
-        Label10 = New Label()
-        LinkLabel1 = New LinkLabel()
+        lbConCont = New Label()
+        camCont = New Label()
         ToolStrip1.SuspendLayout()
         CType(BaseDatosBindingSource, ComponentModel.ISupportInitialize).BeginInit()
         StatusStrip1.SuspendLayout()
@@ -71,16 +71,16 @@ Partial Class FrmUsuario
         txtIdUsu.Size = New Size(188, 23)
         txtIdUsu.TabIndex = 13
         ' 
-        ' UsernameLabel
+        ' lbId
         ' 
-        UsernameLabel.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
-        UsernameLabel.ForeColor = SystemColors.Desktop
-        UsernameLabel.Location = New Point(12, 50)
-        UsernameLabel.Name = "UsernameLabel"
-        UsernameLabel.Size = New Size(82, 23)
-        UsernameLabel.TabIndex = 12
-        UsernameLabel.Text = "&Identificacion:"
-        UsernameLabel.TextAlign = ContentAlignment.MiddleLeft
+        lbId.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        lbId.ForeColor = SystemColors.Desktop
+        lbId.Location = New Point(12, 50)
+        lbId.Name = "lbId"
+        lbId.Size = New Size(82, 23)
+        lbId.TabIndex = 12
+        lbId.Text = "&Identificacion:"
+        lbId.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' txtNomUsu
         ' 
@@ -90,16 +90,16 @@ Partial Class FrmUsuario
         txtNomUsu.Size = New Size(220, 23)
         txtNomUsu.TabIndex = 15
         ' 
-        ' Label1
+        ' lbNom
         ' 
-        Label1.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
-        Label1.ForeColor = SystemColors.Desktop
-        Label1.Location = New Point(12, 79)
-        Label1.Name = "Label1"
-        Label1.Size = New Size(63, 23)
-        Label1.TabIndex = 14
-        Label1.Text = "&Nombres"
-        Label1.TextAlign = ContentAlignment.MiddleLeft
+        lbNom.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        lbNom.ForeColor = SystemColors.Desktop
+        lbNom.Location = New Point(12, 79)
+        lbNom.Name = "lbNom"
+        lbNom.Size = New Size(63, 23)
+        lbNom.TabIndex = 14
+        lbNom.Text = "&Nombres"
+        lbNom.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' txtApeUsu
         ' 
@@ -109,16 +109,16 @@ Partial Class FrmUsuario
         txtApeUsu.Size = New Size(220, 23)
         txtApeUsu.TabIndex = 17
         ' 
-        ' Label2
+        ' lbApe
         ' 
-        Label2.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
-        Label2.ForeColor = SystemColors.Desktop
-        Label2.Location = New Point(12, 108)
-        Label2.Name = "Label2"
-        Label2.Size = New Size(63, 23)
-        Label2.TabIndex = 16
-        Label2.Text = "&Apellidos"
-        Label2.TextAlign = ContentAlignment.MiddleLeft
+        lbApe.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        lbApe.ForeColor = SystemColors.Desktop
+        lbApe.Location = New Point(12, 108)
+        lbApe.Name = "lbApe"
+        lbApe.Size = New Size(63, 23)
+        lbApe.TabIndex = 16
+        lbApe.Text = "&Apellidos"
+        lbApe.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' txtCorUsu
         ' 
@@ -129,27 +129,27 @@ Partial Class FrmUsuario
         txtCorUsu.Size = New Size(220, 23)
         txtCorUsu.TabIndex = 19
         ' 
-        ' Label3
+        ' lbCorr
         ' 
-        Label3.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
-        Label3.ForeColor = SystemColors.Desktop
-        Label3.Location = New Point(12, 197)
-        Label3.Name = "Label3"
-        Label3.Size = New Size(63, 23)
-        Label3.TabIndex = 18
-        Label3.Text = "&Correo"
-        Label3.TextAlign = ContentAlignment.MiddleLeft
+        lbCorr.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        lbCorr.ForeColor = SystemColors.Desktop
+        lbCorr.Location = New Point(12, 197)
+        lbCorr.Name = "lbCorr"
+        lbCorr.Size = New Size(63, 23)
+        lbCorr.TabIndex = 18
+        lbCorr.Text = "&Correo"
+        lbCorr.TextAlign = ContentAlignment.MiddleLeft
         ' 
-        ' Label4
+        ' lbRol
         ' 
-        Label4.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
-        Label4.ForeColor = SystemColors.Desktop
-        Label4.Location = New Point(12, 284)
-        Label4.Name = "Label4"
-        Label4.Size = New Size(42, 23)
-        Label4.TabIndex = 21
-        Label4.Text = "&Rol"
-        Label4.TextAlign = ContentAlignment.MiddleLeft
+        lbRol.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        lbRol.ForeColor = SystemColors.Desktop
+        lbRol.Location = New Point(12, 284)
+        lbRol.Name = "lbRol"
+        lbRol.Size = New Size(42, 23)
+        lbRol.TabIndex = 21
+        lbRol.Text = "&Rol"
+        lbRol.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' txtRolUsu
         ' 
@@ -169,16 +169,16 @@ Partial Class FrmUsuario
         txtObsUsu.TabIndex = 22
         txtObsUsu.Text = ""
         ' 
-        ' Label5
+        ' lbObs
         ' 
-        Label5.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
-        Label5.ForeColor = SystemColors.Desktop
-        Label5.Location = New Point(12, 342)
-        Label5.Name = "Label5"
-        Label5.Size = New Size(96, 23)
-        Label5.TabIndex = 23
-        Label5.Text = "&Observaciones:"
-        Label5.TextAlign = ContentAlignment.MiddleLeft
+        lbObs.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        lbObs.ForeColor = SystemColors.Desktop
+        lbObs.Location = New Point(12, 342)
+        lbObs.Name = "lbObs"
+        lbObs.Size = New Size(96, 23)
+        lbObs.TabIndex = 23
+        lbObs.Text = "&Observaciones:"
+        lbObs.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' Button1
         ' 
@@ -254,16 +254,16 @@ Partial Class FrmUsuario
         ToolStripButton2.Size = New Size(23, 22)
         ToolStripButton2.Text = "Salir"
         ' 
-        ' Label6
+        ' lbDep
         ' 
-        Label6.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
-        Label6.ForeColor = SystemColors.Desktop
-        Label6.Location = New Point(12, 226)
-        Label6.Name = "Label6"
-        Label6.Size = New Size(96, 23)
-        Label6.TabIndex = 28
-        Label6.Text = "&Departamentos"
-        Label6.TextAlign = ContentAlignment.MiddleLeft
+        lbDep.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        lbDep.ForeColor = SystemColors.Desktop
+        lbDep.Location = New Point(12, 226)
+        lbDep.Name = "lbDep"
+        lbDep.Size = New Size(96, 23)
+        lbDep.TabIndex = 28
+        lbDep.Text = "&Departamentos"
+        lbDep.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' txtDepa
         ' 
@@ -273,16 +273,16 @@ Partial Class FrmUsuario
         txtDepa.Size = New Size(220, 23)
         txtDepa.TabIndex = 27
         ' 
-        ' Label7
+        ' lbMun
         ' 
-        Label7.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
-        Label7.ForeColor = SystemColors.Desktop
-        Label7.Location = New Point(12, 255)
-        Label7.Name = "Label7"
-        Label7.Size = New Size(63, 23)
-        Label7.TabIndex = 30
-        Label7.Text = "&Municipio"
-        Label7.TextAlign = ContentAlignment.MiddleLeft
+        lbMun.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        lbMun.ForeColor = SystemColors.Desktop
+        lbMun.Location = New Point(12, 255)
+        lbMun.Name = "lbMun"
+        lbMun.Size = New Size(63, 23)
+        lbMun.TabIndex = 30
+        lbMun.Text = "&Municipio"
+        lbMun.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' txtMun
         ' 
@@ -320,27 +320,27 @@ Partial Class FrmUsuario
         txtConUsu.Size = New Size(220, 23)
         txtConUsu.TabIndex = 45
         ' 
-        ' Label8
+        ' lbCon
         ' 
-        Label8.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
-        Label8.ForeColor = SystemColors.Desktop
-        Label8.Location = New Point(12, 137)
-        Label8.Name = "Label8"
-        Label8.Size = New Size(82, 23)
-        Label8.TabIndex = 44
-        Label8.Text = "&Contraseña"
-        Label8.TextAlign = ContentAlignment.MiddleLeft
+        lbCon.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        lbCon.ForeColor = SystemColors.Desktop
+        lbCon.Location = New Point(12, 137)
+        lbCon.Name = "lbCon"
+        lbCon.Size = New Size(82, 23)
+        lbCon.TabIndex = 44
+        lbCon.Text = "&Contraseña"
+        lbCon.TextAlign = ContentAlignment.MiddleLeft
         ' 
-        ' Label9
+        ' lbEst
         ' 
-        Label9.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
-        Label9.ForeColor = SystemColors.Desktop
-        Label9.Location = New Point(12, 313)
-        Label9.Name = "Label9"
-        Label9.Size = New Size(51, 23)
-        Label9.TabIndex = 47
-        Label9.Text = "&Estado"
-        Label9.TextAlign = ContentAlignment.MiddleLeft
+        lbEst.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        lbEst.ForeColor = SystemColors.Desktop
+        lbEst.Location = New Point(12, 313)
+        lbEst.Name = "lbEst"
+        lbEst.Size = New Size(51, 23)
+        lbEst.TabIndex = 47
+        lbEst.Text = "&Estado"
+        lbEst.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' txtEstUsu
         ' 
@@ -360,59 +360,62 @@ Partial Class FrmUsuario
         txtConContra.Size = New Size(220, 23)
         txtConContra.TabIndex = 49
         ' 
-        ' Label10
+        ' lbConCont
         ' 
-        Label10.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
-        Label10.ForeColor = SystemColors.Desktop
-        Label10.Location = New Point(12, 166)
-        Label10.Name = "Label10"
-        Label10.Size = New Size(128, 23)
-        Label10.TabIndex = 48
-        Label10.Text = "&Confrimar Contraseña"
-        Label10.TextAlign = ContentAlignment.MiddleLeft
+        lbConCont.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        lbConCont.ForeColor = SystemColors.Desktop
+        lbConCont.Location = New Point(12, 166)
+        lbConCont.Name = "lbConCont"
+        lbConCont.Size = New Size(128, 23)
+        lbConCont.TabIndex = 48
+        lbConCont.Text = "&Confrimar Contraseña"
+        lbConCont.TextAlign = ContentAlignment.MiddleLeft
         ' 
-        ' LinkLabel1
+        ' camCont
         ' 
-        LinkLabel1.AutoSize = True
-        LinkLabel1.Location = New Point(12, 413)
-        LinkLabel1.Name = "LinkLabel1"
-        LinkLabel1.Size = New Size(113, 15)
-        LinkLabel1.TabIndex = 50
-        LinkLabel1.TabStop = True
-        LinkLabel1.Text = "Cambiar contraseña"
-        LinkLabel1.Visible = False
+        camCont.BackColor = Color.Transparent
+        camCont.Cursor = Cursors.Hand
+        camCont.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        camCont.ForeColor = Color.LightCoral
+        camCont.Location = New Point(12, 416)
+        camCont.Name = "camCont"
+        camCont.Size = New Size(199, 23)
+        camCont.TabIndex = 51
+        camCont.Text = "Quieres cambiar la contraseña?"
+        camCont.TextAlign = ContentAlignment.MiddleLeft
+        camCont.Visible = False
         ' 
         ' FrmUsuario
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(396, 463)
-        Controls.Add(LinkLabel1)
+        Controls.Add(camCont)
         Controls.Add(txtConContra)
-        Controls.Add(Label10)
-        Controls.Add(Label9)
+        Controls.Add(lbConCont)
+        Controls.Add(lbEst)
         Controls.Add(txtEstUsu)
         Controls.Add(txtConUsu)
-        Controls.Add(Label8)
+        Controls.Add(lbCon)
         Controls.Add(StatusStrip1)
-        Controls.Add(Label7)
+        Controls.Add(lbMun)
         Controls.Add(txtMun)
-        Controls.Add(Label6)
+        Controls.Add(lbDep)
         Controls.Add(txtDepa)
         Controls.Add(ToolStrip1)
         Controls.Add(Button1)
-        Controls.Add(Label5)
+        Controls.Add(lbObs)
         Controls.Add(txtObsUsu)
-        Controls.Add(Label4)
+        Controls.Add(lbRol)
         Controls.Add(txtRolUsu)
         Controls.Add(txtCorUsu)
-        Controls.Add(Label3)
+        Controls.Add(lbCorr)
         Controls.Add(txtApeUsu)
-        Controls.Add(Label2)
+        Controls.Add(lbApe)
         Controls.Add(txtNomUsu)
-        Controls.Add(Label1)
+        Controls.Add(lbNom)
         Controls.Add(txtIdUsu)
-        Controls.Add(UsernameLabel)
+        Controls.Add(lbId)
         Name = "FrmUsuario"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Control de usuario"
@@ -426,25 +429,25 @@ Partial Class FrmUsuario
     End Sub
 
     Friend WithEvents txtIdUsu As TextBox
-    Friend WithEvents UsernameLabel As Label
+    Friend WithEvents lbId As Label
     Friend WithEvents txtNomUsu As TextBox
-    Friend WithEvents Label1 As Label
+    Friend WithEvents lbNom As Label
     Friend WithEvents txtApeUsu As TextBox
-    Friend WithEvents Label2 As Label
+    Friend WithEvents lbApe As Label
     Friend WithEvents txtCorUsu As TextBox
-    Friend WithEvents Label3 As Label
-    Friend WithEvents Label4 As Label
+    Friend WithEvents lbCorr As Label
+    Friend WithEvents lbRol As Label
     Friend WithEvents txtRolUsu As ComboBox
     Friend WithEvents txtObsUsu As RichTextBox
-    Friend WithEvents Label5 As Label
+    Friend WithEvents lbObs As Label
     Friend WithEvents Button1 As Button
     Friend WithEvents ToolStrip1 As ToolStrip
     Friend WithEvents btnAdd As ToolStripButton
     Friend WithEvents ToolStripButton2 As ToolStripButton
     Friend WithEvents ToolStripButton3 As ToolStripButton
-    Friend WithEvents Label6 As Label
+    Friend WithEvents lbDep As Label
     Friend WithEvents txtDepa As ComboBox
-    Friend WithEvents Label7 As Label
+    Friend WithEvents lbMun As Label
     Friend WithEvents txtMun As ComboBox
     Friend WithEvents BaseDatosBindingSource As BindingSource
     Friend WithEvents btnUpd As ToolStripButton
@@ -452,11 +455,11 @@ Partial Class FrmUsuario
     Friend WithEvents StatusStrip1 As StatusStrip
     Friend WithEvents msjErr As ToolStripStatusLabel
     Friend WithEvents txtConUsu As TextBox
-    Friend WithEvents Label8 As Label
-    Friend WithEvents Label9 As Label
+    Friend WithEvents lbCon As Label
+    Friend WithEvents lbEst As Label
     Friend WithEvents txtEstUsu As ComboBox
     Friend WithEvents btnBuscar As ToolStripButton
     Friend WithEvents txtConContra As TextBox
-    Friend WithEvents Label10 As Label
-    Friend WithEvents LinkLabel1 As LinkLabel
+    Friend WithEvents lbConCont As Label
+    Friend WithEvents camCont As Label
 End Class

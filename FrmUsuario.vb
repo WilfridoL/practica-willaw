@@ -1,9 +1,12 @@
 ﻿Imports System.Diagnostics.Eventing.Reader
-Imports System.Windows.Forms.VisualStyles.VisualStyleElement
+'Imports System.Windows.Forms.VisualStyles.VisualStyleElement
+Imports System.Windows.Forms
 Imports Google.Protobuf.WellKnownTypes
 
 Public Class FrmUsuario
     Dim c_Varias As New Varias
+    Dim arrTextBox() As Control
+    Dim arrLabel() As Label
     Public Function VerEstado(ByVal est As String, ByVal name As String, ByVal ob As String)
         If est > 1 Then
             txtObsUsu.ReadOnly = False
@@ -44,6 +47,10 @@ Public Class FrmUsuario
             msjErr.Text = "Por favor ingrese la contraseña del usuario"
             txtConUsu.Focus()
             Return False
+        ElseIf txtConUsu.Text <> txtConContra.Text And conAct = True Then
+            msjErr.Text = "Las contraseñas no coinciden, por favor verifique"
+            txtConUsu.Focus()
+            Return False
         ElseIf txtDepa.SelectedValue = 0 Then
             msjErr.Text = "Por favor seleccione el departamento del usuario"
             txtDepa.Focus()
@@ -63,6 +70,7 @@ Public Class FrmUsuario
         txtNomUsu.Text = ""
         txtApeUsu.Text = ""
         txtCorUsu.Text = ""
+        txtConContra.Text = ""
         txtConUsu.Text = ""
         txtObsUsu.Text = ""
         txtRolUsu.SelectedValue = 0
@@ -81,6 +89,7 @@ Public Class FrmUsuario
         btnDel.Enabled = False
         btnUpd.Enabled = False
         msjErr.Text = ""
+        'modInterfaz("-")
         If e = 1 Then
             txtIdUsu.Text = ""
         End If
@@ -108,7 +117,7 @@ Public Class FrmUsuario
             btnAdd.Enabled = False
             btnDel.Enabled = True
             btnUpd.Enabled = True
-
+            modInterfaz("-")
             VerEstado(rst("estado"), rst("nombre") & " " & rst("apellido"), rst("observacion"))
             msjErr.Text = "Usuario encontrado"
         Else
@@ -137,6 +146,8 @@ Public Class FrmUsuario
     Private Sub FrmUsuario_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         BaseDatos.conectar("root", "")
         txtIdUsu.Focus()
+        arrTextBox = {txtIdUsu, txtNomUsu, txtApeUsu, txtConUsu, txtCorUsu, txtDepa, txtMun, txtRolUsu, txtEstUsu, txtObsUsu}
+        arrLabel = {lbCorr, lbDep, lbMun, lbRol, lbEst, lbObs}
         SQL = "SELECT * FROM departamentos;"
         c_Varias.llena_combo(txtDepa, SQL, "DepId", "DepNom")
         SQL = "SELECT * FROM rol;"
@@ -149,7 +160,36 @@ Public Class FrmUsuario
         txtEstUsu.DropDownStyle = ComboBoxStyle.DropDownList
         txtDepa.SelectedValue = 0
         txtRolUsu.SelectedValue = 0
-        MsgBox(txtConContra.Size.ToString)
+    End Sub
+
+    Private Sub modInterfaz(val)
+        If val = "-" Then
+            txtConUsu.Visible = False
+            txtConContra.Visible = False
+            lbCon.Visible = False
+            lbConCont.Visible = False
+            camCont.Visible = True
+            For i As Integer = 3 To arrTextBox.Length - 1
+                arrTextBox(i).Location = New Point(arrTextBox(i).Location.X, arrTextBox(i).Location.Y - (29 * 2))
+                ' MsgBox(arrTextBox(i).Location.Y - (29 * 2))
+            Next
+            For i As Integer = 0 To arrLabel.Length - 1
+                arrLabel(i).Location = New Point(arrLabel(i).Location.X, arrLabel(i).Location.Y - (29 * 2))
+                ' MsgBox(arrLabel(i).Location.Y + (29 * 2))
+            Next
+        Else
+            txtConUsu.Visible = True
+            txtConContra.Visible = True
+            lbCon.Visible = True
+            lbConCont.Visible = True
+            camCont.Visible = False
+            For i As Integer = 3 To arrTextBox.Length - 1
+                arrTextBox(i).Location = New Point(arrTextBox(i).Location.X, arrTextBox(i).Location.Y + (29 * 2))
+            Next
+            For i As Integer = 0 To arrLabel.Length - 1
+                arrLabel(i).Location = New Point(arrLabel(i).Location.X, arrLabel(i).Location.Y + (29 * 2))
+            Next
+        End If
     End Sub
 
     Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
@@ -249,13 +289,13 @@ Public Class FrmUsuario
         If sw_regreso = 1 Then
             txtIdUsu.Text = CedCli
             BuscarUsuario(CedCli)
-            SendKeys.Send("{ENTER}")
+            'SendKeys.Send("{ENTER}")
         Else
             txtIdUsu.Focus()
         End If
     End Sub
 
-    Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
-
+    Private Sub camCont_Click(sender As Object, e As EventArgs) Handles camCont.Click
+        modInterfaz("+")
     End Sub
 End Class
