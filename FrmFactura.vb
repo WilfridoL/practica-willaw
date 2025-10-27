@@ -36,7 +36,7 @@
                 End Select
             Case Keys.Insert
                 DgvFac.Rows.Add() ' agrega una nueva fila
-                DgvFac.CurrentCell = DgvFac.Rows(DgvFac.CurrentRow.Index + 1).Cells(1) ' desplaza la celda a la siguiente fila
+                DgvFac.CurrentCell = DgvFac.Rows(DgvFac.CurrentRow.Index + 1).Cells(1) ' desplaza la fila actual debajo de la fila recien agregada 
         End Select
     End Sub
 

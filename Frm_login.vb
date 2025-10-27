@@ -22,6 +22,7 @@ Public Class Frm_login
         If validacion() = True Then
             If rst.Read Then
                 codusuario = rst(0)
+                usuContra = txtclave.Text
                 seleccionar.Show()
                 Me.Close()
             Else
