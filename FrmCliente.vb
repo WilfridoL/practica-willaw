@@ -1,4 +1,6 @@
-﻿Public Class FrmCliente
+﻿Imports System.ComponentModel
+
+Public Class FrmCliente
     Dim c_Varias As New Varias
 
     Public Function limpiar(ByVal e As Integer)
@@ -180,5 +182,9 @@
         Else
             txtIdCli.Focus()
         End If
+    End Sub
+
+    Private Sub FrmCliente_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        limpiar(1)
     End Sub
 End Class

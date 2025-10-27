@@ -41,9 +41,6 @@ Partial Class FrmFactura
         Label5 = New Label()
         facId = New Label()
         DgvFac = New DataGridView()
-        artid = New DataGridViewTextBoxColumn()
-        artNom = New DataGridViewTextBoxColumn()
-        artCant = New DataGridViewTextBoxColumn()
         txtSub = New TextBox()
         Label7 = New Label()
         txtIva = New TextBox()
@@ -58,6 +55,10 @@ Partial Class FrmFactura
         usuNom = New ToolStripStatusLabel()
         barProgress = New ToolStripProgressBar()
         est = New ToolStripStatusLabel()
+        artid = New DataGridViewTextBoxColumn()
+        artNom = New DataGridViewTextBoxColumn()
+        artCant = New DataGridViewTextBoxColumn()
+        artPre = New DataGridViewTextBoxColumn()
         ToolStrip1.SuspendLayout()
         CType(DgvFac, ComponentModel.ISupportInitialize).BeginInit()
         StatusStrip1.SuspendLayout()
@@ -211,27 +212,11 @@ Partial Class FrmFactura
         ' DgvFac
         ' 
         DgvFac.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DgvFac.Columns.AddRange(New DataGridViewColumn() {artid, artNom, artCant})
+        DgvFac.Columns.AddRange(New DataGridViewColumn() {artid, artNom, artCant, artPre})
         DgvFac.Location = New Point(12, 137)
         DgvFac.Name = "DgvFac"
         DgvFac.Size = New Size(481, 174)
         DgvFac.TabIndex = 74
-        ' 
-        ' artid
-        ' 
-        artid.HeaderText = "Cod Art"
-        artid.Name = "artid"
-        ' 
-        ' artNom
-        ' 
-        artNom.HeaderText = "Nombre"
-        artNom.Name = "artNom"
-        artNom.Width = 250
-        ' 
-        ' artCant
-        ' 
-        artCant.HeaderText = "Cantidad"
-        artCant.Name = "artCant"
         ' 
         ' txtSub
         ' 
@@ -338,6 +323,27 @@ Partial Class FrmFactura
         est.Text = "&Estado: En Ejecucion"
         est.TextAlign = ContentAlignment.MiddleRight
         ' 
+        ' artid
+        ' 
+        artid.HeaderText = "Cod Art"
+        artid.Name = "artid"
+        ' 
+        ' artNom
+        ' 
+        artNom.HeaderText = "Nombre"
+        artNom.Name = "artNom"
+        artNom.Width = 250
+        ' 
+        ' artCant
+        ' 
+        artCant.HeaderText = "Cantidad"
+        artCant.Name = "artCant"
+        ' 
+        ' artPre
+        ' 
+        artPre.HeaderText = "Precio"
+        artPre.Name = "artPre"
+        ' 
         ' FrmFactura
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -412,4 +418,5 @@ Partial Class FrmFactura
     Friend WithEvents btnSalir As ToolStripButton
     Friend WithEvents usuNom As ToolStripStatusLabel
     Friend WithEvents est As ToolStripStatusLabel
+    Friend WithEvents artPre As DataGridViewTextBoxColumn
 End Class
