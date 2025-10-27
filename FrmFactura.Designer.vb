@@ -28,6 +28,7 @@ Partial Class FrmFactura
         ToolStripButton3 = New ToolStripButton()
         btnDel = New ToolStripButton()
         btnBuscar = New ToolStripButton()
+        btnSalir = New ToolStripButton()
         dateMenu = New DateTimePicker()
         Label1 = New Label()
         txtId = New TextBox()
@@ -40,6 +41,9 @@ Partial Class FrmFactura
         Label5 = New Label()
         facId = New Label()
         DgvFac = New DataGridView()
+        artid = New DataGridViewTextBoxColumn()
+        artNom = New DataGridViewTextBoxColumn()
+        artCant = New DataGridViewTextBoxColumn()
         txtSub = New TextBox()
         Label7 = New Label()
         txtIva = New TextBox()
@@ -49,14 +53,11 @@ Partial Class FrmFactura
         txtTotal = New TextBox()
         Label10 = New Label()
         StatusStrip1 = New StatusStrip()
-        msjUsu = New ToolStripStatusLabel()
         ToolStripStatusLabel2 = New ToolStripStatusLabel()
         ToolStripStatusLabel3 = New ToolStripStatusLabel()
+        usuNom = New ToolStripStatusLabel()
         barProgress = New ToolStripProgressBar()
-        msjEst = New ToolStripStatusLabel()
-        artid = New DataGridViewTextBoxColumn()
-        artNom = New DataGridViewTextBoxColumn()
-        artCant = New DataGridViewTextBoxColumn()
+        est = New ToolStripStatusLabel()
         ToolStrip1.SuspendLayout()
         CType(DgvFac, ComponentModel.ISupportInitialize).BeginInit()
         StatusStrip1.SuspendLayout()
@@ -64,7 +65,7 @@ Partial Class FrmFactura
         ' 
         ' ToolStrip1
         ' 
-        ToolStrip1.Items.AddRange(New ToolStripItem() {btnAdd, ToolStripButton3, btnDel, btnBuscar})
+        ToolStrip1.Items.AddRange(New ToolStripItem() {btnAdd, ToolStripButton3, btnDel, btnBuscar, btnSalir})
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
         ToolStrip1.Size = New Size(505, 25)
@@ -107,11 +108,20 @@ Partial Class FrmFactura
         btnBuscar.Size = New Size(23, 22)
         btnBuscar.Text = "Buscar"
         ' 
+        ' btnSalir
+        ' 
+        btnSalir.DisplayStyle = ToolStripItemDisplayStyle.Image
+        btnSalir.Image = CType(resources.GetObject("btnSalir.Image"), Image)
+        btnSalir.ImageTransparentColor = Color.Magenta
+        btnSalir.Name = "btnSalir"
+        btnSalir.Size = New Size(23, 22)
+        btnSalir.Text = "ToolStripButton1"
+        ' 
         ' dateMenu
         ' 
         dateMenu.Location = New Point(12, 28)
         dateMenu.Name = "dateMenu"
-        dateMenu.Size = New Size(200, 23)
+        dateMenu.Size = New Size(229, 23)
         dateMenu.TabIndex = 63
         ' 
         ' Label1
@@ -207,6 +217,22 @@ Partial Class FrmFactura
         DgvFac.Size = New Size(481, 174)
         DgvFac.TabIndex = 74
         ' 
+        ' artid
+        ' 
+        artid.HeaderText = "Cod Art"
+        artid.Name = "artid"
+        ' 
+        ' artNom
+        ' 
+        artNom.HeaderText = "Nombre"
+        artNom.Name = "artNom"
+        artNom.Width = 250
+        ' 
+        ' artCant
+        ' 
+        artCant.HeaderText = "Cantidad"
+        artCant.Name = "artCant"
+        ' 
         ' txtSub
         ' 
         txtSub.Location = New Point(385, 317)
@@ -273,18 +299,12 @@ Partial Class FrmFactura
         ' 
         ' StatusStrip1
         ' 
-        StatusStrip1.Items.AddRange(New ToolStripItem() {msjUsu, ToolStripStatusLabel2, ToolStripStatusLabel3, barProgress, msjEst})
+        StatusStrip1.Items.AddRange(New ToolStripItem() {ToolStripStatusLabel2, ToolStripStatusLabel3, usuNom, barProgress, est})
         StatusStrip1.Location = New Point(0, 444)
         StatusStrip1.Name = "StatusStrip1"
         StatusStrip1.Size = New Size(505, 23)
         StatusStrip1.TabIndex = 83
         StatusStrip1.Text = "StatusStrip1"
-        ' 
-        ' msjUsu
-        ' 
-        msjUsu.Name = "msjUsu"
-        msjUsu.Size = New Size(53, 18)
-        msjUsu.Text = "Usuario: "
         ' 
         ' ToolStripStatusLabel2
         ' 
@@ -300,32 +320,23 @@ Partial Class FrmFactura
         ToolStripStatusLabel3.Size = New Size(0, 18)
         ToolStripStatusLabel3.Text = "ToolStripStatusLabel3"
         ' 
+        ' usuNom
+        ' 
+        usuNom.Name = "usuNom"
+        usuNom.Size = New Size(71, 18)
+        usuNom.Text = "NombreUsu"
+        ' 
         ' barProgress
         ' 
         barProgress.Name = "barProgress"
         barProgress.Size = New Size(119, 17)
         ' 
-        ' msjEst
+        ' est
         ' 
-        msjEst.Name = "msjEst"
-        msjEst.Size = New Size(48, 18)
-        msjEst.Text = "Estado: "
-        ' 
-        ' artid
-        ' 
-        artid.HeaderText = "Cod Art"
-        artid.Name = "artid"
-        ' 
-        ' artNom
-        ' 
-        artNom.HeaderText = "Nombre"
-        artNom.Name = "artNom"
-        artNom.Width = 250
-        ' 
-        ' artCant
-        ' 
-        artCant.HeaderText = "Cantidad"
-        artCant.Name = "artCant"
+        est.Name = "est"
+        est.Size = New Size(115, 18)
+        est.Text = "&Estado: En Ejecucion"
+        est.TextAlign = ContentAlignment.MiddleRight
         ' 
         ' FrmFactura
         ' 
@@ -392,12 +403,13 @@ Partial Class FrmFactura
     Friend WithEvents txtTotal As TextBox
     Friend WithEvents Label10 As Label
     Friend WithEvents StatusStrip1 As StatusStrip
-    Friend WithEvents msjUsu As ToolStripStatusLabel
     Friend WithEvents ToolStripStatusLabel2 As ToolStripStatusLabel
     Friend WithEvents ToolStripStatusLabel3 As ToolStripStatusLabel
     Friend WithEvents barProgress As ToolStripProgressBar
-    Friend WithEvents msjEst As ToolStripStatusLabel
     Friend WithEvents artid As DataGridViewTextBoxColumn
     Friend WithEvents artNom As DataGridViewTextBoxColumn
     Friend WithEvents artCant As DataGridViewTextBoxColumn
+    Friend WithEvents btnSalir As ToolStripButton
+    Friend WithEvents usuNom As ToolStripStatusLabel
+    Friend WithEvents est As ToolStripStatusLabel
 End Class

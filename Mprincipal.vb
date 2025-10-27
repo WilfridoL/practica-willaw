@@ -5,6 +5,7 @@ Module Mprincipal
     Public rst As Odbc.OdbcDataReader
     Public codusuario As String
     Public usuContra As String
+    Public usuNombres As String
     Public CedCli As String
     Public sw_regreso As Integer = 0
     Public c_Varias As New Varias

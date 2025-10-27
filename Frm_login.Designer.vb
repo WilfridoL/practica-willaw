@@ -17,7 +17,7 @@ Partial Class Frm_login
     Friend WithEvents LogoPictureBox As System.Windows.Forms.PictureBox
     Friend WithEvents UsernameLabel As System.Windows.Forms.Label
     Friend WithEvents PasswordLabel As System.Windows.Forms.Label
-    Friend WithEvents txtusuemail As System.Windows.Forms.TextBox
+    Friend WithEvents txtusuid As System.Windows.Forms.TextBox
     Friend WithEvents txtclave As System.Windows.Forms.TextBox
     Friend WithEvents OK As System.Windows.Forms.Button
     Friend WithEvents Cancel As System.Windows.Forms.Button
@@ -34,7 +34,7 @@ Partial Class Frm_login
         LogoPictureBox = New PictureBox()
         UsernameLabel = New Label()
         PasswordLabel = New Label()
-        txtusuemail = New TextBox()
+        txtusuid = New TextBox()
         txtclave = New TextBox()
         OK = New Button()
         Cancel = New Button()
@@ -57,7 +57,7 @@ Partial Class Frm_login
         UsernameLabel.Name = "UsernameLabel"
         UsernameLabel.Size = New Size(220, 23)
         UsernameLabel.TabIndex = 0
-        UsernameLabel.Text = "&Correo del usuario"
+        UsernameLabel.Text = "&Identificacion del usuario"
         UsernameLabel.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' PasswordLabel
@@ -69,13 +69,13 @@ Partial Class Frm_login
         PasswordLabel.Text = "&Contraseña"
         PasswordLabel.TextAlign = ContentAlignment.MiddleLeft
         ' 
-        ' txtusuemail
+        ' txtusuid
         ' 
-        txtusuemail.Location = New Point(174, 44)
-        txtusuemail.Name = "txtusuemail"
-        txtusuemail.PlaceholderText = "a@example.com"
-        txtusuemail.Size = New Size(220, 23)
-        txtusuemail.TabIndex = 1
+        txtusuid.Location = New Point(174, 44)
+        txtusuid.Name = "txtusuid"
+        txtusuid.PlaceholderText = "827"
+        txtusuid.Size = New Size(220, 23)
+        txtusuid.TabIndex = 1
         ' 
         ' txtclave
         ' 
@@ -125,7 +125,7 @@ Partial Class Frm_login
         Controls.Add(Cancel)
         Controls.Add(OK)
         Controls.Add(txtclave)
-        Controls.Add(txtusuemail)
+        Controls.Add(txtusuid)
         Controls.Add(PasswordLabel)
         Controls.Add(UsernameLabel)
         Controls.Add(LogoPictureBox)

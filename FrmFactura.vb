@@ -1,5 +1,6 @@
 ﻿Public Class FrmFactura
-
+    Dim arrTxt() As Control
+    Dim idFactura As Integer = 1
     Private Sub DgvFac_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvFac.KeyDown
         Select Case e.KeyCode
             Case Keys.Enter
@@ -42,5 +43,30 @@
 
     Private Sub FrmFactura_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         BaseDatos.conectar("root", "")
+        ' cargar nombre del usuario
+        usuNom.Text = "Usuario: " & usuNombres
+        ' cargar id de factura
+        rst = BaseDatos.leer_Registro("SELECT MAX(id_factura) FROM factura")
+        idFactura = If(rst.Read(), If(IsDBNull(rst(0)), 1, CInt(rst(0)) + 1), 1) ' si es null o false el resultado sera 1, si no se sumara el id_factura + 1 
+        facId.Text = idFactura
+        arrTxt = {txtId, txtNom, txtTel} ' rellenar array de control
+    End Sub
+
+    Private Sub btnSalir_Click(sender As Object, e As EventArgs) Handles btnSalir.Click
+        Me.Close()
+    End Sub
+
+    Private Sub txtId_KeyDown(sender As Object, e As KeyEventArgs) Handles txtId.KeyDown
+        SQL = "SELECT cliCed, CONCAT_WS(' ', cliNom, cliApe), cliTel FROM cliente WHERE cliCed =" & txtId.Text
+        If e.KeyCode = Keys.Enter Then
+            If BaseDatos.leer_Registro(SQL).Read() = False Then
+                If MsgBox("El cliente no existe." & vbCrLf & "¿Desea agregarlo?", MsgBoxStyle.YesNo, "Error") = vbYes Then
+                    FrmCliente.ShowDialog()
+                    Exit Sub
+                End If
+            End If
+            limpiar(arrTxt, {btnAdd}, 0)
+            buscar(SQL, arrTxt)
+        End If
     End Sub
 End Class
