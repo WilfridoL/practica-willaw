@@ -2,7 +2,7 @@
 
 Public Class FrmCliente
     Dim c_Varias As New Varias
-
+    Public FocusFactura As Integer = 0 ' 0 = no viene de factura, 1 = viene de factura
     Public Function limpiar(ByVal e As Integer)
         'txtIdCli.Text = ""
         txtNomCli.Text = ""
@@ -99,6 +99,11 @@ Public Class FrmCliente
         'MsgBox(SQL)
         If validacion() Then
             If BaseDatos.ingresar_registros(SQL, "registrar") Then
+                If FocusFactura = 1 Then
+                    FrmFactura.txtId.Text = txtIdCli.Text
+                    SendKeys.Send("{ENTER}")
+                    Me.Close()
+                End If
                 limpiar(1)
                 msjErr.Text = "datos ingresados"
             End If
@@ -186,5 +191,6 @@ Public Class FrmCliente
 
     Private Sub FrmCliente_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         limpiar(1)
+        FocusFactura = 0
     End Sub
 End Class

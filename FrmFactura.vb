@@ -46,7 +46,7 @@
         ' cargar nombre del usuario
         usuNom.Text = "Usuario: " & usuNombres
         ' cargar id de factura
-        rst = BaseDatos.leer_Registro("SELECT MAX(id_factura) FROM factura")
+        rst = BaseDatos.leer_Registro("SELECT MAX(facId) FROM factura")
         idFactura = If(rst.Read(), If(IsDBNull(rst(0)), 1, CInt(rst(0)) + 1), 1) ' si es null o false el resultado sera 1, si no se sumara el id_factura + 1 
         facId.Text = idFactura
         arrTxt = {txtId, txtNom, txtTel} ' rellenar array de control
@@ -61,12 +61,14 @@
         If e.KeyCode = Keys.Enter Then
             If BaseDatos.leer_Registro(SQL).Read() = False Then
                 If MsgBox("El cliente no existe." & vbCrLf & "¿Desea agregarlo?", MsgBoxStyle.YesNo, "Error") = vbYes Then
+                    FrmCliente.txtIdCli.Text = txtId.Text
+                    FrmCliente.FocusFactura = 1
                     FrmCliente.ShowDialog()
                     Exit Sub
                 End If
             End If
-            limpiar(arrTxt, {btnAdd}, 0)
-            buscar(SQL, arrTxt)
+            limpiar(arrTxt, {btnAdd}, 0) ' limpiar los controles del array (el boton de agregar esta de adorno en el parametro)
+            buscar(SQL, arrTxt) ' llena los controles del array con los datos de la consulta
         End If
     End Sub
 End Class
