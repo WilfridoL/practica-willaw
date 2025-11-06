@@ -59,16 +59,17 @@
     Private Sub txtId_KeyDown(sender As Object, e As KeyEventArgs) Handles txtId.KeyDown
         SQL = "SELECT cliCed, CONCAT_WS(' ', cliNom, cliApe), cliTel FROM cliente WHERE cliCed =" & txtId.Text
         If e.KeyCode = Keys.Enter Then
+            If txtId.Text = "" Then Exit Sub
             If BaseDatos.leer_Registro(SQL).Read() = False Then
-                If MsgBox("El cliente no existe." & vbCrLf & "¿Desea agregarlo?", MsgBoxStyle.YesNo, "Error") = vbYes Then
-                    FrmCliente.txtIdCli.Text = txtId.Text
+                    If MsgBox("El cliente no existe." & vbCrLf & "¿Desea agregarlo?", MsgBoxStyle.YesNo, "Error") = vbYes Then
+                    FrmCliente.txtIdNum.Text = txtId.Text
                     FrmCliente.FocusFactura = 1
-                    FrmCliente.ShowDialog()
-                    Exit Sub
+                        FrmCliente.ShowDialog()
+                        Exit Sub
+                    End If
                 End If
+                limpiar(arrTxt, {btnAdd}, 0) ' limpiar los controles del array (el boton de agregar esta de adorno en el parametro)
+                buscar(SQL, arrTxt) ' llena los controles del array con los datos de la consulta
             End If
-            limpiar(arrTxt, {btnAdd}, 0) ' limpiar los controles del array (el boton de agregar esta de adorno en el parametro)
-            buscar(SQL, arrTxt) ' llena los controles del array con los datos de la consulta
-        End If
     End Sub
 End Class

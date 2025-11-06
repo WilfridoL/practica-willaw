@@ -1,59 +1,31 @@
 ﻿Imports System.ComponentModel
 
 Public Class FrmCliente
-    Dim c_Varias As New Varias
     Public FocusFactura As Integer = 0 ' 0 = no viene de factura, 1 = viene de factura
+    Dim arrText() As Control
+    Dim arrLabel() As Label
     Public Function limpiar(ByVal e As Integer)
         'txtIdCli.Text = ""
-        txtNomCli.Text = ""
-        txtApeCli.Text = ""
-        txtCorCli.Text = ""
-        txtTelCli.Text = ""
+        txtNom.Text = ""
+        txtApe.Text = ""
+        txtEma.Text = ""
+        txtTelNum.Text = ""
         txtDepa.SelectedValue = 0
         txtMun.SelectedValue = 0
         btnAdd.Enabled = True
         btnDel.Enabled = False
         btnUpd.Enabled = False
+        ToolStripButton1.Enabled = True
         msjErr.Text = ""
         If e = 1 Then
-            txtIdCli.Text = ""
+            txtIdNum.Text = ""
+            txtIdNum.Enabled = True
         End If
         Return True
     End Function
-    Function validacion() As Boolean
-        If txtIdCli.Text = "" Then
-            msjErr.Text = "Por favor ingrese la identificacion del cliente"
-            txtIdCli.Focus()
-            Return False
-        ElseIf txtNomCli.Text = "" Then
-            msjErr.Text = "Por favor ingrese el nombre del cliente"
-            txtNomCli.Focus()
-            Return False
-        ElseIf txtApeCli.Text = "" Then
-            msjErr.Text = "Por favor ingrese el apellido del cliente"
-            txtApeCli.Focus()
-            Return False
-        ElseIf txtCorCli.Text = "" Then
-            msjErr.Text = "Por favor ingrese el correo del cliente"
-            txtCorCli.Focus()
-            Return False
-        ElseIf txtTelCli.Text = "" Then
-            msjErr.Text = "Por favor ingrese el telefono del cliente"
-            txtTelCli.Focus()
-            Return False
-        ElseIf txtDepa.Text = "" Then
-            msjErr.Text = "Por favor ingrese el deparamento del cliente"
-            txtDepa.Focus()
-            Return False
-        ElseIf txtMun.Text = "" Then
-            msjErr.Text = "Por favor ingrese el municipio del cliente"
-            txtMun.Focus()
-            Return False
-        End If
-        Return True
-    End Function
+
     Private Sub FrmCliente_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        txtIdCli.Focus()
+        txtIdNum.Focus()
         BaseDatos.conectar("root", "")
         SQL = "SELECT * FROM departamentos;"
         c_Varias.llena_combo(txtDepa, SQL, "DepId", "DepNom")
@@ -61,6 +33,12 @@ Public Class FrmCliente
         txtDepa.DropDownStyle = ComboBoxStyle.DropDownList
         txtDepa.SelectedValue = 0
         txtMun.SelectedValue = 0
+        arrText = {txtIdNum, txtNom, txtApe, txtEma, txtTelNum, txtDepa, txtMun}
+        arrLabel = {lbId, lbNom, lbApe, lbCor, lbTel, lbDep, lbMun}
+        If FocusFactura = 1 Then
+            txtIdNum.Enabled = False
+            ToolStripButton1.Enabled = False
+        End If
     End Sub
     Public Function municipios(ByVal depa As Integer)
         SQL = "Select * FROM municipios WHERE depIdFk=" & depa
@@ -76,10 +54,10 @@ Public Class FrmCliente
         If rst.Read() Then
             limpiar(0)
             municipios(rst("cliDep"))
-            txtNomCli.Text = rst("cliNom")
-            txtApeCli.Text = rst("cliApe")
-            txtCorCli.Text = rst("cliEma")
-            txtTelCli.Text = rst("cliTel")
+            txtNom.Text = rst("cliNom")
+            txtApe.Text = rst("cliApe")
+            txtEma.Text = rst("cliEma")
+            txtTelNum.Text = rst("cliTel")
             txtDepa.SelectedValue = rst("cliDep")
             txtMun.SelectedValue = rst("cliMun")
             btnAdd.Enabled = False
@@ -94,19 +72,18 @@ Public Class FrmCliente
 
     Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
         SQL = "INSERT cliente (cliCed, cliNom, cliApe, cliEma, cliTel, cliDep, cliMun) 
-        VALUE (" & txtIdCli.Text & ", '" & txtNomCli.Text.ToUpper & "', '" & txtApeCli.Text.ToUpper &
-        "', '" & txtCorCli.Text & "', " & txtTelCli.Text & ", " & txtDepa.SelectedValue & ", " & txtMun.SelectedValue & ");"
+        VALUE (" & txtIdNum.Text & ", '" & txtNom.Text.ToUpper & "', '" & txtApe.Text.ToUpper &
+        "', '" & txtEma.Text & "', " & txtTelNum.Text & ", " & txtDepa.SelectedValue & ", " & txtMun.SelectedValue & ");"
         'MsgBox(SQL)
-        If validacion() Then
-            If BaseDatos.ingresar_registros(SQL, "registrar") Then
-                If FocusFactura = 1 Then
-                    FrmFactura.txtId.Text = txtIdCli.Text
-                    SendKeys.Send("{ENTER}")
-                    Me.Close()
-                End If
-                limpiar(1)
-                msjErr.Text = "datos ingresados"
+        If validacionGlobal(arrText, arrLabel, msjErr, "SELECT * FROM cliente WHERE cliCed=" & txtIdNum.Text) <> True Then Exit Sub
+        If BaseDatos.ingresar_registros(SQL, "registrar") Then
+            If FocusFactura = 1 Then
+                FrmFactura.txtId.Text = txtIdNum.Text
+                SendKeys.Send("{ENTER}")
+                Me.Close()
             End If
+            limpiar(1)
+            msjErr.Text = "datos ingresados"
         End If
     End Sub
 
@@ -115,7 +92,7 @@ Public Class FrmCliente
     End Sub
 
     Private Sub ToolStripButton5_Click(sender As Object, e As EventArgs) Handles btnDel.Click
-        SQL = "DELETE FROM cliente WHERE cliCed=" & txtIdCli.Text
+        SQL = "DELETE FROM cliente WHERE cliCed=" & txtIdNum.Text
         If BaseDatos.ingresar_registros(SQL, "Eliminar") Then
             limpiar(1)
             msjErr.Text = "datos eliminados"
@@ -126,13 +103,13 @@ Public Class FrmCliente
 
     Private Sub ToolStripButton4_Click(sender As Object, e As EventArgs) Handles btnUpd.Click
         SQL = "UPDATE cliente SET " &
-       "clinom = '" & txtNomCli.Text.ToUpper() & "', " &
-       "cliape = '" & txtApeCli.Text.ToUpper() & "', " &
-       "cliEma = '" & txtCorCli.Text & "', " &
-       "cliTel = " & txtTelCli.Text & ", " &
+       "clinom = '" & txtNom.Text.ToUpper() & "', " &
+       "cliape = '" & txtApe.Text.ToUpper() & "', " &
+       "cliEma = '" & txtEma.Text & "', " &
+       "cliTel = " & txtTelNum.Text & ", " &
        "cliDep = " & txtDepa.SelectedValue & ", " &
        "cliMun = " & txtMun.SelectedValue &
-       " WHERE cliCed = " & txtIdCli.Text
+       " WHERE cliCed = " & txtIdNum.Text
         'MsgBox(SQL)
         If BaseDatos.ingresar_registros(SQL, "actualizar") Then
             limpiar(1)
@@ -146,19 +123,19 @@ Public Class FrmCliente
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        If txtIdCli.Text = "" Then
+        If txtIdNum.Text = "" Then
             msjErr.Text = "Ingrese una identificacion"
         Else
-            BuscarCliente(txtIdCli.Text)
+            BuscarCliente(txtIdNum.Text)
         End If
     End Sub
 
-    Private Sub txtIdCli_TextChanged(sender As Object, e As KeyEventArgs) Handles txtIdCli.KeyDown
+    Private Sub txtIdCli_TextChanged(sender As Object, e As KeyEventArgs) Handles txtIdNum.KeyDown
         If e.KeyCode = Keys.Enter Then
-            If txtIdCli.Text = "" Then
+            If txtIdNum.Text = "" Then
                 msjErr.Text = "Ingrese una identificacion"
             Else
-                BuscarCliente(txtIdCli.Text)
+                BuscarCliente(txtIdNum.Text)
                 msjErr.Text = ""
             End If
         End If
@@ -181,15 +158,15 @@ Public Class FrmCliente
         frmConsulta.DgvConsulta.Columns(4).Width = 120
         frmConsulta.ShowDialog()
         If sw_regreso = 1 Then
-            txtIdCli.Text = CedCli
+            txtIdNum.Text = CedCli
             BuscarCliente(CedCli)
             SendKeys.Send("{ENTER}")
         Else
-            txtIdCli.Focus()
+            txtIdNum.Focus()
         End If
     End Sub
 
-    Private Sub FrmCliente_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+    Private Sub FrmCliente_Closing(sender As Object, e As CancelEventArgs) Handles MyBase.Closing
         limpiar(1)
         FocusFactura = 0
     End Sub

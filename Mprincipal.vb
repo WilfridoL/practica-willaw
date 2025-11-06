@@ -1,4 +1,5 @@
 ﻿Imports System.Reflection
+Imports System.Text.RegularExpressions
 
 Module Mprincipal
     Public SQL As String
@@ -61,6 +62,45 @@ Module Mprincipal
             ' msjErr.Text = "No se encontro"
             Return False
         End If
+    End Function
+
+    Public Function validacionGlobal(arrTxt() As Control, arrLabel() As Label, msjErr As ToolStripStatusLabel, sql As String) As Boolean
+        For i As Integer = 0 To arrTxt.Length - 1
+            If TypeOf arrTxt(i) Is TextBox Then
+                If arrTxt(i).Text = "" Then
+                    msjErr.Text = "El campo " & arrLabel(i).Text & " es obligatorio"
+                    arrTxt(i).Focus()
+                    Return False
+                ElseIf arrTxt(i).Name.Substring(arrTxt(i).Name.Length - 3).ToLower() = "num" And
+                    IsNumeric(arrTxt(i).Text) = False Then
+                    msjErr.Text = $"El campo {arrLabel(i).Text} no tiene que tener letras ni simbolos"
+                    arrTxt(i).Focus()
+                    Return False
+                ElseIf arrTxt(i).Name.Substring(3, 2).ToLower = "id" Then
+                    rst = BaseDatos.leer_Registro(sql)
+                    If rst.Read() Then
+                        If rst(0) = arrTxt(i).Text Then
+                            msjErr.Text = "La identificacion ya existe, por favor ingrese uno diferentes"
+                            arrTxt(i).Focus()
+                            Return False
+                        End If
+                    End If
+                ElseIf Regex.IsMatch(arrTxt(i).Text, "^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$") = False And
+                    arrTxt(i).Name.Substring(arrTxt(i).Name.Length - 3).ToLower() = "ema" Then
+                    msjErr.Text = "Digite un correo valido"
+                    arrTxt(i).Focus()
+                    Return False
+                End If
+            ElseIf TypeOf arrTxt(i) Is ComboBox Then
+                If CType(arrTxt(i), ComboBox).SelectedValue = 0 Then
+                    msjErr.Text = "Seleccione una opcion en el campo " & arrLabel(i).Text
+                    arrTxt(i).Focus()
+                    Return False
+                End If
+            Else
+                Return True
+            End If
+        Next
     End Function
 
     ' Public Function mostrarDataGridView(SQL1 As String, SQL2 As String, txtTitle As String, )

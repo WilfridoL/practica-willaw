@@ -24,13 +24,13 @@ Partial Class FrmUsuario
     Private Sub InitializeComponent()
         components = New ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmUsuario))
-        txtIdUsu = New TextBox()
+        txtIdNum = New TextBox()
         lbId = New Label()
         txtNomUsu = New TextBox()
         lbNom = New Label()
         txtApeUsu = New TextBox()
         lbApe = New Label()
-        txtCorUsu = New TextBox()
+        txtEma = New TextBox()
         lbCorr = New Label()
         lbRol = New Label()
         txtRolUsu = New ComboBox()
@@ -63,13 +63,14 @@ Partial Class FrmUsuario
         StatusStrip1.SuspendLayout()
         SuspendLayout()
         ' 
-        ' txtIdUsu
+        ' txtIdNum
         ' 
-        txtIdUsu.Location = New Point(137, 50)
-        txtIdUsu.MaxLength = 9
-        txtIdUsu.Name = "txtIdUsu"
-        txtIdUsu.Size = New Size(188, 23)
-        txtIdUsu.TabIndex = 13
+        txtIdNum.Cursor = Cursors.IBeam
+        txtIdNum.Location = New Point(137, 50)
+        txtIdNum.MaxLength = 9
+        txtIdNum.Name = "txtIdNum"
+        txtIdNum.Size = New Size(188, 23)
+        txtIdNum.TabIndex = 13
         ' 
         ' lbId
         ' 
@@ -84,6 +85,7 @@ Partial Class FrmUsuario
         ' 
         ' txtNomUsu
         ' 
+        txtNomUsu.Cursor = Cursors.IBeam
         txtNomUsu.Location = New Point(137, 79)
         txtNomUsu.MaxLength = 150
         txtNomUsu.Name = "txtNomUsu"
@@ -103,6 +105,7 @@ Partial Class FrmUsuario
         ' 
         ' txtApeUsu
         ' 
+        txtApeUsu.Cursor = Cursors.IBeam
         txtApeUsu.Location = New Point(137, 108)
         txtApeUsu.MaxLength = 150
         txtApeUsu.Name = "txtApeUsu"
@@ -120,14 +123,15 @@ Partial Class FrmUsuario
         lbApe.Text = "&Apellidos"
         lbApe.TextAlign = ContentAlignment.MiddleLeft
         ' 
-        ' txtCorUsu
+        ' txtEma
         ' 
-        txtCorUsu.ImeMode = ImeMode.NoControl
-        txtCorUsu.Location = New Point(137, 198)
-        txtCorUsu.MaxLength = 254
-        txtCorUsu.Name = "txtCorUsu"
-        txtCorUsu.Size = New Size(220, 23)
-        txtCorUsu.TabIndex = 19
+        txtEma.Cursor = Cursors.IBeam
+        txtEma.ImeMode = ImeMode.NoControl
+        txtEma.Location = New Point(137, 198)
+        txtEma.MaxLength = 254
+        txtEma.Name = "txtEma"
+        txtEma.Size = New Size(220, 23)
+        txtEma.TabIndex = 19
         ' 
         ' lbCorr
         ' 
@@ -153,6 +157,7 @@ Partial Class FrmUsuario
         ' 
         ' txtRolUsu
         ' 
+        txtRolUsu.Cursor = Cursors.Hand
         txtRolUsu.DropDownStyle = ComboBoxStyle.DropDownList
         txtRolUsu.FormattingEnabled = True
         txtRolUsu.Location = New Point(137, 285)
@@ -183,6 +188,7 @@ Partial Class FrmUsuario
         ' 
         ' Button1
         ' 
+        Button1.Cursor = Cursors.Hand
         Button1.Image = CType(resources.GetObject("Button1.Image"), Image)
         Button1.Location = New Point(331, 50)
         Button1.Name = "Button1"
@@ -201,6 +207,7 @@ Partial Class FrmUsuario
         ' 
         ' btnAdd
         ' 
+        btnAdd.BackgroundImageLayout = ImageLayout.None
         btnAdd.DisplayStyle = ToolStripItemDisplayStyle.Image
         btnAdd.Image = CType(resources.GetObject("btnAdd.Image"), Image)
         btnAdd.ImageTransparentColor = Color.Magenta
@@ -268,6 +275,7 @@ Partial Class FrmUsuario
         ' 
         ' txtDepa
         ' 
+        txtDepa.Cursor = Cursors.Hand
         txtDepa.DropDownStyle = ComboBoxStyle.DropDownList
         txtDepa.FormattingEnabled = True
         txtDepa.Location = New Point(137, 227)
@@ -288,6 +296,7 @@ Partial Class FrmUsuario
         ' 
         ' txtMun
         ' 
+        txtMun.Cursor = Cursors.Hand
         txtMun.DropDownStyle = ComboBoxStyle.DropDownList
         txtMun.FormattingEnabled = True
         txtMun.Location = New Point(137, 256)
@@ -316,6 +325,7 @@ Partial Class FrmUsuario
         ' 
         ' txtConUsu
         ' 
+        txtConUsu.Cursor = Cursors.IBeam
         txtConUsu.Location = New Point(137, 137)
         txtConUsu.MaxLength = 15
         txtConUsu.Name = "txtConUsu"
@@ -347,6 +357,7 @@ Partial Class FrmUsuario
         ' 
         ' txtEstUsu
         ' 
+        txtEstUsu.Cursor = Cursors.Hand
         txtEstUsu.DropDownStyle = ComboBoxStyle.DropDownList
         txtEstUsu.Enabled = False
         txtEstUsu.FormattingEnabled = True
@@ -357,6 +368,7 @@ Partial Class FrmUsuario
         ' 
         ' txtConContra
         ' 
+        txtConContra.Cursor = Cursors.IBeam
         txtConContra.Location = New Point(137, 166)
         txtConContra.MaxLength = 15
         txtConContra.Name = "txtConContra"
@@ -412,13 +424,13 @@ Partial Class FrmUsuario
         Controls.Add(txtObsUsu)
         Controls.Add(lbRol)
         Controls.Add(txtRolUsu)
-        Controls.Add(txtCorUsu)
+        Controls.Add(txtEma)
         Controls.Add(lbCorr)
         Controls.Add(txtApeUsu)
         Controls.Add(lbApe)
         Controls.Add(txtNomUsu)
         Controls.Add(lbNom)
-        Controls.Add(txtIdUsu)
+        Controls.Add(txtIdNum)
         Controls.Add(lbId)
         Name = "FrmUsuario"
         StartPosition = FormStartPosition.CenterScreen
@@ -432,13 +444,13 @@ Partial Class FrmUsuario
         PerformLayout()
     End Sub
 
-    Friend WithEvents txtIdUsu As TextBox
+    Friend WithEvents txtIdNum As TextBox
     Friend WithEvents lbId As Label
     Friend WithEvents txtNomUsu As TextBox
     Friend WithEvents lbNom As Label
     Friend WithEvents txtApeUsu As TextBox
     Friend WithEvents lbApe As Label
-    Friend WithEvents txtCorUsu As TextBox
+    Friend WithEvents txtEma As TextBox
     Friend WithEvents lbCorr As Label
     Friend WithEvents lbRol As Label
     Friend WithEvents txtRolUsu As ComboBox

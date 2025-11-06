@@ -1,4 +1,6 @@
 ﻿Imports System.Diagnostics.Eventing.Reader
+Imports System.Text.RegularExpressions
+
 'Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 Imports System.Windows.Forms
 Imports Google.Protobuf.WellKnownTypes
@@ -22,26 +24,13 @@ Public Class FrmUsuario
                 MsgBox("El usuario " & name & " Se encuentra bloqueado por el motivo " & ob, MsgBoxStyle.Critical)
             End If
         Else
-            txtIdUsu.ReadOnly = True
+            txtIdNum.ReadOnly = True
         End If
         Return True
     End Function
     Function validacion()
-        For i As Integer = 0 To arrTextBox.Length - 1
-            If TypeOf arrTextBox(i) Is TextBox Then
-                If arrTextBox(i).Text = "" Then
-                    msjErr.Text = "El campo " & arrLabel(i).Text & " es obligatorio"
-                    arrTextBox(i).Focus()
-                    Return False
-                End If
-            ElseIf TypeOf arrTextBox(i) Is ComboBox Then
-                If CType(arrTextBox(i), ComboBox).SelectedValue = 0 Then
-                    msjErr.Text = "Seleccione una opcion en el campo " & arrLabel(i).Text
-                    arrTextBox(i).Focus()
-                    Return False
-                End If
-            End If
-        Next
+        If validacionGlobal(arrTextBox, arrLabel, msjErr, $"SELECT usuId FROM tb_usuarios WHERE usuId ={txtIdNum.Text};") = False Then Return False ' validacion de campos de texto, correo y numericos
+        ' validacion de la contraseña
         If txtConUsu.Text = "" And txtConUsu.Visible = True Then
             msjErr.Text = "El campo " & lbCon.Text & " es obligatorio"
             txtConUsu.Focus()
@@ -100,27 +89,27 @@ Public Class FrmUsuario
     End Function
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        If txtIdUsu.Text = "" Then
+        If txtIdNum.Text = "" Then
             msjErr.Text = "Ingrese una identificacion"
         Else
-            BuscarUsuario(txtIdUsu.Text)
+            BuscarUsuario(txtIdNum.Text)
         End If
     End Sub
-    Private Sub txtIdCli_TextChanged(sender As Object, e As KeyEventArgs) Handles txtIdUsu.KeyDown ' bucar usuario al presionar enter
+    Private Sub txtIdCli_TextChanged(sender As Object, e As KeyEventArgs) Handles txtIdNum.KeyDown ' bucar usuario al presionar enter
         If e.KeyCode = Keys.Enter Then
-            If txtIdUsu.Text = "" Then
+            If txtIdNum.Text = "" Then
                 msjErr.Text = "Ingrese una identificacion"
             Else
-                BuscarUsuario(txtIdUsu.Text)
+                BuscarUsuario(txtIdNum.Text)
             End If
         End If
     End Sub
 
     Private Sub FrmUsuario_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         BaseDatos.conectar("root", "")
-        txtIdUsu.Focus()
+        txtIdNum.Focus()
         ' rellenar arreglos
-        arrTextBox = {txtIdUsu, txtNomUsu, txtApeUsu, txtCorUsu, txtDepa, txtMun, txtRolUsu, txtEstUsu, txtObsUsu}
+        arrTextBox = {txtIdNum, txtNomUsu, txtApeUsu, txtEma, txtDepa, txtMun, txtRolUsu, txtEstUsu, txtObsUsu}
         arrLabel = {lbId, lbNom, lbApe, lbCorr, lbDep, lbMun, lbRol, lbEst, lbObs}
         arrBtn = {btnAdd, btnUpd, btnDel}
         cargar_combobox("Select * FROM departamentos", txtDepa, "depId", "DepNom")
@@ -128,6 +117,7 @@ Public Class FrmUsuario
         cargar_combobox("Select * FROM estados", txtEstUsu, "idEst", "estNom")
         txtDepa.SelectedValue = 0
         txtRolUsu.SelectedValue = 0
+        MsgBox(txtIdNum.Name.Substring(3, 2))
     End Sub
 
     Private Sub modInterfaz()
@@ -173,10 +163,10 @@ Public Class FrmUsuario
     End Sub
 
     Private Sub ToolStripButton5_Click(sender As Object, e As EventArgs) Handles btnDel.Click
-        SQL = "DELETE FROM observaciones WHERE idUsuFk=" & txtIdUsu.Text
+        SQL = "DELETE FROM observaciones WHERE idUsuFk=" & txtIdNum.Text
         'MsgBox(SQL)
         If BaseDatos.ingresar_registros(SQL, "Eliminar") Then
-            SQL = "DELETE FROM tb_usuarios WHERE usuId=" & txtIdUsu.Text
+            SQL = "DELETE FROM tb_usuarios WHERE usuId=" & txtIdNum.Text
             BaseDatos.ingresar_registros(SQL, "Eliminar")
             msjErr.Text = "datos eliminados"
             resetCampo()
@@ -189,30 +179,30 @@ Public Class FrmUsuario
         SQL = "UPDATE tb_usuarios Set " &
         "nombre = '" & txtNomUsu.Text & "', " &
         "apellido = '" & txtApeUsu.Text & "', " &
-        "correo = '" & txtCorUsu.Text & "', " &
+        "correo = '" & txtEma.Text & "', " &
         "rol = '" & txtRolUsu.SelectedValue & "', " &
         "estado = '" & txtEstUsu.SelectedValue & "', " &
         "departamento = " & txtDepa.SelectedValue & ", " &
         "municipio = " & txtMun.SelectedValue & " " &
-        " WHERE usuId = " & txtIdUsu.Text
+        " WHERE usuId = " & txtIdNum.Text
         If validacion() <> True Then Exit Sub ' validar campos
         If BaseDatos.ingresar_registros(SQL, "actualizar") Then
-                SQL = "UPDATE observaciones SET " &
+            SQL = "UPDATE observaciones SET " &
                         "observacion= '" & txtObsUsu.Text & "' " &
-                        "WHERE idUsuFK=" & txtIdUsu.Text
+                        "WHERE idUsuFK=" & txtIdNum.Text
             controlObservaciones(SQL)
             If txtConUsu.Visible = True Then ' actualizar contraseña si el campo es visible
                 SQL = "UPDATE tb_usuarios Set " &
                         "contraseña = '" & txtConUsu.Text & "' " &
-                        " WHERE usuId = " & txtIdUsu.Text
+                        " WHERE usuId = " & txtIdNum.Text
                 'MsgBox(SQL)
                 If BaseDatos.ingresar_registros(SQL, "actualizar contraseña") Then
                     MsgBox("Contraseña actualizada", MsgBoxStyle.Information)
                 End If
             End If
             resetCampo()
-                msjErr.Text = "Datos actualizados"
-            End If
+            msjErr.Text = "Datos actualizados"
+        End If
     End Sub
 
     Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
@@ -222,13 +212,13 @@ Public Class FrmUsuario
 
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
         SQL = "INSERT tb_usuarios (usuId, nombre, apellido, contraseña, correo, departamento, municipio, rol, estado) " & "
-        VALUE (" & txtIdUsu.Text & ", '" & txtNomUsu.Text.ToUpper() & "', '" & txtApeUsu.Text.ToUpper() & "', '" & txtConUsu.Text & "', '" & txtCorUsu.Text &
+        VALUE (" & txtIdNum.Text & ", '" & txtNomUsu.Text.ToUpper() & "', '" & txtApeUsu.Text.ToUpper() & "', '" & txtConUsu.Text & "', '" & txtEma.Text &
         "', " & txtDepa.SelectedValue & ", " & txtMun.SelectedValue & ", " & txtRolUsu.SelectedValue & ", " & txtEstUsu.SelectedValue & ");"
         If validacion() <> True Then Exit Sub
         MsgBox(SQL)
         If BaseDatos.ingresar_registros(SQL, "guardar") Then
             SQL = "INSERT observaciones (idUsuFk, observacion)
-            VALUE (" & txtIdUsu.Text & ", 'No tiene observaciones...');"
+            VALUE (" & txtIdNum.Text & ", 'No tiene observaciones...');"
             BaseDatos.ingresar_registros(SQL, "guardar")
             resetCampo()
             msjErr.Text = "Datos guardados"
@@ -258,11 +248,11 @@ Public Class FrmUsuario
         frmConsulta.DgvConsulta.Columns(4).Width = 120
         frmConsulta.ShowDialog()
         If sw_regreso = 1 Then
-            txtIdUsu.Text = CedCli
+            txtIdNum.Text = CedCli
             BuscarUsuario(CedCli)
             'SendKeys.Send("{ENTER}")
         Else
-            txtIdUsu.Focus()
+            txtIdNum.Focus()
         End If
     End Sub
 

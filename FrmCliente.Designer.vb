@@ -31,21 +31,21 @@ Partial Class FrmCliente
         btnUpd = New ToolStripButton()
         btnSal = New ToolStripButton()
         Button1 = New Button()
-        Label4 = New Label()
-        txtCorCli = New TextBox()
-        Label3 = New Label()
-        txtApeCli = New TextBox()
-        Label2 = New Label()
-        txtNomCli = New TextBox()
-        Label1 = New Label()
-        txtIdCli = New TextBox()
-        UsernameLabel = New Label()
-        txtTelCli = New TextBox()
+        lbTel = New Label()
+        txtEma = New TextBox()
+        lbCor = New Label()
+        txtApe = New TextBox()
+        lbApe = New Label()
+        txtNom = New TextBox()
+        lbNom = New Label()
+        txtIdNum = New TextBox()
+        lbId = New Label()
+        txtTelNum = New TextBox()
         StatusStrip1 = New StatusStrip()
         msjErr = New ToolStripStatusLabel()
-        Label7 = New Label()
+        lbMun = New Label()
         txtMun = New ComboBox()
-        Label6 = New Label()
+        lbDep = New Label()
         txtDepa = New ComboBox()
         ToolStrip1.SuspendLayout()
         StatusStrip1.SuspendLayout()
@@ -125,100 +125,100 @@ Partial Class FrmCliente
         Button1.TabIndex = 39
         Button1.UseVisualStyleBackColor = True
         ' 
-        ' Label4
+        ' lbTel
         ' 
-        Label4.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
-        Label4.ForeColor = SystemColors.Desktop
-        Label4.Location = New Point(10, 153)
-        Label4.Name = "Label4"
-        Label4.Size = New Size(63, 23)
-        Label4.TabIndex = 36
-        Label4.Text = "&Telefono"
-        Label4.TextAlign = ContentAlignment.MiddleLeft
+        lbTel.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        lbTel.ForeColor = SystemColors.Desktop
+        lbTel.Location = New Point(10, 153)
+        lbTel.Name = "lbTel"
+        lbTel.Size = New Size(63, 23)
+        lbTel.TabIndex = 36
+        lbTel.Text = "&Telefono"
+        lbTel.TextAlign = ContentAlignment.MiddleLeft
         ' 
-        ' txtCorCli
+        ' txtEma
         ' 
-        txtCorCli.Location = New Point(112, 124)
-        txtCorCli.MaxLength = 254
-        txtCorCli.Name = "txtCorCli"
-        txtCorCli.Size = New Size(220, 23)
-        txtCorCli.TabIndex = 34
+        txtEma.Location = New Point(112, 124)
+        txtEma.MaxLength = 254
+        txtEma.Name = "txtEma"
+        txtEma.Size = New Size(220, 23)
+        txtEma.TabIndex = 34
         ' 
-        ' Label3
+        ' lbCor
         ' 
-        Label3.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
-        Label3.ForeColor = SystemColors.Desktop
-        Label3.Location = New Point(10, 124)
-        Label3.Name = "Label3"
-        Label3.Size = New Size(63, 23)
-        Label3.TabIndex = 33
-        Label3.Text = "&Correo"
-        Label3.TextAlign = ContentAlignment.MiddleLeft
+        lbCor.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        lbCor.ForeColor = SystemColors.Desktop
+        lbCor.Location = New Point(10, 124)
+        lbCor.Name = "lbCor"
+        lbCor.Size = New Size(63, 23)
+        lbCor.TabIndex = 33
+        lbCor.Text = "&Correo"
+        lbCor.TextAlign = ContentAlignment.MiddleLeft
         ' 
-        ' txtApeCli
+        ' txtApe
         ' 
-        txtApeCli.Location = New Point(112, 95)
-        txtApeCli.MaxLength = 150
-        txtApeCli.Name = "txtApeCli"
-        txtApeCli.Size = New Size(220, 23)
-        txtApeCli.TabIndex = 32
+        txtApe.Location = New Point(112, 95)
+        txtApe.MaxLength = 150
+        txtApe.Name = "txtApe"
+        txtApe.Size = New Size(220, 23)
+        txtApe.TabIndex = 32
         ' 
-        ' Label2
+        ' lbApe
         ' 
-        Label2.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
-        Label2.ForeColor = SystemColors.Desktop
-        Label2.Location = New Point(10, 95)
-        Label2.Name = "Label2"
-        Label2.Size = New Size(63, 23)
-        Label2.TabIndex = 31
-        Label2.Text = "&Apellidos"
-        Label2.TextAlign = ContentAlignment.MiddleLeft
+        lbApe.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        lbApe.ForeColor = SystemColors.Desktop
+        lbApe.Location = New Point(10, 95)
+        lbApe.Name = "lbApe"
+        lbApe.Size = New Size(63, 23)
+        lbApe.TabIndex = 31
+        lbApe.Text = "&Apellidos"
+        lbApe.TextAlign = ContentAlignment.MiddleLeft
         ' 
-        ' txtNomCli
+        ' txtNom
         ' 
-        txtNomCli.Location = New Point(112, 66)
-        txtNomCli.MaxLength = 150
-        txtNomCli.Name = "txtNomCli"
-        txtNomCli.Size = New Size(220, 23)
-        txtNomCli.TabIndex = 30
+        txtNom.Location = New Point(112, 66)
+        txtNom.MaxLength = 150
+        txtNom.Name = "txtNom"
+        txtNom.Size = New Size(220, 23)
+        txtNom.TabIndex = 30
         ' 
-        ' Label1
+        ' lbNom
         ' 
-        Label1.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
-        Label1.ForeColor = SystemColors.Desktop
-        Label1.Location = New Point(10, 66)
-        Label1.Name = "Label1"
-        Label1.Size = New Size(63, 23)
-        Label1.TabIndex = 29
-        Label1.Text = "&Nombres"
-        Label1.TextAlign = ContentAlignment.MiddleLeft
+        lbNom.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        lbNom.ForeColor = SystemColors.Desktop
+        lbNom.Location = New Point(10, 66)
+        lbNom.Name = "lbNom"
+        lbNom.Size = New Size(63, 23)
+        lbNom.TabIndex = 29
+        lbNom.Text = "&Nombres"
+        lbNom.TextAlign = ContentAlignment.MiddleLeft
         ' 
-        ' txtIdCli
+        ' txtIdNum
         ' 
-        txtIdCli.Location = New Point(112, 37)
-        txtIdCli.MaxLength = 9
-        txtIdCli.Name = "txtIdCli"
-        txtIdCli.Size = New Size(135, 23)
-        txtIdCli.TabIndex = 28
+        txtIdNum.Location = New Point(112, 37)
+        txtIdNum.MaxLength = 9
+        txtIdNum.Name = "txtIdNum"
+        txtIdNum.Size = New Size(135, 23)
+        txtIdNum.TabIndex = 28
         ' 
-        ' UsernameLabel
+        ' lbId
         ' 
-        UsernameLabel.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
-        UsernameLabel.ForeColor = SystemColors.Desktop
-        UsernameLabel.Location = New Point(10, 37)
-        UsernameLabel.Name = "UsernameLabel"
-        UsernameLabel.Size = New Size(82, 23)
-        UsernameLabel.TabIndex = 27
-        UsernameLabel.Text = "&Identificacion:"
-        UsernameLabel.TextAlign = ContentAlignment.MiddleLeft
+        lbId.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        lbId.ForeColor = SystemColors.Desktop
+        lbId.Location = New Point(10, 37)
+        lbId.Name = "lbId"
+        lbId.Size = New Size(82, 23)
+        lbId.TabIndex = 27
+        lbId.Text = "&Identificacion:"
+        lbId.TextAlign = ContentAlignment.MiddleLeft
         ' 
-        ' txtTelCli
+        ' txtTelNum
         ' 
-        txtTelCli.Location = New Point(112, 154)
-        txtTelCli.MaxLength = 9
-        txtTelCli.Name = "txtTelCli"
-        txtTelCli.Size = New Size(220, 23)
-        txtTelCli.TabIndex = 41
+        txtTelNum.Location = New Point(112, 154)
+        txtTelNum.MaxLength = 9
+        txtTelNum.Name = "txtTelNum"
+        txtTelNum.Size = New Size(220, 23)
+        txtTelNum.TabIndex = 41
         ' 
         ' StatusStrip1
         ' 
@@ -235,16 +235,16 @@ Partial Class FrmCliente
         msjErr.Size = New Size(42, 17)
         msjErr.Text = "Estado"
         ' 
-        ' Label7
+        ' lbMun
         ' 
-        Label7.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
-        Label7.ForeColor = SystemColors.Desktop
-        Label7.Location = New Point(10, 212)
-        Label7.Name = "Label7"
-        Label7.Size = New Size(63, 23)
-        Label7.TabIndex = 46
-        Label7.Text = "&Municipio"
-        Label7.TextAlign = ContentAlignment.MiddleLeft
+        lbMun.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        lbMun.ForeColor = SystemColors.Desktop
+        lbMun.Location = New Point(10, 212)
+        lbMun.Name = "lbMun"
+        lbMun.Size = New Size(63, 23)
+        lbMun.TabIndex = 46
+        lbMun.Text = "&Municipio"
+        lbMun.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' txtMun
         ' 
@@ -254,16 +254,16 @@ Partial Class FrmCliente
         txtMun.Size = New Size(220, 23)
         txtMun.TabIndex = 45
         ' 
-        ' Label6
+        ' lbDep
         ' 
-        Label6.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
-        Label6.ForeColor = SystemColors.Desktop
-        Label6.Location = New Point(10, 183)
-        Label6.Name = "Label6"
-        Label6.Size = New Size(96, 23)
-        Label6.TabIndex = 44
-        Label6.Text = "&Departamentos"
-        Label6.TextAlign = ContentAlignment.MiddleLeft
+        lbDep.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        lbDep.ForeColor = SystemColors.Desktop
+        lbDep.Location = New Point(10, 183)
+        lbDep.Name = "lbDep"
+        lbDep.Size = New Size(96, 23)
+        lbDep.TabIndex = 44
+        lbDep.Text = "&Departamentos"
+        lbDep.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' txtDepa
         ' 
@@ -278,23 +278,23 @@ Partial Class FrmCliente
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(376, 267)
-        Controls.Add(Label7)
+        Controls.Add(lbMun)
         Controls.Add(txtMun)
-        Controls.Add(Label6)
+        Controls.Add(lbDep)
         Controls.Add(txtDepa)
         Controls.Add(StatusStrip1)
-        Controls.Add(txtTelCli)
+        Controls.Add(txtTelNum)
         Controls.Add(ToolStrip1)
         Controls.Add(Button1)
-        Controls.Add(Label4)
-        Controls.Add(txtCorCli)
-        Controls.Add(Label3)
-        Controls.Add(txtApeCli)
-        Controls.Add(Label2)
-        Controls.Add(txtNomCli)
-        Controls.Add(Label1)
-        Controls.Add(txtIdCli)
-        Controls.Add(UsernameLabel)
+        Controls.Add(lbTel)
+        Controls.Add(txtEma)
+        Controls.Add(lbCor)
+        Controls.Add(txtApe)
+        Controls.Add(lbApe)
+        Controls.Add(txtNom)
+        Controls.Add(lbNom)
+        Controls.Add(txtIdNum)
+        Controls.Add(lbId)
         Name = "FrmCliente"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Control de clientes"
@@ -311,23 +311,23 @@ Partial Class FrmCliente
     Friend WithEvents btnLim As ToolStripButton
     Friend WithEvents btnSal As ToolStripButton
     Friend WithEvents Button1 As Button
-    Friend WithEvents Label4 As Label
-    Friend WithEvents txtCorCli As TextBox
-    Friend WithEvents Label3 As Label
-    Friend WithEvents txtApeCli As TextBox
-    Friend WithEvents Label2 As Label
-    Friend WithEvents txtNomCli As TextBox
-    Friend WithEvents Label1 As Label
-    Friend WithEvents txtIdCli As TextBox
-    Friend WithEvents UsernameLabel As Label
-    Friend WithEvents txtTelCli As TextBox
+    Friend WithEvents lbTel As Label
+    Friend WithEvents txtEma As TextBox
+    Friend WithEvents lbCor As Label
+    Friend WithEvents txtApe As TextBox
+    Friend WithEvents lbApe As Label
+    Friend WithEvents txtNom As TextBox
+    Friend WithEvents lbNom As Label
+    Friend WithEvents txtIdNum As TextBox
+    Friend WithEvents lbId As Label
+    Friend WithEvents txtTelNum As TextBox
     Friend WithEvents btnUpd As ToolStripButton
     Friend WithEvents btnDel As ToolStripButton
     Friend WithEvents StatusStrip1 As StatusStrip
     Friend WithEvents msjErr As ToolStripStatusLabel
-    Friend WithEvents Label7 As Label
+    Friend WithEvents lbMun As Label
     Friend WithEvents txtMun As ComboBox
-    Friend WithEvents Label6 As Label
+    Friend WithEvents lbDep As Label
     Friend WithEvents txtDepa As ComboBox
     Friend WithEvents ToolStripButton1 As ToolStripButton
 End Class
