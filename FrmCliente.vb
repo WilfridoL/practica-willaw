@@ -1,59 +1,49 @@
 ﻿Imports System.ComponentModel
+Imports System.Text.RegularExpressions
 
 Public Class FrmCliente
     Public FocusFactura As Integer = 0 ' 0 = no viene de factura, 1 = viene de factura
     Dim arrText() As Control
     Dim arrLabel() As Label
+    Dim arrBtn() As ToolStripButton
     Public Function limpiar(ByVal e As Integer)
-        'txtIdCli.Text = ""
-        txtNom.Text = ""
-        txtApe.Text = ""
-        txtEma.Text = ""
-        txtTelNum.Text = ""
-        txtDepa.SelectedValue = 0
-        txtMun.SelectedValue = 0
+        Mprincipal.limpiar(arrText, arrBtn, 0)
         btnAdd.Enabled = True
         btnDel.Enabled = False
         btnUpd.Enabled = False
         ToolStripButton1.Enabled = True
+        txtIdNum.Enabled = True
         msjErr.Text = ""
         If e = 1 Then
             txtIdNum.Text = ""
-            txtIdNum.Enabled = True
         End If
+        For Each lb As Label In arrLabel
+            cambiarColor(True, lb)
+        Next
         Return True
     End Function
 
     Private Sub FrmCliente_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         txtIdNum.Focus()
         BaseDatos.conectar("root", "")
-        SQL = "SELECT * FROM departamentos;"
-        c_Varias.llena_combo(txtDepa, SQL, "DepId", "DepNom")
-        txtMun.DropDownStyle = ComboBoxStyle.DropDownList
-        txtDepa.DropDownStyle = ComboBoxStyle.DropDownList
+        cargar_combobox("SELECT * FROM departamentos;", txtDepa, "DepId", "DepNom")
         txtDepa.SelectedValue = 0
-        txtMun.SelectedValue = 0
         arrText = {txtIdNum, txtNom, txtApe, txtEma, txtTelNum, txtDepa, txtMun}
+        arrBtn = {btnAdd}
         arrLabel = {lbId, lbNom, lbApe, lbCor, lbTel, lbDep, lbMun}
         If FocusFactura = 1 Then
             txtIdNum.Enabled = False
             ToolStripButton1.Enabled = False
         End If
     End Sub
-    Public Function municipios(ByVal depa As Integer)
-        SQL = "Select * FROM municipios WHERE depIdFk=" & depa
-        c_Varias.llena_combo(txtMun, SQL, "munId", "munNom")
-        txtMun.SelectedValue = 0
-        Return True
-    End Function
 
     Public Function BuscarCliente(ByVal id As Integer)
-        SQL = "SELECT * FROM cliente WHERE cliCed=" & id
+        SQL = "Select * FROM cliente WHERE cliCed=" & id
         'MsgBox(SQL)
         rst = BaseDatos.leer_Registro(SQL)
         If rst.Read() Then
             limpiar(0)
-            municipios(rst("cliDep"))
+            cargar_combobox("Select * FROM municipios WHERE depIdFk=" & rst("cliDep"), txtMun, "munId", "munNom")
             txtNom.Text = rst("cliNom")
             txtApe.Text = rst("cliApe")
             txtEma.Text = rst("cliEma")
@@ -63,6 +53,7 @@ Public Class FrmCliente
             btnAdd.Enabled = False
             btnDel.Enabled = True
             btnUpd.Enabled = True
+            txtIdNum.Enabled = False
             msjErr.Text = "Cliente encontrado"
         Else
             msjErr.Text = "El usuario con la identificacion " & id & " no se encuentra registrado"
@@ -75,7 +66,27 @@ Public Class FrmCliente
         VALUE (" & txtIdNum.Text & ", '" & txtNom.Text.ToUpper & "', '" & txtApe.Text.ToUpper &
         "', '" & txtEma.Text & "', " & txtTelNum.Text & ", " & txtDepa.SelectedValue & ", " & txtMun.SelectedValue & ");"
         'MsgBox(SQL)
-        If validacionGlobal(arrText, arrLabel, msjErr, "SELECT * FROM cliente WHERE cliCed=" & txtIdNum.Text) <> True Then Exit Sub
+        If validacionGlobal(arrText, arrLabel, msjErr, "") <> True Then Exit Sub ' validacion general
+        ' validacion id existente
+        rst = BaseDatos.leer_Registro("SELECT * FROM cliente WHERE cliCed=" & txtIdNum.Text)
+        If rst.Read() Then
+            If rst(0) = arrText(0).Text Then
+                msjErr.Text = "La identificacion ya existe, por favor ingrese uno diferentes"
+                arrText(0).Focus()
+                cambiarColor(False, lbId)
+                Exit Sub
+            End If
+        End If
+        cambiarColor(True, lbId)
+        ' validacion correo existente
+        rst = BaseDatos.leer_Registro($"SELECT * FROM cliente WHERE cliEma='{txtEma.Text}'")
+        If rst.Read() Then
+            msjErr.Text = "Este correo ya existe, por favor ingrese uno diferente"
+            txtEma.Focus()
+            cambiarColor(False, lbCor)
+            Exit Sub
+        End If
+        cambiarColor(True, lbCor)
         If BaseDatos.ingresar_registros(SQL, "registrar") Then
             If FocusFactura = 1 Then
                 FrmFactura.txtId.Text = txtIdNum.Text
@@ -111,6 +122,7 @@ Public Class FrmCliente
        "cliMun = " & txtMun.SelectedValue &
        " WHERE cliCed = " & txtIdNum.Text
         'MsgBox(SQL)
+        If validacionGlobal(arrText, arrLabel, msjErr, "") <> True Then Exit Sub
         If BaseDatos.ingresar_registros(SQL, "actualizar") Then
             limpiar(1)
             msjErr.Text = "Datos actualizados"
@@ -142,7 +154,7 @@ Public Class FrmCliente
     End Sub
 
     Private Sub txtDepa_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles txtDepa.SelectionChangeCommitted
-        municipios(txtDepa.SelectedValue)
+        cargar_combobox("Select * FROM municipios WHERE depIdFk=" & txtDepa.SelectedValue, txtMun, "munId", "munNom")
     End Sub
 
     Private Sub ToolStripButton1_Click_1(sender As Object, e As EventArgs) Handles ToolStripButton1.Click

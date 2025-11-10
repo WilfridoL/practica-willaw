@@ -138,6 +138,7 @@ Partial Class FrmCliente
         ' 
         ' txtEma
         ' 
+        txtEma.Cursor = Cursors.IBeam
         txtEma.Location = New Point(112, 124)
         txtEma.MaxLength = 254
         txtEma.Name = "txtEma"
@@ -157,6 +158,7 @@ Partial Class FrmCliente
         ' 
         ' txtApe
         ' 
+        txtApe.Cursor = Cursors.IBeam
         txtApe.Location = New Point(112, 95)
         txtApe.MaxLength = 150
         txtApe.Name = "txtApe"
@@ -176,6 +178,7 @@ Partial Class FrmCliente
         ' 
         ' txtNom
         ' 
+        txtNom.Cursor = Cursors.IBeam
         txtNom.Location = New Point(112, 66)
         txtNom.MaxLength = 150
         txtNom.Name = "txtNom"
@@ -195,6 +198,7 @@ Partial Class FrmCliente
         ' 
         ' txtIdNum
         ' 
+        txtIdNum.Cursor = Cursors.IBeam
         txtIdNum.Location = New Point(112, 37)
         txtIdNum.MaxLength = 9
         txtIdNum.Name = "txtIdNum"
@@ -209,11 +213,12 @@ Partial Class FrmCliente
         lbId.Name = "lbId"
         lbId.Size = New Size(82, 23)
         lbId.TabIndex = 27
-        lbId.Text = "&Identificacion:"
+        lbId.Text = "&Identificacion"
         lbId.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' txtTelNum
         ' 
+        txtTelNum.Cursor = Cursors.IBeam
         txtTelNum.Location = New Point(112, 154)
         txtTelNum.MaxLength = 9
         txtTelNum.Name = "txtTelNum"
@@ -248,6 +253,8 @@ Partial Class FrmCliente
         ' 
         ' txtMun
         ' 
+        txtMun.Cursor = Cursors.Hand
+        txtMun.DropDownStyle = ComboBoxStyle.DropDownList
         txtMun.FormattingEnabled = True
         txtMun.Location = New Point(112, 212)
         txtMun.Name = "txtMun"
@@ -267,6 +274,8 @@ Partial Class FrmCliente
         ' 
         ' txtDepa
         ' 
+        txtDepa.Cursor = Cursors.Hand
+        txtDepa.DropDownStyle = ComboBoxStyle.DropDownList
         txtDepa.FormattingEnabled = True
         txtDepa.Location = New Point(112, 183)
         txtDepa.Name = "txtDepa"

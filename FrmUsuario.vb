@@ -19,27 +19,43 @@ Public Class FrmUsuario
                 For Each ctrl As Control In arrTextBox
                     If TypeOf ctrl Is TextBox Then CType(ctrl, TextBox).ReadOnly = True
                     If TypeOf ctrl Is ComboBox Then ctrl.Enabled = False
+                    If TypeOf ctrl Is TextBox = True Then ctrl.Cursor = Cursors.No ' cambia el cursor a no disponible
                 Next
                 txtEstUsu.Enabled = True
                 MsgBox("El usuario " & name & " Se encuentra bloqueado por el motivo " & ob, MsgBoxStyle.Critical)
             End If
         Else
             txtIdNum.ReadOnly = True
+            txtIdNum.Cursor = Cursors.No
+            txtObsUsu.ReadOnly = True
         End If
         Return True
     End Function
     Function validacion()
-        If validacionGlobal(arrTextBox, arrLabel, msjErr, $"SELECT usuId FROM tb_usuarios WHERE usuId ={txtIdNum.Text};") = False Then Return False ' validacion de campos de texto, correo y numericos
+        If validacionGlobal(arrTextBox, arrLabel, msjErr, "") = False Then Return False ' validacion de campos de texto, correo y numericos
+        If txtRolUsu.SelectedValue = 0 Then
+            msjErr.Text = "Seleccione una opcion en el campo " & lbRol.Text
+            txtRolUsu.Focus()
+            cambiarColor(False, lbRol)
+            Return False
+        Else
+            cambiarColor(True, lbRol)
+        End If
         ' validacion de la contraseña
         If txtConUsu.Text = "" And txtConUsu.Visible = True Then
             msjErr.Text = "El campo " & lbCon.Text & " es obligatorio"
             txtConUsu.Focus()
+            cambiarColor(False, lbCon)
             Return False
         ElseIf txtConUsu.Text <> txtConContra.Text And txtConUsu.Visible = True Then
             msjErr.Text = "La contraseña no coiciden"
             txtConUsu.Focus()
+            cambiarColor(False, lbCon)
+            cambiarColor(False, lbConCont)
             Return False
         Else
+            cambiarColor(True, lbCon)
+            cambiarColor(True, lbConCont)
             Return True
         End If
     End Function
@@ -49,6 +65,10 @@ Public Class FrmUsuario
             txtConContra.Text = ""
             If TypeOf ctrl Is TextBox Then CType(ctrl, TextBox).ReadOnly = False
             If TypeOf ctrl Is ComboBox Then ctrl.Enabled = True
+            If TypeOf ctrl Is TextBox Then ctrl.Cursor = Cursors.IBeam
+        Next
+        For Each lb As Label In arrLabel
+            cambiarColor(True, lb)
         Next
         txtConUsu.ReadOnly = False
         txtConUsu.Text = ""
@@ -117,7 +137,6 @@ Public Class FrmUsuario
         cargar_combobox("Select * FROM estados", txtEstUsu, "idEst", "estNom")
         txtDepa.SelectedValue = 0
         txtRolUsu.SelectedValue = 0
-        MsgBox(txtIdNum.Name.Substring(3, 2))
     End Sub
 
     Private Sub modInterfaz()
@@ -215,7 +234,27 @@ Public Class FrmUsuario
         VALUE (" & txtIdNum.Text & ", '" & txtNomUsu.Text.ToUpper() & "', '" & txtApeUsu.Text.ToUpper() & "', '" & txtConUsu.Text & "', '" & txtEma.Text &
         "', " & txtDepa.SelectedValue & ", " & txtMun.SelectedValue & ", " & txtRolUsu.SelectedValue & ", " & txtEstUsu.SelectedValue & ");"
         If validacion() <> True Then Exit Sub
-        MsgBox(SQL)
+        'MsgBox(SQL)
+        ' validacion id existente
+        rst = BaseDatos.leer_Registro("SELECT * FROM tb_usuarios WHERE usuId=" & txtIdNum.Text)
+        If rst.Read() Then
+            If rst(0) = arrTextBox(0).Text Then
+                msjErr.Text = "La identificacion ya existe, por favor ingrese uno diferentes"
+                arrTextBox(0).Focus()
+                cambiarColor(False, lbId)
+                Exit Sub
+            End If
+        End If
+        cambiarColor(True, lbId)
+        ' validacion correo existente
+        rst = BaseDatos.leer_Registro($"SELECT * FROM cliente WHERE cliEma='{txtEma.Text}'")
+        If rst.Read() Then
+            msjErr.Text = "Este correo ya existe, por favor ingrese uno diferente"
+            txtEma.Focus()
+            cambiarColor(False, lbCorr)
+            Exit Sub
+        End If
+        cambiarColor(True, lbCorr)
         If BaseDatos.ingresar_registros(SQL, "guardar") Then
             SQL = "INSERT observaciones (idUsuFk, observacion)
             VALUE (" & txtIdNum.Text & ", 'No tiene observaciones...');"
@@ -255,7 +294,7 @@ Public Class FrmUsuario
             txtIdNum.Focus()
         End If
     End Sub
-
+    ' Cambiar contraseña
     Private Sub camCont_Click(sender As Object, e As EventArgs) Handles camCont.Click
         If InputBox("Ingrese su contraseña de acceso, para habilitar el cambio de contraseña",
                     "Cambiar Contraseña", "").ToString() = usuContra Then
@@ -266,4 +305,5 @@ Public Class FrmUsuario
             MsgBox("Contraseña incorrecta", MsgBoxStyle.Critical)
         End If
     End Sub
+
 End Class

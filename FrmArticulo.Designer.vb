@@ -30,23 +30,23 @@ Partial Class FrmArticulo
         btnUpd = New ToolStripButton()
         btnDel = New ToolStripButton()
         ToolStripButton2 = New ToolStripButton()
-        Label5 = New Label()
+        lbDesc = New Label()
         txtDesc = New RichTextBox()
         txtPre = New TextBox()
-        Label2 = New Label()
+        lbPre = New Label()
         txtNom = New TextBox()
-        Label1 = New Label()
+        lbNom = New Label()
         txtStock = New TextBox()
-        Label8 = New Label()
+        lbSto = New Label()
         StatusStrip1 = New StatusStrip()
         msjErr = New ToolStripStatusLabel()
         comCat = New ComboBox()
-        Label3 = New Label()
+        lbCat = New Label()
         addCat = New PictureBox()
         txtIva = New TextBox()
-        Label4 = New Label()
+        lbIva = New Label()
         TxtDes = New TextBox()
-        Label6 = New Label()
+        lbDes = New Label()
         txtId = New Label()
         Label7 = New Label()
         ToolStrip1.SuspendLayout()
@@ -119,16 +119,16 @@ Partial Class FrmArticulo
         ToolStripButton2.Size = New Size(23, 22)
         ToolStripButton2.Text = "Salir"
         ' 
-        ' Label5
+        ' lbDesc
         ' 
-        Label5.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
-        Label5.ForeColor = SystemColors.Desktop
-        Label5.Location = New Point(245, 187)
-        Label5.Name = "Label5"
-        Label5.Size = New Size(199, 23)
-        Label5.TabIndex = 59
-        Label5.Text = "&Descripcion del producto"
-        Label5.TextAlign = ContentAlignment.MiddleLeft
+        lbDesc.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        lbDesc.ForeColor = SystemColors.Desktop
+        lbDesc.Location = New Point(245, 187)
+        lbDesc.Name = "lbDesc"
+        lbDesc.Size = New Size(199, 23)
+        lbDesc.TabIndex = 59
+        lbDesc.Text = "&Descripcion del producto"
+        lbDesc.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' txtDesc
         ' 
@@ -136,7 +136,7 @@ Partial Class FrmArticulo
         txtDesc.Location = New Point(245, 213)
         txtDesc.Name = "txtDesc"
         txtDesc.Size = New Size(220, 40)
-        txtDesc.TabIndex = 58
+        txtDesc.TabIndex = 7
         txtDesc.Text = ""
         ' 
         ' txtPre
@@ -145,18 +145,18 @@ Partial Class FrmArticulo
         txtPre.MaxLength = 150
         txtPre.Name = "txtPre"
         txtPre.Size = New Size(220, 23)
-        txtPre.TabIndex = 53
+        txtPre.TabIndex = 3
         ' 
-        ' Label2
+        ' lbPre
         ' 
-        Label2.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
-        Label2.ForeColor = SystemColors.Desktop
-        Label2.Location = New Point(245, 89)
-        Label2.Name = "Label2"
-        Label2.Size = New Size(63, 23)
-        Label2.TabIndex = 52
-        Label2.Text = "&Precio"
-        Label2.TextAlign = ContentAlignment.MiddleLeft
+        lbPre.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        lbPre.ForeColor = SystemColors.Desktop
+        lbPre.Location = New Point(245, 89)
+        lbPre.Name = "lbPre"
+        lbPre.Size = New Size(63, 23)
+        lbPre.TabIndex = 52
+        lbPre.Text = "&Precio"
+        lbPre.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' txtNom
         ' 
@@ -164,18 +164,18 @@ Partial Class FrmArticulo
         txtNom.MaxLength = 150
         txtNom.Name = "txtNom"
         txtNom.Size = New Size(220, 23)
-        txtNom.TabIndex = 51
+        txtNom.TabIndex = 2
         ' 
-        ' Label1
+        ' lbNom
         ' 
-        Label1.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
-        Label1.ForeColor = SystemColors.Desktop
-        Label1.Location = New Point(19, 89)
-        Label1.Name = "Label1"
-        Label1.Size = New Size(63, 23)
-        Label1.TabIndex = 50
-        Label1.Text = "&Nombre"
-        Label1.TextAlign = ContentAlignment.MiddleLeft
+        lbNom.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        lbNom.ForeColor = SystemColors.Desktop
+        lbNom.Location = New Point(19, 89)
+        lbNom.Name = "lbNom"
+        lbNom.Size = New Size(63, 23)
+        lbNom.TabIndex = 50
+        lbNom.Text = "&Nombre"
+        lbNom.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' txtStock
         ' 
@@ -183,18 +183,18 @@ Partial Class FrmArticulo
         txtStock.MaxLength = 15
         txtStock.Name = "txtStock"
         txtStock.Size = New Size(220, 23)
-        txtStock.TabIndex = 68
+        txtStock.TabIndex = 4
         ' 
-        ' Label8
+        ' lbSto
         ' 
-        Label8.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
-        Label8.ForeColor = SystemColors.Desktop
-        Label8.Location = New Point(19, 140)
-        Label8.Name = "Label8"
-        Label8.Size = New Size(82, 23)
-        Label8.TabIndex = 67
-        Label8.Text = "&Stock"
-        Label8.TextAlign = ContentAlignment.MiddleLeft
+        lbSto.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        lbSto.ForeColor = SystemColors.Desktop
+        lbSto.Location = New Point(19, 140)
+        lbSto.Name = "lbSto"
+        lbSto.Size = New Size(82, 23)
+        lbSto.TabIndex = 67
+        lbSto.Text = "&Stock"
+        lbSto.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' StatusStrip1
         ' 
@@ -218,18 +218,18 @@ Partial Class FrmArticulo
         comCat.Location = New Point(19, 61)
         comCat.Name = "comCat"
         comCat.Size = New Size(196, 23)
-        comCat.TabIndex = 70
+        comCat.TabIndex = 1
         ' 
-        ' Label3
+        ' lbCat
         ' 
-        Label3.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
-        Label3.ForeColor = SystemColors.Desktop
-        Label3.Location = New Point(19, 35)
-        Label3.Name = "Label3"
-        Label3.Size = New Size(63, 23)
-        Label3.TabIndex = 71
-        Label3.Text = "&Categoria"
-        Label3.TextAlign = ContentAlignment.MiddleLeft
+        lbCat.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        lbCat.ForeColor = SystemColors.Desktop
+        lbCat.Location = New Point(19, 35)
+        lbCat.Name = "lbCat"
+        lbCat.Size = New Size(63, 23)
+        lbCat.TabIndex = 71
+        lbCat.Text = "&Categoria"
+        lbCat.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' addCat
         ' 
@@ -249,18 +249,18 @@ Partial Class FrmArticulo
         txtIva.MaxLength = 15
         txtIva.Name = "txtIva"
         txtIva.Size = New Size(220, 23)
-        txtIva.TabIndex = 74
+        txtIva.TabIndex = 5
         ' 
-        ' Label4
+        ' lbIva
         ' 
-        Label4.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
-        Label4.ForeColor = SystemColors.Desktop
-        Label4.Location = New Point(245, 140)
-        Label4.Name = "Label4"
-        Label4.Size = New Size(82, 23)
-        Label4.TabIndex = 73
-        Label4.Text = "&IVA"
-        Label4.TextAlign = ContentAlignment.MiddleLeft
+        lbIva.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        lbIva.ForeColor = SystemColors.Desktop
+        lbIva.Location = New Point(245, 140)
+        lbIva.Name = "lbIva"
+        lbIva.Size = New Size(82, 23)
+        lbIva.TabIndex = 73
+        lbIva.Text = "&IVA"
+        lbIva.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' TxtDes
         ' 
@@ -268,18 +268,18 @@ Partial Class FrmArticulo
         TxtDes.MaxLength = 15
         TxtDes.Name = "TxtDes"
         TxtDes.Size = New Size(220, 23)
-        TxtDes.TabIndex = 76
+        TxtDes.TabIndex = 6
         ' 
-        ' Label6
+        ' lbDes
         ' 
-        Label6.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
-        Label6.ForeColor = SystemColors.Desktop
-        Label6.Location = New Point(19, 190)
-        Label6.Name = "Label6"
-        Label6.Size = New Size(82, 23)
-        Label6.TabIndex = 75
-        Label6.Text = "&Descuento"
-        Label6.TextAlign = ContentAlignment.MiddleLeft
+        lbDes.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        lbDes.ForeColor = SystemColors.Desktop
+        lbDes.Location = New Point(19, 190)
+        lbDes.Name = "lbDes"
+        lbDes.Size = New Size(82, 23)
+        lbDes.TabIndex = 75
+        lbDes.Text = "&Descuento"
+        lbDes.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' txtId
         ' 
@@ -310,21 +310,21 @@ Partial Class FrmArticulo
         Controls.Add(txtId)
         Controls.Add(Label7)
         Controls.Add(TxtDes)
-        Controls.Add(Label6)
+        Controls.Add(lbDes)
         Controls.Add(txtIva)
-        Controls.Add(Label4)
+        Controls.Add(lbIva)
         Controls.Add(addCat)
-        Controls.Add(Label3)
+        Controls.Add(lbCat)
         Controls.Add(comCat)
         Controls.Add(ToolStrip1)
-        Controls.Add(Label5)
+        Controls.Add(lbDesc)
         Controls.Add(txtDesc)
         Controls.Add(txtPre)
-        Controls.Add(Label2)
+        Controls.Add(lbPre)
         Controls.Add(txtNom)
-        Controls.Add(Label1)
+        Controls.Add(lbNom)
         Controls.Add(txtStock)
-        Controls.Add(Label8)
+        Controls.Add(lbSto)
         Controls.Add(StatusStrip1)
         Name = "FrmArticulo"
         StartPosition = FormStartPosition.CenterScreen
@@ -345,23 +345,23 @@ Partial Class FrmArticulo
     Friend WithEvents btnUpd As ToolStripButton
     Friend WithEvents btnDel As ToolStripButton
     Friend WithEvents ToolStripButton2 As ToolStripButton
-    Friend WithEvents Label5 As Label
+    Friend WithEvents lbDesc As Label
     Friend WithEvents txtDesc As RichTextBox
     Friend WithEvents txtPre As TextBox
-    Friend WithEvents Label2 As Label
+    Friend WithEvents lbPre As Label
     Friend WithEvents txtNom As TextBox
-    Friend WithEvents Label1 As Label
+    Friend WithEvents lbNom As Label
     Friend WithEvents txtStock As TextBox
-    Friend WithEvents Label8 As Label
+    Friend WithEvents lbSto As Label
     Friend WithEvents StatusStrip1 As StatusStrip
     Friend WithEvents msjErr As ToolStripStatusLabel
     Friend WithEvents comCat As ComboBox
-    Friend WithEvents Label3 As Label
+    Friend WithEvents lbCat As Label
     Friend WithEvents addCat As PictureBox
     Friend WithEvents txtIva As TextBox
-    Friend WithEvents Label4 As Label
+    Friend WithEvents lbIva As Label
     Friend WithEvents TxtDes As TextBox
-    Friend WithEvents Label6 As Label
+    Friend WithEvents lbDes As Label
     Friend WithEvents txtId As Label
     Friend WithEvents Label7 As Label
 End Class

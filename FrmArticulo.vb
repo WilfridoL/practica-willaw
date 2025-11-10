@@ -2,32 +2,57 @@
     Dim c_Varias As New Varias
     Dim idDisplay As New Integer
     Public txtboxArr() As Control
+    Private arrLabel() As Label
     Public btnArr() As ToolStripButton
+
+    Function val()
+        For Each ctrl As Control In txtboxArr
+            If TypeOf ctrl Is TextBox Then
+                If CType(ctrl, TextBox).Text = "" Then
+                    msjErr.Text = "por favor, rellene todos los campos"
+                    ctrl.Focus()
+                    Return False
+                End If
+            ElseIf TypeOf ctrl Is ComboBox Then
+                If CType(ctrl, ComboBox).SelectedValue = 0 Then
+                    msjErr.Text = "Por favor, rellene todos los campos"
+                    ctrl.Focus()
+                End If
+            Else
+                Return True
+            End If
+        Next
+    End Function
+
+    Function cargar_id()
+        rst = BaseDatos.leer_Registro("SELECT MAX(artId) FROM articulo")
+        If rst.Read() Then
+            idDisplay = rst(0) + 1
+            txtId.Text = idDisplay
+        End If
+    End Function
 
     Private Sub FrmArticulo_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         BaseDatos.conectar("root", "")
         SQL = "Select * FROM categorias"
         c_Varias.llena_combo(comCat, SQL, "catId", "catNom")
         comCat.SelectedValue = 0
-        txtboxArr = {txtId, txtNom, txtDesc, txtPre, txtStock, comCat, txtIva, TxtDes}
+        txtboxArr = {comCat, txtNom, txtPre, txtStock, txtIva, TxtDes, txtDesc}
+        arrLabel = {lbCat, lbNom, lbPre, lbSto, lbIva, lbDes, lbDesc}
         btnArr = {btnAdd, btnUpd, btnDel}
-        rst = BaseDatos.leer_Registro("SELECT MAX(artId) FROM articulo")
-        If rst.Read() Then
-            idDisplay = rst(0) + 1
-            txtId.Text = idDisplay
-        End If
+        cargar_id()
     End Sub
 
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
+        If val() <> True Then Exit Sub
         SQL = "INSERT articulo (artnom, artdesc, precio, stock, catIdFk, artIva, artDescuento)
         VALUE ('" & txtNom.Text & "', '" & txtDesc.Text & "', " & txtPre.Text & ", " &
         txtStock.Text & ", " & comCat.SelectedValue & ", " & txtIva.Text & ", " & TxtDes.Text & ");"
-        MsgBox(SQL)
+        ' MsgBox(SQL)
         If BaseDatos.ingresar_registros(SQL, "insertar") Then
             msjErr.Text = "Se insertaron los datos correctamente"
             limpiar(txtboxArr, btnArr, 0)
-            idDisplay = idDisplay + 1
-            txtId.Text = idDisplay
+            cargar_id()
         End If
     End Sub
 
@@ -61,7 +86,7 @@
             txtId.Text = CedCli
             'MsgBox(txtboxArr)
             limpiar(txtboxArr, btnArr, 0)
-            buscar("SELECT * FROM articulo WHERE artId=" & CedCli, txtboxArr)
+            buscar("SELECT artid, artnom, precio, stock, artIva, artDescuento, artDesc FROM articulo WHERE artId=" & CedCli, txtboxArr)
             SendKeys.Send("{ENTER}")
             btnAdd.Enabled = False
             btnDel.Enabled = True
@@ -70,6 +95,7 @@
     End Sub
 
     Private Sub btnUpd_Click(sender As Object, e As EventArgs) Handles btnUpd.Click
+        If val() = False Then Exit Sub
         SQL = "UPDATE  articulo SET 
         artNom='" & txtNom.Text & "', " &
         "artDesc='" & txtDesc.Text & "', " &
@@ -77,7 +103,7 @@
         "stock=" & txtStock.Text & ", " &
         "catIdFk=" & comCat.SelectedValue &
         " WHERE artId=" & txtId.Text
-        MsgBox(SQL)
+        'MsgBox(SQL)
         If BaseDatos.ingresar_registros(SQL, "Actualizar") Then
             limpiar(txtboxArr, btnArr, 1)
             msjErr.Text = "Articulo actualizado con exito"

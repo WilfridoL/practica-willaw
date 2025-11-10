@@ -11,6 +11,7 @@ Module Mprincipal
     Public sw_regreso As Integer = 0
     Public c_Varias As New Varias
     Public vec() As String
+    'And Regex.IsMatch(arrTxt(i).Text, "[^\w]") = True
     Function controlObservaciones(ByVal SQL As String) As Boolean
         If FrmUsuario.txtEstUsu.SelectedValue <> 1 Then
             'MsgBox(SQL)
@@ -64,41 +65,58 @@ Module Mprincipal
         End If
     End Function
 
+    Public Function cambiarColor(resultado As Boolean, label As Label)
+        If resultado = False Then
+            label.ForeColor = Color.Red
+        Else
+            label.ForeColor = Color.Black
+        End If
+    End Function
+
     Public Function validacionGlobal(arrTxt() As Control, arrLabel() As Label, msjErr As ToolStripStatusLabel, sql As String) As Boolean
         For i As Integer = 0 To arrTxt.Length - 1
             If TypeOf arrTxt(i) Is TextBox Then
-                If arrTxt(i).Text = "" Then
+                If arrTxt(i).Text = "" Then ' campo obligatorio
                     msjErr.Text = "El campo " & arrLabel(i).Text & " es obligatorio"
                     arrTxt(i).Focus()
+                    cambiarColor(False, arrLabel(i))
                     Return False
                 ElseIf arrTxt(i).Name.Substring(arrTxt(i).Name.Length - 3).ToLower() = "num" And
-                    IsNumeric(arrTxt(i).Text) = False Then
+                    Regex.IsMatch(arrTxt(i).Text, "^([0-9]+(\/{1}[0-9]+)*)+(?!([\/]{2}))$") = False Then ' no permite letras y simbolos solo numeros
                     msjErr.Text = $"El campo {arrLabel(i).Text} no tiene que tener letras ni simbolos"
                     arrTxt(i).Focus()
+                    cambiarColor(False, arrLabel(i))
                     Return False
-                ElseIf arrTxt(i).Name.Substring(3, 2).ToLower = "id" Then
-                    rst = BaseDatos.leer_Registro(sql)
-                    If rst.Read() Then
-                        If rst(0) = arrTxt(i).Text Then
-                            msjErr.Text = "La identificacion ya existe, por favor ingrese uno diferentes"
-                            arrTxt(i).Focus()
-                            Return False
-                        End If
-                    End If
+                    'ElseIf arrTxt(i).Name.Substring(3, 2).ToLower = "id" Then ' problemas con este bloque de codigo
+                    '    rst = BaseDatos.leer_Registro(sql)
+                    '    If rst.Read() Then
+                    '        If rst(0) = arrTxt(i).Text Then
+                    '            msjErr.Text = "La identificacion ya existe, por favor ingrese uno diferentes"
+                    '            arrTxt(i).Focus()
+                    'cambiarColor(False, arrTxt(i), arrLabel(i)) 
+                    '        Return False
+                    '    End If
+                    'End If
                 ElseIf Regex.IsMatch(arrTxt(i).Text, "^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$") = False And
-                    arrTxt(i).Name.Substring(arrTxt(i).Name.Length - 3).ToLower() = "ema" Then
+                    arrTxt(i).Name.Substring(arrTxt(i).Name.Length - 3).ToLower() = "ema" Then ' valida formato de correo
                     msjErr.Text = "Digite un correo valido"
                     arrTxt(i).Focus()
+                    cambiarColor(False, arrLabel(i))
                     Return False
+                Else
+                    cambiarColor(True, arrLabel(i))
                 End If
             ElseIf TypeOf arrTxt(i) Is ComboBox Then
                 If CType(arrTxt(i), ComboBox).SelectedValue = 0 Then
                     msjErr.Text = "Seleccione una opcion en el campo " & arrLabel(i).Text
                     arrTxt(i).Focus()
+                    cambiarColor(False, arrLabel(i))
+
                     Return False
+                Else
+                    cambiarColor(True, arrLabel(i))
+                    Return True
                 End If
-            Else
-                Return True
             End If
         Next
     End Function
