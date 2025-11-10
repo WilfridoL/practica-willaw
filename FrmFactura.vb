@@ -3,7 +3,10 @@
     Dim idFactura As Integer = 1
     Dim sbtCant As Double = 0
     Dim dscto As Double = 0
+    Dim prIva As Double = 0
     Private Sub DgvFac_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvFac.KeyDown
+
+        ' MsgBox(e.KeyCode)
         Select Case e.KeyCode
             Case Keys.Enter
                 Select Case DgvFac.CurrentCell.ColumnIndex ' posicion de la columna donde esta el foco en el datagrid
@@ -30,9 +33,10 @@
                             If sw_regreso = 1 Then
                                 DgvFac.Item(0, DgvFac.CurrentRow.Index).Value = vec(0) ' rellena la columna seleccionada (0 = Codigo) con los datos de vec
                                 DgvFac.Item(1, DgvFac.CurrentRow.Index).Value = vec(1) ' rellena la columna seleccionada (1 = Nombre) con los datos de vec
+                                DgvFac.Item(2, DgvFac.CurrentRow.Index).Value = 1 ' rellena la columna seleccionada (1 = Nombre) con los datos de vec
                                 DgvFac.Item(3, DgvFac.CurrentRow.Index).Value = vec(2) ' rellena la columna seleccionada (2 = Valor) con los datos de vec
-                                DgvFac.Item(4, DgvFac.CurrentRow.Index).Value = vec(4) ' rellena la columna seleccionada (4 = Descuento) con los datos de vec
                                 DgvFac.Item(5, DgvFac.CurrentRow.Index).Value = vec(3) ' rellena la columna seleccionada (3 = IVA) con los datos de vec
+                                DgvFac.Item(4, DgvFac.CurrentRow.Index).Value = vec(4) ' rellena la columna seleccionada (4 = Descuento) con los datos de vec
                                 DgvFac.CurrentCell = DgvFac.Rows(DgvFac.CurrentRow.Index).Cells(1) ' mover el focus a la siguiente fila en la misma columna
                             Else
                                 DgvFac.CurrentCell = DgvFac.Rows(DgvFac.CurrentRow.Index).Cells(1)
@@ -82,15 +86,21 @@
     End Sub
 
     Protected Overrides Function processCmdKey(ByRef msg As System.Windows.Forms.Message, ByVal keyData As System.Windows.Forms.Keys) As Boolean
-        If Not DgvFac.IsCurrentCellInEditMode Then Return MyBase.ProcessCmdKey(msg, keyData)
+        If (Not DgvFac.IsCurrentCellInEditMode) Then Return MyBase.ProcessCmdKey(msg, keyData) ' Si el control DataGridView no tiene el foco, y si la celda actual no está siendo editada, abandonamos el procedimiento.
+
         If (keyData <> Keys.Return) Then Return MyBase.ProcessCmdKey(msg, keyData)
         Dim cell As DataGridViewCell = DgvFac.CurrentCell
         Dim columnIndex As Int32 = cell.ColumnIndex
         Dim rowIndex As Int32 = cell.RowIndex
         If columnIndex = 2 Then
+            DgvFac.CommitEdit(DataGridViewDataErrorContexts.Commit)
+            DgvFac.EndEdit()
             sbtCant = DgvFac.Rows(rowIndex).Cells(3).Value * DgvFac.Rows(rowIndex).Cells(2).Value
-            dscto = DgvFac.Rows(rowIndex).Cells(4).Value
-            DgvFac.Rows(rowIndex).Cells(6).Value = sbtCant - (sbtCant * (dscto / 100))
+            dscto = sbtCant * (DgvFac.Rows(rowIndex).Cells(4).Value / 100)
+            prIva = sbtCant * (DgvFac.Rows(rowIndex).Cells(5).Value / 100)
+            MsgBox(prIva)
+            MsgBox(dscto)
+            DgvFac.Rows(rowIndex).Cells(6).Value = (sbtCant - dscto) + prIva
             If rowIndex = DgvFac.Rows.Count - 1 Then
                 DgvFac.Rows.Add()
                 cell = DgvFac.Rows(DgvFac.CurrentRow.Index + 1).Cells(0)
@@ -101,7 +111,6 @@
         End If
         DgvFac.CurrentCell = cell
         Return True
-
     End Function
 
 End Class

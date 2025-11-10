@@ -81,6 +81,7 @@ Public Class FrmUsuario
         limitModFrm = 2
         modInterfaz()
         limitModFrm = 1
+        bloquearCampos(arrTextBox, 0)
         Return True
     End Function
     Public Function BuscarUsuario(ByVal id As Integer)
@@ -90,6 +91,7 @@ Public Class FrmUsuario
         rst = BaseDatos.leer_Registro(SQL)
         If rst.Read() Then
             resetCampo()
+            bloquearCampos(arrTextBox, 1)
             limitModFrm = 0
             municipios(rst("departamento"))
             buscar(SQL, arrTextBox)
@@ -104,6 +106,7 @@ Public Class FrmUsuario
             limitModFrm = 1
         Else
             msjErr.Text = "El usuario con la identificacion " & id & " no se encuentra registrado"
+            bloquearCampos(arrTextBox, 1)
         End If
         Return True
     End Function
@@ -137,6 +140,7 @@ Public Class FrmUsuario
         cargar_combobox("Select * FROM estados", txtEstUsu, "idEst", "estNom")
         txtDepa.SelectedValue = 0
         txtRolUsu.SelectedValue = 0
+        bloquearCampos(arrTextBox, 0)
     End Sub
 
     Private Sub modInterfaz()
@@ -305,5 +309,23 @@ Public Class FrmUsuario
             MsgBox("Contraseña incorrecta", MsgBoxStyle.Critical)
         End If
     End Sub
+
+    Function bloquearCampos(arr() As Control, tip As Integer)
+        For Each ctrl As Control In arr
+            If tip = 0 Then ctrl.Enabled = False
+            If tip = 1 Then ctrl.Enabled = True
+        Next
+        If tip = 1 Then
+            btnAdd.Enabled = True
+            txtConUsu.Enabled = True
+            txtConContra.Enabled = True
+        End If
+        If tip = 0 Then
+            btnAdd.Enabled = False
+            txtConUsu.Enabled = False
+            txtConContra.Enabled = False
+        End If
+        txtIdNum.Enabled = True
+    End Function
 
 End Class
