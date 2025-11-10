@@ -96,11 +96,9 @@
             DgvFac.CommitEdit(DataGridViewDataErrorContexts.Commit)
             DgvFac.EndEdit()
             sbtCant = DgvFac.Rows(rowIndex).Cells(3).Value * DgvFac.Rows(rowIndex).Cells(2).Value
-            dscto = sbtCant * (DgvFac.Rows(rowIndex).Cells(4).Value / 100)
-            prIva = sbtCant * (DgvFac.Rows(rowIndex).Cells(5).Value / 100)
-            MsgBox(prIva)
-            MsgBox(dscto)
-            DgvFac.Rows(rowIndex).Cells(6).Value = (sbtCant - dscto) + prIva
+            dscto = sbtCant - (sbtCant * (DgvFac.Rows(rowIndex).Cells(4).Value / 100))
+            prIva = dscto * (DgvFac.Rows(rowIndex).Cells(5).Value / 100)
+            DgvFac.Rows(rowIndex).Cells(6).Value = dscto + prIva
             If rowIndex = DgvFac.Rows.Count - 1 Then
                 DgvFac.Rows.Add()
                 cell = DgvFac.Rows(DgvFac.CurrentRow.Index + 1).Cells(0)
