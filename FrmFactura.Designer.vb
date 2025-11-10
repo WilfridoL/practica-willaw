@@ -59,6 +59,9 @@ Partial Class FrmFactura
         artNom = New DataGridViewTextBoxColumn()
         artCant = New DataGridViewTextBoxColumn()
         artPre = New DataGridViewTextBoxColumn()
+        Descuento = New DataGridViewTextBoxColumn()
+        Iva = New DataGridViewTextBoxColumn()
+        SubTotal = New DataGridViewTextBoxColumn()
         ToolStrip1.SuspendLayout()
         CType(DgvFac, ComponentModel.ISupportInitialize).BeginInit()
         StatusStrip1.SuspendLayout()
@@ -212,7 +215,7 @@ Partial Class FrmFactura
         ' DgvFac
         ' 
         DgvFac.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DgvFac.Columns.AddRange(New DataGridViewColumn() {artid, artNom, artCant, artPre})
+        DgvFac.Columns.AddRange(New DataGridViewColumn() {artid, artNom, artCant, artPre, Descuento, Iva, SubTotal})
         DgvFac.Location = New Point(12, 137)
         DgvFac.Name = "DgvFac"
         DgvFac.Size = New Size(481, 174)
@@ -325,24 +328,43 @@ Partial Class FrmFactura
         ' 
         ' artid
         ' 
-        artid.HeaderText = "Cod Art"
+        artid.HeaderText = "Cod"
         artid.Name = "artid"
+        artid.Width = 50
         ' 
         ' artNom
         ' 
-        artNom.HeaderText = "Nombre"
+        artNom.HeaderText = "Articulo"
         artNom.Name = "artNom"
         artNom.Width = 250
         ' 
         ' artCant
         ' 
-        artCant.HeaderText = "Cantidad"
+        artCant.HeaderText = "Cant"
         artCant.Name = "artCant"
+        artCant.Width = 50
         ' 
         ' artPre
         ' 
         artPre.HeaderText = "Precio"
         artPre.Name = "artPre"
+        ' 
+        ' Descuento
+        ' 
+        Descuento.HeaderText = "(%)"
+        Descuento.Name = "Descuento"
+        Descuento.Width = 50
+        ' 
+        ' Iva
+        ' 
+        Iva.HeaderText = "IVA"
+        Iva.Name = "Iva"
+        Iva.Width = 50
+        ' 
+        ' SubTotal
+        ' 
+        SubTotal.HeaderText = "SubTotal"
+        SubTotal.Name = "SubTotal"
         ' 
         ' FrmFactura
         ' 
@@ -412,11 +434,14 @@ Partial Class FrmFactura
     Friend WithEvents ToolStripStatusLabel2 As ToolStripStatusLabel
     Friend WithEvents ToolStripStatusLabel3 As ToolStripStatusLabel
     Friend WithEvents barProgress As ToolStripProgressBar
-    Friend WithEvents artid As DataGridViewTextBoxColumn
-    Friend WithEvents artNom As DataGridViewTextBoxColumn
-    Friend WithEvents artCant As DataGridViewTextBoxColumn
     Friend WithEvents btnSalir As ToolStripButton
     Friend WithEvents usuNom As ToolStripStatusLabel
     Friend WithEvents est As ToolStripStatusLabel
+    Friend WithEvents artid As DataGridViewTextBoxColumn
+    Friend WithEvents artNom As DataGridViewTextBoxColumn
+    Friend WithEvents artCant As DataGridViewTextBoxColumn
     Friend WithEvents artPre As DataGridViewTextBoxColumn
+    Friend WithEvents Descuento As DataGridViewTextBoxColumn
+    Friend WithEvents Iva As DataGridViewTextBoxColumn
+    Friend WithEvents SubTotal As DataGridViewTextBoxColumn
 End Class
