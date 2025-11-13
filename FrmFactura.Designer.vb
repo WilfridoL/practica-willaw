@@ -41,6 +41,13 @@ Partial Class FrmFactura
         Label5 = New Label()
         facId = New Label()
         DgvFac = New DataGridView()
+        artid = New DataGridViewTextBoxColumn()
+        artNom = New DataGridViewTextBoxColumn()
+        artCant = New DataGridViewTextBoxColumn()
+        artPre = New DataGridViewTextBoxColumn()
+        Descuento = New DataGridViewTextBoxColumn()
+        Iva = New DataGridViewTextBoxColumn()
+        SubTotal = New DataGridViewTextBoxColumn()
         txtSub = New TextBox()
         Label7 = New Label()
         txtIva = New TextBox()
@@ -55,13 +62,8 @@ Partial Class FrmFactura
         usuNom = New ToolStripStatusLabel()
         barProgress = New ToolStripProgressBar()
         est = New ToolStripStatusLabel()
-        artid = New DataGridViewTextBoxColumn()
-        artNom = New DataGridViewTextBoxColumn()
-        artCant = New DataGridViewTextBoxColumn()
-        artPre = New DataGridViewTextBoxColumn()
-        Descuento = New DataGridViewTextBoxColumn()
-        Iva = New DataGridViewTextBoxColumn()
-        SubTotal = New DataGridViewTextBoxColumn()
+        RichTextBox1 = New RichTextBox()
+        Label6 = New Label()
         ToolStrip1.SuspendLayout()
         CType(DgvFac, ComponentModel.ISupportInitialize).BeginInit()
         StatusStrip1.SuspendLayout()
@@ -221,6 +223,46 @@ Partial Class FrmFactura
         DgvFac.Size = New Size(481, 174)
         DgvFac.TabIndex = 74
         ' 
+        ' artid
+        ' 
+        artid.HeaderText = "Cod"
+        artid.Name = "artid"
+        artid.Width = 50
+        ' 
+        ' artNom
+        ' 
+        artNom.HeaderText = "Articulo"
+        artNom.Name = "artNom"
+        artNom.Width = 250
+        ' 
+        ' artCant
+        ' 
+        artCant.HeaderText = "Cant"
+        artCant.Name = "artCant"
+        artCant.Width = 50
+        ' 
+        ' artPre
+        ' 
+        artPre.HeaderText = "Precio"
+        artPre.Name = "artPre"
+        ' 
+        ' Descuento
+        ' 
+        Descuento.HeaderText = "(%)"
+        Descuento.Name = "Descuento"
+        Descuento.Width = 50
+        ' 
+        ' Iva
+        ' 
+        Iva.HeaderText = "IVA"
+        Iva.Name = "Iva"
+        Iva.Width = 50
+        ' 
+        ' SubTotal
+        ' 
+        SubTotal.HeaderText = "SubTotal"
+        SubTotal.Name = "SubTotal"
+        ' 
         ' txtSub
         ' 
         txtSub.Location = New Point(385, 317)
@@ -326,51 +368,30 @@ Partial Class FrmFactura
         est.Text = "&Estado: En Ejecucion"
         est.TextAlign = ContentAlignment.MiddleRight
         ' 
-        ' artid
+        ' RichTextBox1
         ' 
-        artid.HeaderText = "Cod"
-        artid.Name = "artid"
-        artid.Width = 50
+        RichTextBox1.Location = New Point(12, 345)
+        RichTextBox1.Name = "RichTextBox1"
+        RichTextBox1.Size = New Size(271, 82)
+        RichTextBox1.TabIndex = 84
+        RichTextBox1.Text = ""
         ' 
-        ' artNom
+        ' Label6
         ' 
-        artNom.HeaderText = "Articulo"
-        artNom.Name = "artNom"
-        artNom.Width = 250
-        ' 
-        ' artCant
-        ' 
-        artCant.HeaderText = "Cant"
-        artCant.Name = "artCant"
-        artCant.Width = 50
-        ' 
-        ' artPre
-        ' 
-        artPre.HeaderText = "Precio"
-        artPre.Name = "artPre"
-        ' 
-        ' Descuento
-        ' 
-        Descuento.HeaderText = "(%)"
-        Descuento.Name = "Descuento"
-        Descuento.Width = 50
-        ' 
-        ' Iva
-        ' 
-        Iva.HeaderText = "IVA"
-        Iva.Name = "Iva"
-        Iva.Width = 50
-        ' 
-        ' SubTotal
-        ' 
-        SubTotal.HeaderText = "SubTotal"
-        SubTotal.Name = "SubTotal"
+        Label6.AutoSize = True
+        Label6.Location = New Point(12, 320)
+        Label6.Name = "Label6"
+        Label6.Size = New Size(73, 15)
+        Label6.TabIndex = 85
+        Label6.Text = "Observación"
         ' 
         ' FrmFactura
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(505, 467)
+        Controls.Add(Label6)
+        Controls.Add(RichTextBox1)
         Controls.Add(StatusStrip1)
         Controls.Add(txtTotal)
         Controls.Add(Label10)
@@ -444,4 +465,6 @@ Partial Class FrmFactura
     Friend WithEvents Descuento As DataGridViewTextBoxColumn
     Friend WithEvents Iva As DataGridViewTextBoxColumn
     Friend WithEvents SubTotal As DataGridViewTextBoxColumn
+    Friend WithEvents RichTextBox1 As RichTextBox
+    Friend WithEvents Label6 As Label
 End Class

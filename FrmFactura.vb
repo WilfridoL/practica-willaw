@@ -4,6 +4,11 @@
     Dim sbtCant As Double = 0
     Dim dscto As Double = 0
     Dim prIva As Double = 0
+
+    Sub buscarArticulo(sql As String)
+        rst = BaseDatos.leer_Registro(sql)
+    End Sub
+
     Private Sub DgvFac_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvFac.KeyDown
 
         ' MsgBox(e.KeyCode)
@@ -11,10 +16,8 @@
             Case Keys.Enter
                 Select Case DgvFac.CurrentCell.ColumnIndex ' posicion de la columna donde esta el foco en el datagrid
                     Case 0
-                        e.Handled = True
-                        SendKeys.Send("{TAB}")
-                    Case 1
                         Try
+
                             FrmConsulta2.Text = "Plantilla de Articulos"
                             FrmConsulta2.grd.DataSource = ""
                             SQL = "SELECT artId AS ID, artNom AS NOMBRE, precio AS VALOR, artIva AS IVA, artDescuento AS 'DT(%)' FROM articulo
@@ -37,7 +40,7 @@
                                 DgvFac.Item(3, DgvFac.CurrentRow.Index).Value = vec(2) ' rellena la columna seleccionada (2 = Valor) con los datos de vec
                                 DgvFac.Item(5, DgvFac.CurrentRow.Index).Value = vec(3) ' rellena la columna seleccionada (3 = IVA) con los datos de vec
                                 DgvFac.Item(4, DgvFac.CurrentRow.Index).Value = vec(4) ' rellena la columna seleccionada (4 = Descuento) con los datos de vec
-                                DgvFac.CurrentCell = DgvFac.Rows(DgvFac.CurrentRow.Index).Cells(1) ' mover el focus a la siguiente fila en la misma columna
+                                DgvFac.CurrentCell = DgvFac.Rows(DgvFac.CurrentRow.Index).Cells(2) ' mover el focus a la siguiente fila en la misma columna
                             Else
                                 DgvFac.CurrentCell = DgvFac.Rows(DgvFac.CurrentRow.Index).Cells(1)
                             End If
@@ -92,13 +95,36 @@
         Dim cell As DataGridViewCell = DgvFac.CurrentCell
         Dim columnIndex As Int32 = cell.ColumnIndex
         Dim rowIndex As Int32 = cell.RowIndex
+        If columnIndex = 0 Then
+            DgvFac.CommitEdit(DataGridViewDataErrorContexts.Commit)
+            DgvFac.EndEdit()
+            SQL = $"SELECT artId AS ID, artNom AS NOMBRE, precio AS VALOR, artIva AS IVA, artDescuento AS 'DT(%)' FROM articulo
+                            WHERE  artEst = 'A' AND artId = {DgvFac.Rows(rowIndex).Cells(0).Value}"
+            MsgBox(SQL)
+            rst = BaseDatos.leer_Registro(SQL)
+            If rst.Read() Then
+                DgvFac.Rows(rowIndex).Cells(1).Value = rst(1)
+                DgvFac.Rows(rowIndex).Cells(3).Value = rst(2)
+                DgvFac.Rows(rowIndex).Cells(4).Value = rst(3)
+                DgvFac.Rows(rowIndex).Cells(5).Value = rst(4)
+            Else
+                If (MsgBox("El articulo no exite. ¿Desea buscarlo?", MsgBoxStyle.YesNo) = vbYes) Then
+                    SendKeys.Send("{ENTER}")
+                Else
+                    DgvFac.Rows(rowIndex).Cells(0).Value = ""
+                End If
+            End If
+        End If
         If columnIndex = 2 Then
             DgvFac.CommitEdit(DataGridViewDataErrorContexts.Commit)
             DgvFac.EndEdit()
             sbtCant = DgvFac.Rows(rowIndex).Cells(3).Value * DgvFac.Rows(rowIndex).Cells(2).Value
-            dscto = sbtCant - (sbtCant * (DgvFac.Rows(rowIndex).Cells(4).Value / 100))
-            prIva = dscto * (DgvFac.Rows(rowIndex).Cells(5).Value / 100)
-            DgvFac.Rows(rowIndex).Cells(6).Value = dscto + prIva
+            dscto = sbtCant * (DgvFac.Rows(rowIndex).Cells(4).Value / 100)
+            MsgBox(dscto)
+            prIva = DgvFac.Rows(rowIndex).Cells(5).Value / 100
+            DgvFac.Rows(rowIndex).Cells(6).Value = (sbtCant - dscto) + ((sbtCant - dscto) * prIva)
+
+
             If rowIndex = DgvFac.Rows.Count - 1 Then
                 DgvFac.Rows.Add()
                 cell = DgvFac.Rows(DgvFac.CurrentRow.Index + 1).Cells(0)
