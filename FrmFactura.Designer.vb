@@ -47,7 +47,7 @@ Partial Class FrmFactura
         artPre = New DataGridViewTextBoxColumn()
         Descuento = New DataGridViewTextBoxColumn()
         Iva = New DataGridViewTextBoxColumn()
-        SubTotal = New DataGridViewTextBoxColumn()
+        sb = New DataGridViewTextBoxColumn()
         txtSub = New TextBox()
         Label7 = New Label()
         txtIva = New TextBox()
@@ -99,6 +99,7 @@ Partial Class FrmFactura
         ' btnDel
         ' 
         btnDel.DisplayStyle = ToolStripItemDisplayStyle.Image
+        btnDel.Enabled = False
         btnDel.Image = CType(resources.GetObject("btnDel.Image"), Image)
         btnDel.ImageTransparentColor = Color.Magenta
         btnDel.Name = "btnDel"
@@ -217,7 +218,7 @@ Partial Class FrmFactura
         ' DgvFac
         ' 
         DgvFac.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DgvFac.Columns.AddRange(New DataGridViewColumn() {artid, artNom, artCant, artPre, Descuento, Iva, SubTotal})
+        DgvFac.Columns.AddRange(New DataGridViewColumn() {artid, artNom, artCant, artPre, Descuento, Iva, sb})
         DgvFac.Location = New Point(12, 137)
         DgvFac.Name = "DgvFac"
         DgvFac.Size = New Size(481, 174)
@@ -258,13 +259,14 @@ Partial Class FrmFactura
         Iva.Name = "Iva"
         Iva.Width = 50
         ' 
-        ' SubTotal
+        ' sb
         ' 
-        SubTotal.HeaderText = "SubTotal"
-        SubTotal.Name = "SubTotal"
+        sb.HeaderText = "SubTotal"
+        sb.Name = "sb"
         ' 
         ' txtSub
         ' 
+        txtSub.Enabled = False
         txtSub.Location = New Point(385, 317)
         txtSub.Name = "txtSub"
         txtSub.Size = New Size(108, 23)
@@ -281,6 +283,7 @@ Partial Class FrmFactura
         ' 
         ' txtIva
         ' 
+        txtIva.Enabled = False
         txtIva.Location = New Point(385, 346)
         txtIva.Name = "txtIva"
         txtIva.Size = New Size(108, 23)
@@ -297,6 +300,7 @@ Partial Class FrmFactura
         ' 
         ' txtDesc
         ' 
+        txtDesc.Enabled = False
         txtDesc.Location = New Point(385, 375)
         txtDesc.Name = "txtDesc"
         txtDesc.Size = New Size(108, 23)
@@ -313,6 +317,7 @@ Partial Class FrmFactura
         ' 
         ' txtTotal
         ' 
+        txtTotal.Enabled = False
         txtTotal.Location = New Point(385, 404)
         txtTotal.Name = "txtTotal"
         txtTotal.Size = New Size(108, 23)
@@ -458,13 +463,13 @@ Partial Class FrmFactura
     Friend WithEvents btnSalir As ToolStripButton
     Friend WithEvents usuNom As ToolStripStatusLabel
     Friend WithEvents est As ToolStripStatusLabel
+    Friend WithEvents RichTextBox1 As RichTextBox
+    Friend WithEvents Label6 As Label
     Friend WithEvents artid As DataGridViewTextBoxColumn
     Friend WithEvents artNom As DataGridViewTextBoxColumn
     Friend WithEvents artCant As DataGridViewTextBoxColumn
     Friend WithEvents artPre As DataGridViewTextBoxColumn
     Friend WithEvents Descuento As DataGridViewTextBoxColumn
     Friend WithEvents Iva As DataGridViewTextBoxColumn
-    Friend WithEvents SubTotal As DataGridViewTextBoxColumn
-    Friend WithEvents RichTextBox1 As RichTextBox
-    Friend WithEvents Label6 As Label
+    Friend WithEvents sb As DataGridViewTextBoxColumn
 End Class

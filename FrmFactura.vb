@@ -5,6 +5,12 @@
     Dim dscto As Double = 0
     Dim prIva As Double = 0
 
+    ' valores totales
+    Dim subTotal As Double = 0
+    Dim dscoTotal As Double = 0
+    Dim ivaTotal As Double = 0
+    Dim total As Double = 0
+
     Sub buscarArticulo(sql As String)
         rst = BaseDatos.leer_Registro(sql)
     End Sub
@@ -36,11 +42,14 @@
                             If sw_regreso = 1 Then
                                 DgvFac.Item(0, DgvFac.CurrentRow.Index).Value = vec(0) ' rellena la columna seleccionada (0 = Codigo) con los datos de vec
                                 DgvFac.Item(1, DgvFac.CurrentRow.Index).Value = vec(1) ' rellena la columna seleccionada (1 = Nombre) con los datos de vec
-                                DgvFac.Item(2, DgvFac.CurrentRow.Index).Value = 1 ' rellena la columna seleccionada (1 = Nombre) con los datos de vec
                                 DgvFac.Item(3, DgvFac.CurrentRow.Index).Value = vec(2) ' rellena la columna seleccionada (2 = Valor) con los datos de vec
                                 DgvFac.Item(5, DgvFac.CurrentRow.Index).Value = vec(3) ' rellena la columna seleccionada (3 = IVA) con los datos de vec
                                 DgvFac.Item(4, DgvFac.CurrentRow.Index).Value = vec(4) ' rellena la columna seleccionada (4 = Descuento) con los datos de vec
-                                DgvFac.CurrentCell = DgvFac.Rows(DgvFac.CurrentRow.Index).Cells(2) ' mover el focus a la siguiente fila en la misma columna
+                                DgvFac.CurrentCell = DgvFac.Rows(DgvFac.CurrentRow.Index - 1).Cells(2) ' mover el focus a la siguiente fila en la misma columna
+                                'If DgvFac.CurrentCell.Selected = 0 Then
+                                'MsgBox("a")
+
+                                'End If
                             Else
                                 DgvFac.CurrentCell = DgvFac.Rows(DgvFac.CurrentRow.Index).Cells(1)
                             End If
@@ -52,7 +61,7 @@
                 End Select
             Case Keys.Insert
                 DgvFac.Rows.Add() ' agrega una nueva fila
-                DgvFac.CurrentCell = DgvFac.Rows(DgvFac.CurrentRow.Index + 1).Cells(1) ' desplaza la fila actual debajo de la fila recien agregada 
+                DgvFac.CurrentCell = DgvFac.Rows(DgvFac.CurrentRow.Index + 1).Cells(0) ' desplaza la fila actual debajo de la fila recien agregada 
         End Select
     End Sub
 
@@ -88,6 +97,19 @@
         End If
     End Sub
 
+    Sub recorrerDataGrid()
+        subTotal = 0
+        dscoTotal = 0
+        ivaTotal = 0
+        total = 0
+        For i As Integer = 0 To DgvFac.RowCount - 1
+            subTotal += DgvFac.Rows(i).Cells(3).Value * DgvFac.Rows(i).Cells(2).Value
+        Next
+        txtSub.Text = subTotal.ToString()
+        ' txtIva.Text = ivaTotal.ToString()
+        ' txtDesc.Text = dscoTotal.ToString()
+    End Sub
+
     Protected Overrides Function processCmdKey(ByRef msg As System.Windows.Forms.Message, ByVal keyData As System.Windows.Forms.Keys) As Boolean
         If (Not DgvFac.IsCurrentCellInEditMode) Then Return MyBase.ProcessCmdKey(msg, keyData) ' Si el control DataGridView no tiene el foco, y si la celda actual no está siendo editada, abandonamos el procedimiento.
 
@@ -95,18 +117,20 @@
         Dim cell As DataGridViewCell = DgvFac.CurrentCell
         Dim columnIndex As Int32 = cell.ColumnIndex
         Dim rowIndex As Int32 = cell.RowIndex
+        DgvFac.CommitEdit(DataGridViewDataErrorContexts.Commit)
+        DgvFac.EndEdit()
         If columnIndex = 0 Then
-            DgvFac.CommitEdit(DataGridViewDataErrorContexts.Commit)
-            DgvFac.EndEdit()
             SQL = $"SELECT artId AS ID, artNom AS NOMBRE, precio AS VALOR, artIva AS IVA, artDescuento AS 'DT(%)' FROM articulo
                             WHERE  artEst = 'A' AND artId = {DgvFac.Rows(rowIndex).Cells(0).Value}"
-            MsgBox(SQL)
+            'MsgBox(SQL)
             rst = BaseDatos.leer_Registro(SQL)
             If rst.Read() Then
                 DgvFac.Rows(rowIndex).Cells(1).Value = rst(1)
                 DgvFac.Rows(rowIndex).Cells(3).Value = rst(2)
                 DgvFac.Rows(rowIndex).Cells(4).Value = rst(3)
                 DgvFac.Rows(rowIndex).Cells(5).Value = rst(4)
+                DgvFac.CurrentCell = DgvFac.Rows(rowIndex).Cells(2)
+                Return True
             Else
                 If (MsgBox("El articulo no exite. ¿Desea buscarlo?", MsgBoxStyle.YesNo) = vbYes) Then
                     SendKeys.Send("{ENTER}")
@@ -120,18 +144,13 @@
             DgvFac.EndEdit()
             sbtCant = DgvFac.Rows(rowIndex).Cells(3).Value * DgvFac.Rows(rowIndex).Cells(2).Value
             dscto = sbtCant * (DgvFac.Rows(rowIndex).Cells(4).Value / 100)
-            MsgBox(dscto)
+            'MsgBox(dscto)
             prIva = DgvFac.Rows(rowIndex).Cells(5).Value / 100
             DgvFac.Rows(rowIndex).Cells(6).Value = (sbtCant - dscto) + ((sbtCant - dscto) * prIva)
-
-
-            If rowIndex = DgvFac.Rows.Count - 1 Then
-                DgvFac.Rows.Add()
-                cell = DgvFac.Rows(DgvFac.CurrentRow.Index + 1).Cells(0)
-            Else
-                cell = DgvFac.Rows(rowIndex + 1).Cells(0)
-            End If
-            cell = DgvFac.Rows(rowIndex).Cells(columnIndex + 1)
+            recorrerDataGrid()
+            DgvFac.CurrentCell = DgvFac.Rows(rowIndex + 1).Cells(0)
+            'cell = DgvFac.Rows(rowIndex).Cells(columnIndex + 1)
+            Return True
         End If
         DgvFac.CurrentCell = cell
         Return True

@@ -44,6 +44,7 @@ Public Class FrmCliente
         If rst.Read() Then
             limpiar(0)
             cargar_combobox("Select * FROM municipios WHERE depIdFk=" & rst("cliDep"), txtMun, "munId", "munNom")
+            txtIdNum.Text = rst("cliCed")
             txtNom.Text = rst("cliNom")
             txtApe.Text = rst("cliApe")
             txtEma.Text = rst("cliEma")
