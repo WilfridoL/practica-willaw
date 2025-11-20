@@ -104,10 +104,16 @@
         total = 0
         For i As Integer = 0 To DgvFac.RowCount - 1
             subTotal += DgvFac.Rows(i).Cells(3).Value * DgvFac.Rows(i).Cells(2).Value
+            dscoTotal += (DgvFac.Rows(i).Cells(3).Value * DgvFac.Rows(i).Cells(2).Value) * (DgvFac.Rows(i).Cells(4).Value / 100)
+            ivaTotal += ((DgvFac.Rows(i).Cells(3).Value * DgvFac.Rows(i).Cells(2).Value) -
+                          ((DgvFac.Rows(i).Cells(3).Value * DgvFac.Rows(i).Cells(2).Value) * (DgvFac.Rows(i).Cells(4).Value / 100))) *
+                          (DgvFac.Rows(i).Cells(5).Value / 100) ' se saca el subtotal menos el descuento y se multiplica por el iva
+            total += DgvFac.Rows(i).Cells(6).Value
         Next
-        txtSub.Text = subTotal.ToString()
-        ' txtIva.Text = ivaTotal.ToString()
-        ' txtDesc.Text = dscoTotal.ToString()
+        txtSub.Text = "$ " & subTotal.ToString("N2")
+        txtIva.Text = "$ " & ivaTotal.ToString("N2")
+        txtDesc.Text = "$ " & dscoTotal.ToString("N2")
+        txtTotal.Text = "$ " & total.ToString("N2")
     End Sub
 
     Protected Overrides Function processCmdKey(ByRef msg As System.Windows.Forms.Message, ByVal keyData As System.Windows.Forms.Keys) As Boolean
@@ -120,6 +126,10 @@
         DgvFac.CommitEdit(DataGridViewDataErrorContexts.Commit)
         DgvFac.EndEdit()
         If columnIndex = 0 Then
+            If DgvFac.Rows(rowIndex).Cells(0).Value = "" Then
+                MsgBox("Debe ingresar un codigo de articulo")
+                Exit Function
+            End If
             SQL = $"SELECT artId AS ID, artNom AS NOMBRE, precio AS VALOR, artIva AS IVA, artDescuento AS 'DT(%)' FROM articulo
                             WHERE  artEst = 'A' AND artId = {DgvFac.Rows(rowIndex).Cells(0).Value}"
             'MsgBox(SQL)
