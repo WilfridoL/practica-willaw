@@ -1,5 +1,7 @@
 ﻿Public Class FrmFactura
     Dim arrTxt() As Control
+    Dim canCod As Integer
+
     Dim idFactura As Integer = 1
     Dim sbtCant As Double = 0
     Dim dscto As Double = 0
@@ -61,7 +63,7 @@
                 End Select
             Case Keys.Insert
                 DgvFac.Rows.Add() ' agrega una nueva fila
-                DgvFac.CurrentCell = DgvFac.Rows(DgvFac.CurrentRow.Index + 1).Cells(0) ' desplaza la fila actual debajo de la fila recien agregada 
+                'DgvFac.CurrentCell = DgvFac.Rows(DgvFac.CurrentRow.Index + 1).Cells(0) ' desplaza la fila actual debajo de la fila recien agregada 
         End Select
     End Sub
 
@@ -73,7 +75,8 @@
         rst = BaseDatos.leer_Registro("SELECT MAX(facId) FROM factura")
         idFactura = If(rst.Read(), If(IsDBNull(rst(0)), 1, CInt(rst(0)) + 1), 1) ' si es null o false el resultado sera 1, si no se sumara el id_factura + 1 
         facId.Text = idFactura
-        arrTxt = {txtId, txtNom, txtTel} ' rellenar array de control
+        arrTxt = {txtId, txtNom, txtTel, txtCor} ' rellenar array de control
+        txtId.Focus()
     End Sub
 
     Private Sub btnSalir_Click(sender As Object, e As EventArgs) Handles btnSalir.Click
@@ -81,9 +84,10 @@
     End Sub
 
     Private Sub txtId_KeyDown(sender As Object, e As KeyEventArgs) Handles txtId.KeyDown
-        SQL = "SELECT cliCed, CONCAT_WS(' ', cliNom, cliApe), cliTel FROM cliente WHERE cliCed =" & txtId.Text
+        SQL = "SELECT cliCed, CONCAT_WS(' ', cliNom, cliApe), cliTel, cliEma FROM cliente WHERE cliCed =" & txtId.Text
         If e.KeyCode = Keys.Enter Then
             If txtId.Text = "" Then Exit Sub
+            ' If validacionGlobal(arrTxt, {Label1, Label2, Label3, Label4}, msjErr, "") <> True Then Exit Sub
             If BaseDatos.leer_Registro(SQL).Read() = False Then
                 If MsgBox("El cliente no existe." & vbCrLf & "¿Desea agregarlo?", MsgBoxStyle.YesNo, "Error") = vbYes Then
                     FrmCliente.txtIdNum.Text = txtId.Text
@@ -94,8 +98,17 @@
             End If
             limpiar(arrTxt, {btnAdd}, 0) ' limpiar los controles del array (el boton de agregar esta de adorno en el parametro)
             buscar(SQL, arrTxt) ' llena los controles del array con los datos de la consulta
+            'bloquearCampos(arrTxt, 0)
         End If
     End Sub
+
+    ' Sub bloquearCampos(arr() As Control, tip As Integer)
+    '  For i As Integer = 0 To arr.Length
+    '        arr(0).Enabled = True
+    '       If tip = 0 Then arr(i).Enabled = False
+    ' If tip = 1 Then arr(i).Enabled = True
+    '    Next
+    'End Sub
 
     Sub recorrerDataGrid()
         subTotal = 0
@@ -130,16 +143,19 @@
                 MsgBox("Debe ingresar un codigo de articulo")
                 Exit Function
             End If
-            SQL = $"SELECT artId AS ID, artNom AS NOMBRE, precio AS VALOR, artIva AS IVA, artDescuento AS 'DT(%)' FROM articulo
+
+            SQL = $"SELECT artId AS ID, artNom AS NOMBRE, precio AS VALOR, artIva AS IVA, artDescuento AS 'DT(%)', stock FROM articulo
                             WHERE  artEst = 'A' AND artId = {DgvFac.Rows(rowIndex).Cells(0).Value}"
             'MsgBox(SQL)
             rst = BaseDatos.leer_Registro(SQL)
             If rst.Read() Then
+                ' If validarDataGrid(rst("ID")) <> True Then Exit Function
                 DgvFac.Rows(rowIndex).Cells(1).Value = rst(1)
                 DgvFac.Rows(rowIndex).Cells(3).Value = rst(2)
                 DgvFac.Rows(rowIndex).Cells(4).Value = rst(3)
                 DgvFac.Rows(rowIndex).Cells(5).Value = rst(4)
                 DgvFac.CurrentCell = DgvFac.Rows(rowIndex).Cells(2)
+
                 Return True
             Else
                 If (MsgBox("El articulo no exite. ¿Desea buscarlo?", MsgBoxStyle.YesNo) = vbYes) Then
@@ -152,6 +168,7 @@
         If columnIndex = 2 Then
             DgvFac.CommitEdit(DataGridViewDataErrorContexts.Commit)
             DgvFac.EndEdit()
+            'If validarDataGrid(DgvFac.Rows(rowIndex).Cells(0).Value) <> True Then Exit Function
             sbtCant = DgvFac.Rows(rowIndex).Cells(3).Value * DgvFac.Rows(rowIndex).Cells(2).Value
             dscto = sbtCant * (DgvFac.Rows(rowIndex).Cells(4).Value / 100)
             'MsgBox(dscto)
@@ -166,4 +183,24 @@
         Return True
     End Function
 
+    'Function validarDataGrid(id)
+    'canCod = 0
+    'rst = BaseDatos.leer_Registro($"SELECT artId, stock from articulo WHERE artId={id}")
+    ' If rst.Read() Then
+    ' For i As Integer = 0 To DgvFac.RowCount - 1
+    ' If rst(0) = DgvFac.Rows(i).Cells(0).Value Then
+    ' If canCod <> 0 Then
+    '  MsgBox("Articulo ya a sido seleccionado, seleccione otro articulo")
+    ' Return False
+    ' End If
+    'canCod += 1
+    'End If
+    ' If DgvFac.Rows(i).Cells(2).Value > rst(1) And DgvFac.Rows(i).Cells(2).Value <> "" Then
+    ' MsgBox("se supera la cantidad de articulos disponibles")
+    ' Return False
+    'End If
+    ' Return True
+    ' Next
+    'End If
+    'End Function
 End Class

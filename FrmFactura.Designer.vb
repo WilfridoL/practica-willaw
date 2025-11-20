@@ -34,7 +34,7 @@ Partial Class FrmFactura
         txtId = New TextBox()
         txtNom = New TextBox()
         Label2 = New Label()
-        txtRezSoc = New TextBox()
+        txtCor = New TextBox()
         Label3 = New Label()
         txtTel = New TextBox()
         Label4 = New Label()
@@ -62,6 +62,7 @@ Partial Class FrmFactura
         usuNom = New ToolStripStatusLabel()
         barProgress = New ToolStripProgressBar()
         est = New ToolStripStatusLabel()
+        msjErr = New ToolStripStatusLabel()
         RichTextBox1 = New RichTextBox()
         Label6 = New Label()
         ToolStrip1.SuspendLayout()
@@ -74,7 +75,7 @@ Partial Class FrmFactura
         ToolStrip1.Items.AddRange(New ToolStripItem() {btnAdd, ToolStripButton3, btnDel, btnBuscar, btnSalir})
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
-        ToolStrip1.Size = New Size(505, 25)
+        ToolStrip1.Size = New Size(583, 25)
         ToolStrip1.TabIndex = 62
         ToolStrip1.Text = "ToolStrip1"
         ' 
@@ -151,7 +152,7 @@ Partial Class FrmFactura
         ' 
         txtNom.Location = New Point(232, 69)
         txtNom.Name = "txtNom"
-        txtNom.Size = New Size(261, 23)
+        txtNom.Size = New Size(339, 23)
         txtNom.TabIndex = 67
         ' 
         ' Label2
@@ -163,25 +164,25 @@ Partial Class FrmFactura
         Label2.TabIndex = 66
         Label2.Text = "Nombres"
         ' 
-        ' txtRezSoc
+        ' txtCor
         ' 
-        txtRezSoc.Location = New Point(90, 95)
-        txtRezSoc.Name = "txtRezSoc"
-        txtRezSoc.Size = New Size(231, 23)
-        txtRezSoc.TabIndex = 69
+        txtCor.Location = New Point(61, 95)
+        txtCor.Name = "txtCor"
+        txtCor.Size = New Size(338, 23)
+        txtCor.TabIndex = 69
         ' 
         ' Label3
         ' 
         Label3.AutoSize = True
         Label3.Location = New Point(12, 98)
         Label3.Name = "Label3"
-        Label3.Size = New Size(72, 15)
+        Label3.Size = New Size(43, 15)
         Label3.TabIndex = 68
-        Label3.Text = "Razon social"
+        Label3.Text = "Correo"
         ' 
         ' txtTel
         ' 
-        txtTel.Location = New Point(385, 98)
+        txtTel.Location = New Point(463, 98)
         txtTel.Name = "txtTel"
         txtTel.Size = New Size(108, 23)
         txtTel.TabIndex = 71
@@ -189,7 +190,7 @@ Partial Class FrmFactura
         ' Label4
         ' 
         Label4.AutoSize = True
-        Label4.Location = New Point(327, 101)
+        Label4.Location = New Point(405, 101)
         Label4.Name = "Label4"
         Label4.Size = New Size(52, 15)
         Label4.TabIndex = 70
@@ -199,7 +200,7 @@ Partial Class FrmFactura
         ' 
         Label5.AutoSize = True
         Label5.Font = New Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label5.Location = New Point(385, 20)
+        Label5.Location = New Point(490, 19)
         Label5.Name = "Label5"
         Label5.Size = New Size(42, 32)
         Label5.TabIndex = 72
@@ -209,7 +210,7 @@ Partial Class FrmFactura
         ' 
         facId.AutoSize = True
         facId.Font = New Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        facId.Location = New Point(433, 20)
+        facId.Location = New Point(538, 19)
         facId.Name = "facId"
         facId.Size = New Size(28, 32)
         facId.TabIndex = 73
@@ -221,7 +222,7 @@ Partial Class FrmFactura
         DgvFac.Columns.AddRange(New DataGridViewColumn() {artid, artNom, artCant, artPre, Descuento, Iva, sb})
         DgvFac.Location = New Point(12, 137)
         DgvFac.Name = "DgvFac"
-        DgvFac.Size = New Size(481, 174)
+        DgvFac.Size = New Size(554, 174)
         DgvFac.TabIndex = 74
         ' 
         ' artid
@@ -234,7 +235,7 @@ Partial Class FrmFactura
         ' 
         artNom.HeaderText = "Articulo"
         artNom.Name = "artNom"
-        artNom.Width = 250
+        artNom.Width = 150
         ' 
         ' artCant
         ' 
@@ -246,6 +247,7 @@ Partial Class FrmFactura
         ' 
         artPre.HeaderText = "Precio"
         artPre.Name = "artPre"
+        artPre.Width = 80
         ' 
         ' Descuento
         ' 
@@ -263,19 +265,21 @@ Partial Class FrmFactura
         ' 
         sb.HeaderText = "SubTotal"
         sb.Name = "sb"
+        sb.Width = 80
         ' 
         ' txtSub
         ' 
-        txtSub.Enabled = False
-        txtSub.Location = New Point(385, 317)
+        txtSub.BackColor = SystemColors.Control
+        txtSub.Location = New Point(458, 320)
         txtSub.Name = "txtSub"
+        txtSub.ReadOnly = True
         txtSub.Size = New Size(108, 23)
         txtSub.TabIndex = 76
         ' 
         ' Label7
         ' 
         Label7.AutoSize = True
-        Label7.Location = New Point(327, 320)
+        Label7.Location = New Point(400, 323)
         Label7.Name = "Label7"
         Label7.Size = New Size(51, 15)
         Label7.TabIndex = 75
@@ -283,16 +287,17 @@ Partial Class FrmFactura
         ' 
         ' txtIva
         ' 
-        txtIva.Enabled = False
-        txtIva.Location = New Point(385, 346)
+        txtIva.BackColor = SystemColors.Control
+        txtIva.Location = New Point(458, 349)
         txtIva.Name = "txtIva"
+        txtIva.ReadOnly = True
         txtIva.Size = New Size(108, 23)
         txtIva.TabIndex = 78
         ' 
         ' Label8
         ' 
         Label8.AutoSize = True
-        Label8.Location = New Point(327, 349)
+        Label8.Location = New Point(400, 352)
         Label8.Name = "Label8"
         Label8.Size = New Size(52, 15)
         Label8.TabIndex = 77
@@ -300,16 +305,17 @@ Partial Class FrmFactura
         ' 
         ' txtDesc
         ' 
-        txtDesc.Enabled = False
-        txtDesc.Location = New Point(385, 375)
+        txtDesc.BackColor = SystemColors.Control
+        txtDesc.Location = New Point(458, 378)
         txtDesc.Name = "txtDesc"
+        txtDesc.ReadOnly = True
         txtDesc.Size = New Size(108, 23)
         txtDesc.TabIndex = 80
         ' 
         ' Label9
         ' 
         Label9.AutoSize = True
-        Label9.Location = New Point(289, 378)
+        Label9.Location = New Point(362, 381)
         Label9.Name = "Label9"
         Label9.Size = New Size(90, 15)
         Label9.TabIndex = 79
@@ -317,16 +323,17 @@ Partial Class FrmFactura
         ' 
         ' txtTotal
         ' 
-        txtTotal.Enabled = False
-        txtTotal.Location = New Point(385, 404)
+        txtTotal.BackColor = SystemColors.Control
+        txtTotal.Location = New Point(458, 407)
         txtTotal.Name = "txtTotal"
+        txtTotal.ReadOnly = True
         txtTotal.Size = New Size(108, 23)
         txtTotal.TabIndex = 82
         ' 
         ' Label10
         ' 
         Label10.AutoSize = True
-        Label10.Location = New Point(347, 407)
+        Label10.Location = New Point(420, 410)
         Label10.Name = "Label10"
         Label10.Size = New Size(32, 15)
         Label10.TabIndex = 81
@@ -334,10 +341,10 @@ Partial Class FrmFactura
         ' 
         ' StatusStrip1
         ' 
-        StatusStrip1.Items.AddRange(New ToolStripItem() {ToolStripStatusLabel2, ToolStripStatusLabel3, usuNom, barProgress, est})
+        StatusStrip1.Items.AddRange(New ToolStripItem() {ToolStripStatusLabel2, ToolStripStatusLabel3, usuNom, barProgress, est, msjErr})
         StatusStrip1.Location = New Point(0, 444)
         StatusStrip1.Name = "StatusStrip1"
-        StatusStrip1.Size = New Size(505, 23)
+        StatusStrip1.Size = New Size(583, 23)
         StatusStrip1.TabIndex = 83
         StatusStrip1.Text = "StatusStrip1"
         ' 
@@ -369,15 +376,21 @@ Partial Class FrmFactura
         ' est
         ' 
         est.Name = "est"
-        est.Size = New Size(115, 18)
-        est.Text = "&Estado: En Ejecucion"
+        est.Size = New Size(45, 18)
+        est.Text = "&Estado:"
         est.TextAlign = ContentAlignment.MiddleRight
+        ' 
+        ' msjErr
+        ' 
+        msjErr.Name = "msjErr"
+        msjErr.Size = New Size(74, 18)
+        msjErr.Text = "En ejecucion"
         ' 
         ' RichTextBox1
         ' 
         RichTextBox1.Location = New Point(12, 345)
         RichTextBox1.Name = "RichTextBox1"
-        RichTextBox1.Size = New Size(271, 82)
+        RichTextBox1.Size = New Size(344, 82)
         RichTextBox1.TabIndex = 84
         RichTextBox1.Text = ""
         ' 
@@ -394,7 +407,7 @@ Partial Class FrmFactura
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(505, 467)
+        ClientSize = New Size(583, 467)
         Controls.Add(Label6)
         Controls.Add(RichTextBox1)
         Controls.Add(StatusStrip1)
@@ -411,7 +424,7 @@ Partial Class FrmFactura
         Controls.Add(Label5)
         Controls.Add(txtTel)
         Controls.Add(Label4)
-        Controls.Add(txtRezSoc)
+        Controls.Add(txtCor)
         Controls.Add(Label3)
         Controls.Add(txtNom)
         Controls.Add(Label2)
@@ -441,7 +454,7 @@ Partial Class FrmFactura
     Friend WithEvents txtId As TextBox
     Friend WithEvents txtNom As TextBox
     Friend WithEvents Label2 As Label
-    Friend WithEvents txtRezSoc As TextBox
+    Friend WithEvents txtCor As TextBox
     Friend WithEvents Label3 As Label
     Friend WithEvents txtTel As TextBox
     Friend WithEvents Label4 As Label
@@ -472,4 +485,5 @@ Partial Class FrmFactura
     Friend WithEvents Descuento As DataGridViewTextBoxColumn
     Friend WithEvents Iva As DataGridViewTextBoxColumn
     Friend WithEvents sb As DataGridViewTextBoxColumn
+    Friend WithEvents msjErr As ToolStripStatusLabel
 End Class
