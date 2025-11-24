@@ -70,7 +70,7 @@ Partial Class FrmUsuario
         txtIdNum.MaxLength = 9
         txtIdNum.Name = "txtIdNum"
         txtIdNum.Size = New Size(188, 23)
-        txtIdNum.TabIndex = 13
+        txtIdNum.TabIndex = 0
         ' 
         ' lbId
         ' 
@@ -90,7 +90,7 @@ Partial Class FrmUsuario
         txtNomUsu.MaxLength = 150
         txtNomUsu.Name = "txtNomUsu"
         txtNomUsu.Size = New Size(220, 23)
-        txtNomUsu.TabIndex = 15
+        txtNomUsu.TabIndex = 2
         ' 
         ' lbNom
         ' 
@@ -110,7 +110,7 @@ Partial Class FrmUsuario
         txtApeUsu.MaxLength = 150
         txtApeUsu.Name = "txtApeUsu"
         txtApeUsu.Size = New Size(220, 23)
-        txtApeUsu.TabIndex = 17
+        txtApeUsu.TabIndex = 3
         ' 
         ' lbApe
         ' 
@@ -131,7 +131,7 @@ Partial Class FrmUsuario
         txtEma.MaxLength = 254
         txtEma.Name = "txtEma"
         txtEma.Size = New Size(220, 23)
-        txtEma.TabIndex = 19
+        txtEma.TabIndex = 6
         ' 
         ' lbCorr
         ' 
@@ -163,7 +163,7 @@ Partial Class FrmUsuario
         txtRolUsu.Location = New Point(137, 285)
         txtRolUsu.Name = "txtRolUsu"
         txtRolUsu.Size = New Size(220, 23)
-        txtRolUsu.TabIndex = 20
+        txtRolUsu.TabIndex = 9
         ' 
         ' txtObsUsu
         ' 
@@ -172,7 +172,7 @@ Partial Class FrmUsuario
         txtObsUsu.Name = "txtObsUsu"
         txtObsUsu.ReadOnly = True
         txtObsUsu.Size = New Size(220, 96)
-        txtObsUsu.TabIndex = 22
+        txtObsUsu.TabIndex = 11
         txtObsUsu.Text = ""
         ' 
         ' lbObs
@@ -193,7 +193,7 @@ Partial Class FrmUsuario
         Button1.Location = New Point(331, 50)
         Button1.Name = "Button1"
         Button1.Size = New Size(26, 23)
-        Button1.TabIndex = 25
+        Button1.TabIndex = 1
         Button1.UseVisualStyleBackColor = True
         ' 
         ' ToolStrip1
@@ -203,6 +203,7 @@ Partial Class FrmUsuario
         ToolStrip1.Name = "ToolStrip1"
         ToolStrip1.Size = New Size(396, 25)
         ToolStrip1.TabIndex = 26
+        ToolStrip1.TabStop = True
         ToolStrip1.Text = "ToolStrip1"
         ' 
         ' btnAdd
@@ -281,7 +282,7 @@ Partial Class FrmUsuario
         txtDepa.Location = New Point(137, 227)
         txtDepa.Name = "txtDepa"
         txtDepa.Size = New Size(220, 23)
-        txtDepa.TabIndex = 27
+        txtDepa.TabIndex = 7
         ' 
         ' lbMun
         ' 
@@ -302,7 +303,7 @@ Partial Class FrmUsuario
         txtMun.Location = New Point(137, 256)
         txtMun.Name = "txtMun"
         txtMun.Size = New Size(220, 23)
-        txtMun.TabIndex = 29
+        txtMun.TabIndex = 8
         ' 
         ' BaseDatosBindingSource
         ' 
@@ -331,7 +332,7 @@ Partial Class FrmUsuario
         txtConUsu.Name = "txtConUsu"
         txtConUsu.PasswordChar = "*"c
         txtConUsu.Size = New Size(220, 23)
-        txtConUsu.TabIndex = 45
+        txtConUsu.TabIndex = 4
         ' 
         ' lbCon
         ' 
@@ -364,7 +365,7 @@ Partial Class FrmUsuario
         txtEstUsu.Location = New Point(137, 314)
         txtEstUsu.Name = "txtEstUsu"
         txtEstUsu.Size = New Size(220, 23)
-        txtEstUsu.TabIndex = 46
+        txtEstUsu.TabIndex = 10
         ' 
         ' txtConContra
         ' 
@@ -374,7 +375,7 @@ Partial Class FrmUsuario
         txtConContra.Name = "txtConContra"
         txtConContra.PasswordChar = "*"c
         txtConContra.Size = New Size(220, 23)
-        txtConContra.TabIndex = 49
+        txtConContra.TabIndex = 5
         ' 
         ' lbConCont
         ' 
@@ -396,7 +397,7 @@ Partial Class FrmUsuario
         camCont.Location = New Point(12, 416)
         camCont.Name = "camCont"
         camCont.Size = New Size(199, 23)
-        camCont.TabIndex = 51
+        camCont.TabIndex = 12
         camCont.Text = "Quieres cambiar la contraseña?"
         camCont.TextAlign = ContentAlignment.MiddleLeft
         camCont.Visible = False

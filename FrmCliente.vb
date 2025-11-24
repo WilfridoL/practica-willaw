@@ -29,7 +29,7 @@ Public Class FrmCliente
         BaseDatos.conectar("root", "")
         cargar_combobox("SELECT * FROM departamentos;", txtDepa, "DepId", "DepNom")
         txtDepa.SelectedValue = 0
-        arrText = {txtIdNum, txtNom, txtApe, txtEma, txtTelNum, txtDepa, txtMun}
+        arrText = {txtIdNum, txtNom, txtApe, txtEma, txtTel, txtDepa, txtMun}
         arrBtn = {btnAdd}
         arrLabel = {lbId, lbNom, lbApe, lbCor, lbTel, lbDep, lbMun}
         If FocusFactura = 1 Then
@@ -37,6 +37,8 @@ Public Class FrmCliente
             ToolStripButton1.Enabled = False
             btnLim.Enabled = False
         End If
+
+        'MsgBox(Regex.IsMatch("+57-344488", "^\+[0-9]{1,3}-[0-9]{5,15}$"))
     End Sub
 
     Public Function BuscarCliente(ByVal id As Integer)
@@ -50,7 +52,7 @@ Public Class FrmCliente
             txtNom.Text = rst("cliNom")
             txtApe.Text = rst("cliApe")
             txtEma.Text = rst("cliEma")
-            txtTelNum.Text = rst("cliTel")
+            txtTel.Text = rst("cliTel")
             txtDepa.SelectedValue = rst("cliDep")
             txtMun.SelectedValue = rst("cliMun")
             btnAdd.Enabled = False
@@ -67,7 +69,7 @@ Public Class FrmCliente
     Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
         SQL = "INSERT cliente (cliCed, cliNom, cliApe, cliEma, cliTel, cliDep, cliMun) 
         VALUE (" & txtIdNum.Text & ", '" & txtNom.Text.ToUpper & "', '" & txtApe.Text.ToUpper &
-        "', '" & txtEma.Text & "', " & txtTelNum.Text & ", " & txtDepa.SelectedValue & ", " & txtMun.SelectedValue & ");"
+        "', '" & txtEma.Text & "', '" & txtTel.Text & "', " & txtDepa.SelectedValue & ", " & txtMun.SelectedValue & ");"
         'MsgBox(SQL)
         If validacionGlobal(arrText, arrLabel, msjErr, "") <> True Then Exit Sub ' validacion general
         ' validacion id existente
@@ -120,7 +122,7 @@ Public Class FrmCliente
        "clinom = '" & txtNom.Text.ToUpper() & "', " &
        "cliape = '" & txtApe.Text.ToUpper() & "', " &
        "cliEma = '" & txtEma.Text & "', " &
-       "cliTel = " & txtTelNum.Text & ", " &
+       "cliTel = '" & txtTel.Text & "', " &
        "cliDep = " & txtDepa.SelectedValue & ", " &
        "cliMun = " & txtMun.SelectedValue &
        " WHERE cliCed = " & txtIdNum.Text
@@ -184,5 +186,6 @@ Public Class FrmCliente
     Private Sub FrmCliente_Closing(sender As Object, e As CancelEventArgs) Handles MyBase.Closing
         limpiar(1)
         FocusFactura = 0
+        seleccionar.Show()
     End Sub
 End Class

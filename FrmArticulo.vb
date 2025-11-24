@@ -1,4 +1,6 @@
-﻿Public Class FrmArticulo
+﻿Imports System.Text.RegularExpressions
+
+Public Class FrmArticulo
     Dim c_Varias As New Varias
     Dim idDisplay As New Integer
     Public txtboxArr() As Control
@@ -13,10 +15,17 @@
                     ctrl.Focus()
                     Return False
                 End If
+                If CType(ctrl, TextBox).Name.Substring(CType(ctrl, TextBox).Name.Length - 3).ToLower() = "num" And
+                    Regex.IsMatch(CType(ctrl, TextBox).Text, "^([0-9]+(\/{1}[0-9]+)*)+(?!([\/]{2}))$") = False Then
+                    msjErr.Text = "Este campo no permite datos no numericos"
+                    ctrl.Focus()
+                    Return False
+                End If
             ElseIf TypeOf ctrl Is ComboBox Then
                 If CType(ctrl, ComboBox).SelectedValue = 0 Then
-                    msjErr.Text = "Por favor, rellene todos los campos"
+                    msjErr.Text = "Por favor, seleccione una categoria para continuar"
                     ctrl.Focus()
+                    Return False
                 End If
             Else
                 Return True
@@ -37,7 +46,7 @@
         SQL = "Select * FROM categorias"
         c_Varias.llena_combo(comCat, SQL, "catId", "catNom")
         comCat.SelectedValue = 0
-        txtboxArr = {comCat, txtNom, txtPre, txtStock, txtIva, TxtDes, txtDesc}
+        txtboxArr = {comCat, txtNom, txtPreNum, txtStockNum, txtIvaNum, TxtDesNum, txtDesc}
         arrLabel = {lbCat, lbNom, lbPre, lbSto, lbIva, lbDes, lbDesc}
         btnArr = {btnAdd, btnUpd, btnDel}
         cargar_id()
@@ -46,8 +55,8 @@
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
         If val() <> True Then Exit Sub
         SQL = "INSERT articulo (artnom, artdesc, precio, stock, catIdFk, artIva, artDescuento)
-        VALUE ('" & txtNom.Text & "', '" & txtDesc.Text & "', " & txtPre.Text & ", " &
-        txtStock.Text & ", " & comCat.SelectedValue & ", " & txtIva.Text & ", " & TxtDes.Text & ");"
+        VALUE ('" & txtNom.Text & "', '" & txtDesc.Text & "', " & txtPreNum.Text & ", " &
+        txtStockNum.Text & ", " & comCat.SelectedValue & ", " & txtIvaNum.Text & ", " & TxtDesNum.Text & ");"
         ' MsgBox(SQL)
         If BaseDatos.ingresar_registros(SQL, "insertar") Then
             msjErr.Text = "Se insertaron los datos correctamente"
@@ -99,11 +108,11 @@
         SQL = "UPDATE  articulo SET 
         artNom='" & txtNom.Text & "', " &
         "artDesc='" & txtDesc.Text & "', " &
-        " precio=" & txtPre.Text.Replace(",", ".") & ", " &
-        "stock=" & txtStock.Text & ", " &
+        " precio=" & txtPreNum.Text.Replace(",", ".") & ", " &
+        "stock=" & txtStockNum.Text & ", " &
         "catIdFk=" & comCat.SelectedValue & "," &
-        "artDescuento=" & TxtDes.Text & ", " &
-        "artIva=" & txtIva.Text &
+        "artDescuento=" & TxtDesNum.Text & ", " &
+        "artIva=" & txtIvaNum.Text &
         " WHERE artId=" & txtId.Text
         MsgBox(SQL)
         If BaseDatos.ingresar_registros(SQL, "Actualizar") Then
@@ -134,5 +143,9 @@
     Private Sub addCat_Click(sender As Object, e As EventArgs) Handles addCat.Click
         FrmCategoria.Show()
         Me.Close()
+    End Sub
+
+    Private Sub FrmArticulo_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+        seleccionar.Show()
     End Sub
 End Class

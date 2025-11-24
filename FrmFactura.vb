@@ -45,17 +45,18 @@ Public Class FrmFactura
                             FrmConsulta2.grd.Columns(4).Width = 45
                             FrmConsulta2.ShowDialog()
                             If sw_regreso = 1 Then
-                                If validarDataGrid(vec(0)) = False Then Exit Sub
                                 DgvFac.Item(0, DgvFac.CurrentRow.Index).Value = vec(0) ' rellena la columna seleccionada (0 = Codigo) con los datos de vec
+                                If validarDataGrid(DgvFac.Item(0, DgvFac.CurrentRow.Index).Value) = False Then Exit Sub
                                 DgvFac.Item(1, DgvFac.CurrentRow.Index).Value = vec(1) ' rellena la columna seleccionada (1 = Nombre) con los datos de vec
                                 DgvFac.Item(3, DgvFac.CurrentRow.Index).Value = vec(2) ' rellena la columna seleccionada (2 = Valor) con los datos de vec
                                 DgvFac.Item(5, DgvFac.CurrentRow.Index).Value = vec(3) ' rellena la columna seleccionada (3 = IVA) con los datos de vec
                                 DgvFac.Item(4, DgvFac.CurrentRow.Index).Value = vec(4) ' rellena la columna seleccionada (4 = Descuento) con los datos de vec
                                 DgvFac.CurrentCell = DgvFac.Rows(DgvFac.CurrentRow.Index - 1).Cells(2) ' mover el focus a la siguiente fila en la misma columna
-                                'If DgvFac.CurrentCell.Selected = 0 Then
+                                ' MsgBox(DgvFac.CurrentCell.RowIndex)
+                                'If DgvFac.CurrentCell.RowIndex = 0 Then
                                 'MsgBox("a")
 
-                                'End If
+                                ' End If
                             Else
                                 DgvFac.CurrentCell = DgvFac.Rows(DgvFac.CurrentRow.Index).Cells(1)
                             End If
@@ -77,7 +78,9 @@ Public Class FrmFactura
         usuNom.Text = "Usuario: " & usuNombres
         arrTxt = {txtId, txtNom, txtTel, txtCor} ' rellenar array de control
         txtId.Focus()
+        ' DgvFac.Rows.Add() ' agrega una nueva fila
         cambiarEstado(2)
+        ' MsgBox(DgvFac.RowCount)
     End Sub
 
     Private Sub btnSalir_Click(sender As Object, e As EventArgs) Handles btnSalir.Click
@@ -150,11 +153,11 @@ Public Class FrmFactura
             rst = BaseDatos.leer_Registro(SQL)
             If rst.Read() Then
                 DgvFac.Rows(rowIndex).Cells(1).Value = rst(1)
+                DgvFac.Rows(rowIndex).Cells(2).Value = 1
                 DgvFac.Rows(rowIndex).Cells(3).Value = rst(2)
                 DgvFac.Rows(rowIndex).Cells(4).Value = rst(3)
                 DgvFac.Rows(rowIndex).Cells(5).Value = rst(4)
                 DgvFac.CurrentCell = DgvFac.Rows(rowIndex).Cells(2)
-
                 Return True
             Else
                 If (MsgBox("El articulo no exite. ¿Desea buscarlo?", MsgBoxStyle.YesNo) = vbYes) Then
@@ -201,6 +204,7 @@ Public Class FrmFactura
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
         Try
             If validarIdCliente(True) <> True Then Exit Sub ' si no pasa a la primera al segundo click si pasa, si la funcion retorna true 
+            If DgvFac.RowCount < 2 Then MsgBox("Para registrar tiene que al menos tener un articulo en la cuadricula", MsgBoxStyle.Critical) : Exit Sub
             If MsgBox("¿Desea registrar la factura?" & vbCrLf &
                       "Se eliminaran todas las filas que no esten diligenciadas de la cuadricula",
                       MsgBoxStyle.YesNo Or MsgBoxStyle.Information, "Confirmar") = vbNo Then Exit Sub
@@ -319,6 +323,10 @@ Public Class FrmFactura
     End Function
 
     Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
-        limpiarFactura()
+        limpiarFilas()
+    End Sub
+
+    Private Sub FrmFactura_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+        seleccionar.Show()
     End Sub
 End Class

@@ -328,4 +328,7 @@ Public Class FrmUsuario
         txtIdNum.Enabled = True
     End Function
 
+    Private Sub FrmUsuario_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+        seleccionar.Show()
+    End Sub
 End Class

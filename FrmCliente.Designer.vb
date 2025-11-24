@@ -40,7 +40,7 @@ Partial Class FrmCliente
         lbNom = New Label()
         txtIdNum = New TextBox()
         lbId = New Label()
-        txtTelNum = New TextBox()
+        txtTel = New TextBox()
         StatusStrip1 = New StatusStrip()
         msjErr = New ToolStripStatusLabel()
         lbMun = New Label()
@@ -58,6 +58,7 @@ Partial Class FrmCliente
         ToolStrip1.Name = "ToolStrip1"
         ToolStrip1.Size = New Size(376, 25)
         ToolStrip1.TabIndex = 40
+        ToolStrip1.TabStop = True
         ToolStrip1.Text = "ToolStrip1"
         ' 
         ' btnAdd
@@ -122,7 +123,7 @@ Partial Class FrmCliente
         Button1.Location = New Point(253, 37)
         Button1.Name = "Button1"
         Button1.Size = New Size(26, 23)
-        Button1.TabIndex = 39
+        Button1.TabIndex = 1
         Button1.UseVisualStyleBackColor = True
         ' 
         ' lbTel
@@ -143,7 +144,7 @@ Partial Class FrmCliente
         txtEma.MaxLength = 254
         txtEma.Name = "txtEma"
         txtEma.Size = New Size(220, 23)
-        txtEma.TabIndex = 34
+        txtEma.TabIndex = 4
         ' 
         ' lbCor
         ' 
@@ -163,7 +164,7 @@ Partial Class FrmCliente
         txtApe.MaxLength = 150
         txtApe.Name = "txtApe"
         txtApe.Size = New Size(220, 23)
-        txtApe.TabIndex = 32
+        txtApe.TabIndex = 3
         ' 
         ' lbApe
         ' 
@@ -183,7 +184,7 @@ Partial Class FrmCliente
         txtNom.MaxLength = 150
         txtNom.Name = "txtNom"
         txtNom.Size = New Size(220, 23)
-        txtNom.TabIndex = 30
+        txtNom.TabIndex = 2
         ' 
         ' lbNom
         ' 
@@ -203,7 +204,7 @@ Partial Class FrmCliente
         txtIdNum.MaxLength = 9
         txtIdNum.Name = "txtIdNum"
         txtIdNum.Size = New Size(135, 23)
-        txtIdNum.TabIndex = 28
+        txtIdNum.TabIndex = 0
         ' 
         ' lbId
         ' 
@@ -216,14 +217,14 @@ Partial Class FrmCliente
         lbId.Text = "&Identificacion"
         lbId.TextAlign = ContentAlignment.MiddleLeft
         ' 
-        ' txtTelNum
+        ' txtTel
         ' 
-        txtTelNum.Cursor = Cursors.IBeam
-        txtTelNum.Location = New Point(112, 154)
-        txtTelNum.MaxLength = 9
-        txtTelNum.Name = "txtTelNum"
-        txtTelNum.Size = New Size(220, 23)
-        txtTelNum.TabIndex = 41
+        txtTel.Cursor = Cursors.IBeam
+        txtTel.Location = New Point(112, 154)
+        txtTel.MaxLength = 15
+        txtTel.Name = "txtTel"
+        txtTel.Size = New Size(220, 23)
+        txtTel.TabIndex = 5
         ' 
         ' StatusStrip1
         ' 
@@ -259,7 +260,7 @@ Partial Class FrmCliente
         txtMun.Location = New Point(112, 212)
         txtMun.Name = "txtMun"
         txtMun.Size = New Size(220, 23)
-        txtMun.TabIndex = 45
+        txtMun.TabIndex = 7
         ' 
         ' lbDep
         ' 
@@ -280,7 +281,7 @@ Partial Class FrmCliente
         txtDepa.Location = New Point(112, 183)
         txtDepa.Name = "txtDepa"
         txtDepa.Size = New Size(220, 23)
-        txtDepa.TabIndex = 43
+        txtDepa.TabIndex = 6
         ' 
         ' FrmCliente
         ' 
@@ -292,7 +293,7 @@ Partial Class FrmCliente
         Controls.Add(lbDep)
         Controls.Add(txtDepa)
         Controls.Add(StatusStrip1)
-        Controls.Add(txtTelNum)
+        Controls.Add(txtTel)
         Controls.Add(ToolStrip1)
         Controls.Add(Button1)
         Controls.Add(lbTel)
@@ -329,7 +330,7 @@ Partial Class FrmCliente
     Friend WithEvents lbNom As Label
     Friend WithEvents txtIdNum As TextBox
     Friend WithEvents lbId As Label
-    Friend WithEvents txtTelNum As TextBox
+    Friend WithEvents txtTel As TextBox
     Friend WithEvents btnUpd As ToolStripButton
     Friend WithEvents btnDel As ToolStripButton
     Friend WithEvents StatusStrip1 As StatusStrip

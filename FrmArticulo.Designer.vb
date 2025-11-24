@@ -32,23 +32,23 @@ Partial Class FrmArticulo
         ToolStripButton2 = New ToolStripButton()
         lbDesc = New Label()
         txtDesc = New RichTextBox()
-        txtPre = New TextBox()
+        txtPreNum = New TextBox()
         lbPre = New Label()
         txtNom = New TextBox()
         lbNom = New Label()
-        txtStock = New TextBox()
+        txtStockNum = New TextBox()
         lbSto = New Label()
         StatusStrip1 = New StatusStrip()
         msjErr = New ToolStripStatusLabel()
         comCat = New ComboBox()
         lbCat = New Label()
         addCat = New PictureBox()
-        txtIva = New TextBox()
+        txtIvaNum = New TextBox()
         lbIva = New Label()
-        TxtDes = New TextBox()
-        lbDes = New Label()
+        TxtDesNum = New TextBox()
         txtId = New Label()
         Label7 = New Label()
+        lbDes = New Label()
         ToolStrip1.SuspendLayout()
         StatusStrip1.SuspendLayout()
         CType(addCat, ComponentModel.ISupportInitialize).BeginInit()
@@ -61,6 +61,7 @@ Partial Class FrmArticulo
         ToolStrip1.Name = "ToolStrip1"
         ToolStrip1.Size = New Size(491, 25)
         ToolStrip1.TabIndex = 61
+        ToolStrip1.TabStop = True
         ToolStrip1.Text = "ToolStrip1"
         ' 
         ' btnAdd
@@ -123,7 +124,7 @@ Partial Class FrmArticulo
         ' 
         lbDesc.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         lbDesc.ForeColor = SystemColors.Desktop
-        lbDesc.Location = New Point(245, 187)
+        lbDesc.Location = New Point(19, 167)
         lbDesc.Name = "lbDesc"
         lbDesc.Size = New Size(199, 23)
         lbDesc.TabIndex = 59
@@ -133,25 +134,25 @@ Partial Class FrmArticulo
         ' txtDesc
         ' 
         txtDesc.BackColor = SystemColors.ControlLightLight
-        txtDesc.Location = New Point(245, 213)
+        txtDesc.Location = New Point(19, 191)
         txtDesc.Name = "txtDesc"
-        txtDesc.Size = New Size(220, 40)
+        txtDesc.Size = New Size(443, 40)
         txtDesc.TabIndex = 7
         txtDesc.Text = ""
         ' 
-        ' txtPre
+        ' txtPreNum
         ' 
-        txtPre.Location = New Point(245, 115)
-        txtPre.MaxLength = 150
-        txtPre.Name = "txtPre"
-        txtPre.Size = New Size(220, 23)
-        txtPre.TabIndex = 3
+        txtPreNum.Location = New Point(19, 104)
+        txtPreNum.MaxLength = 150
+        txtPreNum.Name = "txtPreNum"
+        txtPreNum.Size = New Size(220, 23)
+        txtPreNum.TabIndex = 3
         ' 
         ' lbPre
         ' 
         lbPre.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         lbPre.ForeColor = SystemColors.Desktop
-        lbPre.Location = New Point(245, 89)
+        lbPre.Location = New Point(19, 78)
         lbPre.Name = "lbPre"
         lbPre.Size = New Size(63, 23)
         lbPre.TabIndex = 52
@@ -160,7 +161,7 @@ Partial Class FrmArticulo
         ' 
         ' txtNom
         ' 
-        txtNom.Location = New Point(19, 115)
+        txtNom.Location = New Point(245, 60)
         txtNom.MaxLength = 150
         txtNom.Name = "txtNom"
         txtNom.Size = New Size(220, 23)
@@ -170,26 +171,26 @@ Partial Class FrmArticulo
         ' 
         lbNom.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         lbNom.ForeColor = SystemColors.Desktop
-        lbNom.Location = New Point(19, 89)
+        lbNom.Location = New Point(245, 34)
         lbNom.Name = "lbNom"
         lbNom.Size = New Size(63, 23)
         lbNom.TabIndex = 50
         lbNom.Text = "&Nombre"
         lbNom.TextAlign = ContentAlignment.MiddleLeft
         ' 
-        ' txtStock
+        ' txtStockNum
         ' 
-        txtStock.Location = New Point(19, 166)
-        txtStock.MaxLength = 15
-        txtStock.Name = "txtStock"
-        txtStock.Size = New Size(220, 23)
-        txtStock.TabIndex = 4
+        txtStockNum.Location = New Point(245, 104)
+        txtStockNum.MaxLength = 15
+        txtStockNum.Name = "txtStockNum"
+        txtStockNum.Size = New Size(220, 23)
+        txtStockNum.TabIndex = 4
         ' 
         ' lbSto
         ' 
         lbSto.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         lbSto.ForeColor = SystemColors.Desktop
-        lbSto.Location = New Point(19, 140)
+        lbSto.Location = New Point(245, 78)
         lbSto.Name = "lbSto"
         lbSto.Size = New Size(82, 23)
         lbSto.TabIndex = 67
@@ -199,7 +200,7 @@ Partial Class FrmArticulo
         ' StatusStrip1
         ' 
         StatusStrip1.Items.AddRange(New ToolStripItem() {msjErr})
-        StatusStrip1.Location = New Point(0, 256)
+        StatusStrip1.Location = New Point(0, 240)
         StatusStrip1.Name = "StatusStrip1"
         StatusStrip1.Size = New Size(491, 22)
         StatusStrip1.TabIndex = 66
@@ -243,49 +244,39 @@ Partial Class FrmArticulo
         addCat.TabIndex = 72
         addCat.TabStop = False
         ' 
-        ' txtIva
+        ' txtIvaNum
         ' 
-        txtIva.Location = New Point(245, 166)
-        txtIva.MaxLength = 15
-        txtIva.Name = "txtIva"
-        txtIva.Size = New Size(220, 23)
-        txtIva.TabIndex = 5
+        txtIvaNum.Location = New Point(19, 148)
+        txtIvaNum.MaxLength = 15
+        txtIvaNum.Name = "txtIvaNum"
+        txtIvaNum.Size = New Size(220, 23)
+        txtIvaNum.TabIndex = 5
         ' 
         ' lbIva
         ' 
+        lbIva.BackColor = Color.Transparent
         lbIva.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         lbIva.ForeColor = SystemColors.Desktop
-        lbIva.Location = New Point(245, 140)
+        lbIva.Location = New Point(19, 123)
         lbIva.Name = "lbIva"
         lbIva.Size = New Size(82, 23)
         lbIva.TabIndex = 73
         lbIva.Text = "&IVA"
         lbIva.TextAlign = ContentAlignment.MiddleLeft
         ' 
-        ' TxtDes
+        ' TxtDesNum
         ' 
-        TxtDes.Location = New Point(19, 216)
-        TxtDes.MaxLength = 15
-        TxtDes.Name = "TxtDes"
-        TxtDes.Size = New Size(220, 23)
-        TxtDes.TabIndex = 6
-        ' 
-        ' lbDes
-        ' 
-        lbDes.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
-        lbDes.ForeColor = SystemColors.Desktop
-        lbDes.Location = New Point(19, 190)
-        lbDes.Name = "lbDes"
-        lbDes.Size = New Size(82, 23)
-        lbDes.TabIndex = 75
-        lbDes.Text = "&Descuento"
-        lbDes.TextAlign = ContentAlignment.MiddleLeft
+        TxtDesNum.Location = New Point(245, 147)
+        TxtDesNum.MaxLength = 15
+        TxtDesNum.Name = "TxtDesNum"
+        TxtDesNum.Size = New Size(220, 23)
+        TxtDesNum.TabIndex = 6
         ' 
         ' txtId
         ' 
         txtId.AutoSize = True
         txtId.Font = New Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        txtId.Location = New Point(277, 54)
+        txtId.Location = New Point(437, 22)
         txtId.Name = "txtId"
         txtId.Size = New Size(23, 25)
         txtId.TabIndex = 78
@@ -296,22 +287,35 @@ Partial Class FrmArticulo
         Label7.AutoSize = True
         Label7.BackColor = Color.Transparent
         Label7.Font = New Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label7.Location = New Point(245, 52)
+        Label7.Location = New Point(405, 20)
         Label7.Name = "Label7"
         Label7.Size = New Size(38, 30)
         Label7.TabIndex = 79
         Label7.Text = "N°"
         ' 
+        ' lbDes
+        ' 
+        lbDes.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        lbDes.ForeColor = SystemColors.Desktop
+        lbDes.Location = New Point(245, 122)
+        lbDes.Name = "lbDes"
+        lbDes.Size = New Size(82, 23)
+        lbDes.TabIndex = 75
+        lbDes.Text = "&Descuento"
+        lbDes.TextAlign = ContentAlignment.MiddleLeft
+        ' 
         ' FrmArticulo
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(491, 278)
+        ClientSize = New Size(491, 262)
+        Controls.Add(txtPreNum)
+        Controls.Add(txtStockNum)
         Controls.Add(txtId)
         Controls.Add(Label7)
-        Controls.Add(TxtDes)
+        Controls.Add(TxtDesNum)
         Controls.Add(lbDes)
-        Controls.Add(txtIva)
+        Controls.Add(txtIvaNum)
         Controls.Add(lbIva)
         Controls.Add(addCat)
         Controls.Add(lbCat)
@@ -319,11 +323,9 @@ Partial Class FrmArticulo
         Controls.Add(ToolStrip1)
         Controls.Add(lbDesc)
         Controls.Add(txtDesc)
-        Controls.Add(txtPre)
         Controls.Add(lbPre)
         Controls.Add(txtNom)
         Controls.Add(lbNom)
-        Controls.Add(txtStock)
         Controls.Add(lbSto)
         Controls.Add(StatusStrip1)
         Name = "FrmArticulo"
@@ -347,21 +349,21 @@ Partial Class FrmArticulo
     Friend WithEvents ToolStripButton2 As ToolStripButton
     Friend WithEvents lbDesc As Label
     Friend WithEvents txtDesc As RichTextBox
-    Friend WithEvents txtPre As TextBox
+    Friend WithEvents txtPreNum As TextBox
     Friend WithEvents lbPre As Label
     Friend WithEvents txtNom As TextBox
     Friend WithEvents lbNom As Label
-    Friend WithEvents txtStock As TextBox
+    Friend WithEvents txtStockNum As TextBox
     Friend WithEvents lbSto As Label
     Friend WithEvents StatusStrip1 As StatusStrip
     Friend WithEvents msjErr As ToolStripStatusLabel
     Friend WithEvents comCat As ComboBox
     Friend WithEvents lbCat As Label
     Friend WithEvents addCat As PictureBox
-    Friend WithEvents txtIva As TextBox
+    Friend WithEvents txtIvaNum As TextBox
     Friend WithEvents lbIva As Label
-    Friend WithEvents TxtDes As TextBox
-    Friend WithEvents lbDes As Label
+    Friend WithEvents TxtDesNum As TextBox
     Friend WithEvents txtId As Label
     Friend WithEvents Label7 As Label
+    Friend WithEvents lbDes As Label
 End Class

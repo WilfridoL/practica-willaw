@@ -39,13 +39,6 @@ Partial Class FrmFactura
         txtTel = New TextBox()
         Label4 = New Label()
         DgvFac = New DataGridView()
-        artid = New DataGridViewTextBoxColumn()
-        artNom = New DataGridViewTextBoxColumn()
-        artCant = New DataGridViewTextBoxColumn()
-        artPre = New DataGridViewTextBoxColumn()
-        Descuento = New DataGridViewTextBoxColumn()
-        Iva = New DataGridViewTextBoxColumn()
-        sb = New DataGridViewTextBoxColumn()
         txtIva = New TextBox()
         Label8 = New Label()
         txtDesc = New TextBox()
@@ -61,6 +54,13 @@ Partial Class FrmFactura
         msjErr = New ToolStripStatusLabel()
         txtObs = New RichTextBox()
         Label6 = New Label()
+        artid = New DataGridViewTextBoxColumn()
+        artNom = New DataGridViewTextBoxColumn()
+        artCant = New DataGridViewTextBoxColumn()
+        artPre = New DataGridViewTextBoxColumn()
+        Descuento = New DataGridViewTextBoxColumn()
+        Iva = New DataGridViewTextBoxColumn()
+        sb = New DataGridViewTextBoxColumn()
         ToolStrip1.SuspendLayout()
         CType(DgvFac, ComponentModel.ISupportInitialize).BeginInit()
         StatusStrip1.SuspendLayout()
@@ -73,6 +73,7 @@ Partial Class FrmFactura
         ToolStrip1.Name = "ToolStrip1"
         ToolStrip1.Size = New Size(583, 25)
         ToolStrip1.TabIndex = 62
+        ToolStrip1.TabStop = True
         ToolStrip1.Text = "ToolStrip1"
         ' 
         ' btnAdd
@@ -204,48 +205,6 @@ Partial Class FrmFactura
         DgvFac.Size = New Size(554, 174)
         DgvFac.TabIndex = 74
         ' 
-        ' artid
-        ' 
-        artid.HeaderText = "Cod"
-        artid.Name = "artid"
-        artid.Width = 50
-        ' 
-        ' artNom
-        ' 
-        artNom.HeaderText = "Articulo"
-        artNom.Name = "artNom"
-        artNom.Width = 150
-        ' 
-        ' artCant
-        ' 
-        artCant.HeaderText = "Cant"
-        artCant.Name = "artCant"
-        artCant.Width = 50
-        ' 
-        ' artPre
-        ' 
-        artPre.HeaderText = "Precio"
-        artPre.Name = "artPre"
-        artPre.Width = 80
-        ' 
-        ' Descuento
-        ' 
-        Descuento.HeaderText = "(%)"
-        Descuento.Name = "Descuento"
-        Descuento.Width = 50
-        ' 
-        ' Iva
-        ' 
-        Iva.HeaderText = "IVA"
-        Iva.Name = "Iva"
-        Iva.Width = 50
-        ' 
-        ' sb
-        ' 
-        sb.HeaderText = "SubTotal"
-        sb.Name = "sb"
-        sb.Width = 80
-        ' 
         ' txtIva
         ' 
         txtIva.BackColor = SystemColors.Control
@@ -364,6 +323,53 @@ Partial Class FrmFactura
         Label6.TabIndex = 85
         Label6.Text = "Observación"
         ' 
+        ' artid
+        ' 
+        artid.HeaderText = "Cod"
+        artid.Name = "artid"
+        artid.Width = 50
+        ' 
+        ' artNom
+        ' 
+        artNom.HeaderText = "Articulo"
+        artNom.Name = "artNom"
+        artNom.ReadOnly = True
+        artNom.Width = 150
+        ' 
+        ' artCant
+        ' 
+        artCant.HeaderText = "Cant"
+        artCant.Name = "artCant"
+        artCant.Width = 50
+        ' 
+        ' artPre
+        ' 
+        artPre.HeaderText = "Precio"
+        artPre.Name = "artPre"
+        artPre.ReadOnly = True
+        artPre.Width = 80
+        ' 
+        ' Descuento
+        ' 
+        Descuento.HeaderText = "DSC (%)"
+        Descuento.Name = "Descuento"
+        Descuento.ReadOnly = True
+        Descuento.Width = 50
+        ' 
+        ' Iva
+        ' 
+        Iva.HeaderText = "IVA (%)"
+        Iva.Name = "Iva"
+        Iva.ReadOnly = True
+        Iva.Width = 50
+        ' 
+        ' sb
+        ' 
+        sb.HeaderText = "SubTotal"
+        sb.Name = "sb"
+        sb.ReadOnly = True
+        sb.Width = 80
+        ' 
         ' FrmFactura
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -431,6 +437,7 @@ Partial Class FrmFactura
     Friend WithEvents est As ToolStripStatusLabel
     Friend WithEvents txtObs As RichTextBox
     Friend WithEvents Label6 As Label
+    Friend WithEvents msjErr As ToolStripStatusLabel
     Friend WithEvents artid As DataGridViewTextBoxColumn
     Friend WithEvents artNom As DataGridViewTextBoxColumn
     Friend WithEvents artCant As DataGridViewTextBoxColumn
@@ -438,5 +445,4 @@ Partial Class FrmFactura
     Friend WithEvents Descuento As DataGridViewTextBoxColumn
     Friend WithEvents Iva As DataGridViewTextBoxColumn
     Friend WithEvents sb As DataGridViewTextBoxColumn
-    Friend WithEvents msjErr As ToolStripStatusLabel
 End Class
