@@ -12,6 +12,7 @@ Public Class FrmCliente
         btnDel.Enabled = False
         btnUpd.Enabled = False
         ToolStripButton1.Enabled = True
+        btnLim.Enabled = True
         txtIdNum.Enabled = True
         msjErr.Text = ""
         If e = 1 Then
@@ -34,6 +35,7 @@ Public Class FrmCliente
         If FocusFactura = 1 Then
             txtIdNum.Enabled = False
             ToolStripButton1.Enabled = False
+            btnLim.Enabled = False
         End If
     End Sub
 

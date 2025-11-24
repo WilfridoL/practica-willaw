@@ -86,7 +86,7 @@
             txtId.Text = CedCli
             'MsgBox(txtboxArr)
             limpiar(txtboxArr, btnArr, 0)
-            buscar("SELECT artid, artnom, precio, stock, artIva, artDescuento, artDesc FROM articulo WHERE artId=" & CedCli, txtboxArr)
+            buscar("SELECT catIdFk, artnom, precio, stock, artIva, artDescuento, artDesc FROM articulo WHERE artId=" & CedCli, txtboxArr)
             SendKeys.Send("{ENTER}")
             btnAdd.Enabled = False
             btnDel.Enabled = True
@@ -101,9 +101,11 @@
         "artDesc='" & txtDesc.Text & "', " &
         " precio=" & txtPre.Text.Replace(",", ".") & ", " &
         "stock=" & txtStock.Text & ", " &
-        "catIdFk=" & comCat.SelectedValue &
+        "catIdFk=" & comCat.SelectedValue & "," &
+        "artDescuento=" & TxtDes.Text & ", " &
+        "artIva=" & txtIva.Text &
         " WHERE artId=" & txtId.Text
-        'MsgBox(SQL)
+        MsgBox(SQL)
         If BaseDatos.ingresar_registros(SQL, "Actualizar") Then
             limpiar(txtboxArr, btnArr, 1)
             msjErr.Text = "Articulo actualizado con exito"

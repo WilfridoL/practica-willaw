@@ -38,8 +38,6 @@ Partial Class FrmFactura
         Label3 = New Label()
         txtTel = New TextBox()
         Label4 = New Label()
-        Label5 = New Label()
-        facId = New Label()
         DgvFac = New DataGridView()
         artid = New DataGridViewTextBoxColumn()
         artNom = New DataGridViewTextBoxColumn()
@@ -48,8 +46,6 @@ Partial Class FrmFactura
         Descuento = New DataGridViewTextBoxColumn()
         Iva = New DataGridViewTextBoxColumn()
         sb = New DataGridViewTextBoxColumn()
-        txtSub = New TextBox()
-        Label7 = New Label()
         txtIva = New TextBox()
         Label8 = New Label()
         txtDesc = New TextBox()
@@ -63,7 +59,7 @@ Partial Class FrmFactura
         barProgress = New ToolStripProgressBar()
         est = New ToolStripStatusLabel()
         msjErr = New ToolStripStatusLabel()
-        RichTextBox1 = New RichTextBox()
+        txtObs = New RichTextBox()
         Label6 = New Label()
         ToolStrip1.SuspendLayout()
         CType(DgvFac, ComponentModel.ISupportInitialize).BeginInit()
@@ -137,9 +133,9 @@ Partial Class FrmFactura
         Label1.AutoSize = True
         Label1.Location = New Point(12, 69)
         Label1.Name = "Label1"
-        Label1.Size = New Size(79, 15)
+        Label1.Size = New Size(84, 15)
         Label1.TabIndex = 64
-        Label1.Text = "Identificación"
+        Label1.Text = "Identificación*"
         ' 
         ' txtId
         ' 
@@ -152,6 +148,7 @@ Partial Class FrmFactura
         ' 
         txtNom.Location = New Point(232, 69)
         txtNom.Name = "txtNom"
+        txtNom.ReadOnly = True
         txtNom.Size = New Size(339, 23)
         txtNom.TabIndex = 67
         ' 
@@ -168,6 +165,7 @@ Partial Class FrmFactura
         ' 
         txtCor.Location = New Point(61, 95)
         txtCor.Name = "txtCor"
+        txtCor.ReadOnly = True
         txtCor.Size = New Size(338, 23)
         txtCor.TabIndex = 69
         ' 
@@ -184,6 +182,7 @@ Partial Class FrmFactura
         ' 
         txtTel.Location = New Point(463, 98)
         txtTel.Name = "txtTel"
+        txtTel.ReadOnly = True
         txtTel.Size = New Size(108, 23)
         txtTel.TabIndex = 71
         ' 
@@ -195,26 +194,6 @@ Partial Class FrmFactura
         Label4.Size = New Size(52, 15)
         Label4.TabIndex = 70
         Label4.Text = "Teléfono"
-        ' 
-        ' Label5
-        ' 
-        Label5.AutoSize = True
-        Label5.Font = New Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label5.Location = New Point(490, 19)
-        Label5.Name = "Label5"
-        Label5.Size = New Size(42, 32)
-        Label5.TabIndex = 72
-        Label5.Text = "N°"
-        ' 
-        ' facId
-        ' 
-        facId.AutoSize = True
-        facId.Font = New Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        facId.Location = New Point(538, 19)
-        facId.Name = "facId"
-        facId.Size = New Size(28, 32)
-        facId.TabIndex = 73
-        facId.Text = "1"
         ' 
         ' DgvFac
         ' 
@@ -267,28 +246,10 @@ Partial Class FrmFactura
         sb.Name = "sb"
         sb.Width = 80
         ' 
-        ' txtSub
-        ' 
-        txtSub.BackColor = SystemColors.Control
-        txtSub.Location = New Point(458, 320)
-        txtSub.Name = "txtSub"
-        txtSub.ReadOnly = True
-        txtSub.Size = New Size(108, 23)
-        txtSub.TabIndex = 76
-        ' 
-        ' Label7
-        ' 
-        Label7.AutoSize = True
-        Label7.Location = New Point(400, 323)
-        Label7.Name = "Label7"
-        Label7.Size = New Size(51, 15)
-        Label7.TabIndex = 75
-        Label7.Text = "Subtotal"
-        ' 
         ' txtIva
         ' 
         txtIva.BackColor = SystemColors.Control
-        txtIva.Location = New Point(458, 349)
+        txtIva.Location = New Point(458, 320)
         txtIva.Name = "txtIva"
         txtIva.ReadOnly = True
         txtIva.Size = New Size(108, 23)
@@ -297,16 +258,16 @@ Partial Class FrmFactura
         ' Label8
         ' 
         Label8.AutoSize = True
-        Label8.Location = New Point(400, 352)
+        Label8.Location = New Point(400, 323)
         Label8.Name = "Label8"
-        Label8.Size = New Size(52, 15)
+        Label8.Size = New Size(57, 15)
         Label8.TabIndex = 77
-        Label8.Text = "Total IVA"
+        Label8.Text = "Total IVA*"
         ' 
         ' txtDesc
         ' 
         txtDesc.BackColor = SystemColors.Control
-        txtDesc.Location = New Point(458, 378)
+        txtDesc.Location = New Point(458, 349)
         txtDesc.Name = "txtDesc"
         txtDesc.ReadOnly = True
         txtDesc.Size = New Size(108, 23)
@@ -315,16 +276,16 @@ Partial Class FrmFactura
         ' Label9
         ' 
         Label9.AutoSize = True
-        Label9.Location = New Point(362, 381)
+        Label9.Location = New Point(362, 352)
         Label9.Name = "Label9"
-        Label9.Size = New Size(90, 15)
+        Label9.Size = New Size(95, 15)
         Label9.TabIndex = 79
-        Label9.Text = "Total descuento"
+        Label9.Text = "Total descuento*"
         ' 
         ' txtTotal
         ' 
         txtTotal.BackColor = SystemColors.Control
-        txtTotal.Location = New Point(458, 407)
+        txtTotal.Location = New Point(458, 378)
         txtTotal.Name = "txtTotal"
         txtTotal.ReadOnly = True
         txtTotal.Size = New Size(108, 23)
@@ -333,16 +294,16 @@ Partial Class FrmFactura
         ' Label10
         ' 
         Label10.AutoSize = True
-        Label10.Location = New Point(420, 410)
+        Label10.Location = New Point(420, 381)
         Label10.Name = "Label10"
-        Label10.Size = New Size(32, 15)
+        Label10.Size = New Size(37, 15)
         Label10.TabIndex = 81
-        Label10.Text = "Total"
+        Label10.Text = "Total*"
         ' 
         ' StatusStrip1
         ' 
         StatusStrip1.Items.AddRange(New ToolStripItem() {ToolStripStatusLabel2, ToolStripStatusLabel3, usuNom, barProgress, est, msjErr})
-        StatusStrip1.Location = New Point(0, 444)
+        StatusStrip1.Location = New Point(0, 413)
         StatusStrip1.Name = "StatusStrip1"
         StatusStrip1.Size = New Size(583, 23)
         StatusStrip1.TabIndex = 83
@@ -384,15 +345,15 @@ Partial Class FrmFactura
         ' 
         msjErr.Name = "msjErr"
         msjErr.Size = New Size(74, 18)
-        msjErr.Text = "En ejecucion"
+        msjErr.Text = "En Ejecución"
         ' 
-        ' RichTextBox1
+        ' txtObs
         ' 
-        RichTextBox1.Location = New Point(12, 345)
-        RichTextBox1.Name = "RichTextBox1"
-        RichTextBox1.Size = New Size(344, 82)
-        RichTextBox1.TabIndex = 84
-        RichTextBox1.Text = ""
+        txtObs.Location = New Point(12, 345)
+        txtObs.Name = "txtObs"
+        txtObs.Size = New Size(344, 56)
+        txtObs.TabIndex = 84
+        txtObs.Text = ""
         ' 
         ' Label6
         ' 
@@ -407,9 +368,9 @@ Partial Class FrmFactura
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(583, 467)
+        ClientSize = New Size(583, 436)
         Controls.Add(Label6)
-        Controls.Add(RichTextBox1)
+        Controls.Add(txtObs)
         Controls.Add(StatusStrip1)
         Controls.Add(txtTotal)
         Controls.Add(Label10)
@@ -417,11 +378,7 @@ Partial Class FrmFactura
         Controls.Add(Label9)
         Controls.Add(txtIva)
         Controls.Add(Label8)
-        Controls.Add(txtSub)
-        Controls.Add(Label7)
         Controls.Add(DgvFac)
-        Controls.Add(facId)
-        Controls.Add(Label5)
         Controls.Add(txtTel)
         Controls.Add(Label4)
         Controls.Add(txtCor)
@@ -458,11 +415,7 @@ Partial Class FrmFactura
     Friend WithEvents Label3 As Label
     Friend WithEvents txtTel As TextBox
     Friend WithEvents Label4 As Label
-    Friend WithEvents Label5 As Label
-    Friend WithEvents facId As Label
     Friend WithEvents DgvFac As DataGridView
-    Friend WithEvents txtSub As TextBox
-    Friend WithEvents Label7 As Label
     Friend WithEvents txtIva As TextBox
     Friend WithEvents Label8 As Label
     Friend WithEvents txtDesc As TextBox
@@ -476,7 +429,7 @@ Partial Class FrmFactura
     Friend WithEvents btnSalir As ToolStripButton
     Friend WithEvents usuNom As ToolStripStatusLabel
     Friend WithEvents est As ToolStripStatusLabel
-    Friend WithEvents RichTextBox1 As RichTextBox
+    Friend WithEvents txtObs As RichTextBox
     Friend WithEvents Label6 As Label
     Friend WithEvents artid As DataGridViewTextBoxColumn
     Friend WithEvents artNom As DataGridViewTextBoxColumn

@@ -1,6 +1,10 @@
-﻿Public Class FrmFactura
+﻿Imports System.Globalization
+Imports System.Text.RegularExpressions
+
+Public Class FrmFactura
     Dim arrTxt() As Control
     Dim canCod As Integer
+    Dim clienteValido As Integer = 0
 
     Dim idFactura As Integer = 1
     Dim sbtCant As Double = 0
@@ -8,7 +12,6 @@
     Dim prIva As Double = 0
 
     ' valores totales
-    Dim subTotal As Double = 0
     Dim dscoTotal As Double = 0
     Dim ivaTotal As Double = 0
     Dim total As Double = 0
@@ -42,6 +45,7 @@
                             FrmConsulta2.grd.Columns(4).Width = 45
                             FrmConsulta2.ShowDialog()
                             If sw_regreso = 1 Then
+                                If validarDataGrid(vec(0)) = False Then Exit Sub
                                 DgvFac.Item(0, DgvFac.CurrentRow.Index).Value = vec(0) ' rellena la columna seleccionada (0 = Codigo) con los datos de vec
                                 DgvFac.Item(1, DgvFac.CurrentRow.Index).Value = vec(1) ' rellena la columna seleccionada (1 = Nombre) con los datos de vec
                                 DgvFac.Item(3, DgvFac.CurrentRow.Index).Value = vec(2) ' rellena la columna seleccionada (2 = Valor) con los datos de vec
@@ -71,12 +75,9 @@
         BaseDatos.conectar("root", "")
         ' cargar nombre del usuario
         usuNom.Text = "Usuario: " & usuNombres
-        ' cargar id de factura
-        rst = BaseDatos.leer_Registro("SELECT MAX(facId) FROM factura")
-        idFactura = If(rst.Read(), If(IsDBNull(rst(0)), 1, CInt(rst(0)) + 1), 1) ' si es null o false el resultado sera 1, si no se sumara el id_factura + 1 
-        facId.Text = idFactura
         arrTxt = {txtId, txtNom, txtTel, txtCor} ' rellenar array de control
         txtId.Focus()
+        cambiarEstado(2)
     End Sub
 
     Private Sub btnSalir_Click(sender As Object, e As EventArgs) Handles btnSalir.Click
@@ -84,10 +85,9 @@
     End Sub
 
     Private Sub txtId_KeyDown(sender As Object, e As KeyEventArgs) Handles txtId.KeyDown
-        SQL = "SELECT cliCed, CONCAT_WS(' ', cliNom, cliApe), cliTel, cliEma FROM cliente WHERE cliCed =" & txtId.Text
         If e.KeyCode = Keys.Enter Then
-            If txtId.Text = "" Then Exit Sub
-            ' If validacionGlobal(arrTxt, {Label1, Label2, Label3, Label4}, msjErr, "") <> True Then Exit Sub
+            If validarIdCliente(False) <> True Then Exit Sub
+            SQL = "SELECT cliCed, CONCAT_WS(' ', cliNom, cliApe), cliTel, cliEma FROM cliente WHERE cliCed =" & Convert.ToInt32(txtId.Text)
             If BaseDatos.leer_Registro(SQL).Read() = False Then
                 If MsgBox("El cliente no existe." & vbCrLf & "¿Desea agregarlo?", MsgBoxStyle.YesNo, "Error") = vbYes Then
                     FrmCliente.txtIdNum.Text = txtId.Text
@@ -95,9 +95,11 @@
                     FrmCliente.ShowDialog()
                     Exit Sub
                 End If
+                Exit Sub
             End If
             limpiar(arrTxt, {btnAdd}, 0) ' limpiar los controles del array (el boton de agregar esta de adorno en el parametro)
             buscar(SQL, arrTxt) ' llena los controles del array con los datos de la consulta
+            clienteValido = txtId.Text
             'bloquearCampos(arrTxt, 0)
         End If
     End Sub
@@ -111,19 +113,16 @@
     'End Sub
 
     Sub recorrerDataGrid()
-        subTotal = 0
         dscoTotal = 0
         ivaTotal = 0
         total = 0
         For i As Integer = 0 To DgvFac.RowCount - 1
-            subTotal += DgvFac.Rows(i).Cells(3).Value * DgvFac.Rows(i).Cells(2).Value
             dscoTotal += (DgvFac.Rows(i).Cells(3).Value * DgvFac.Rows(i).Cells(2).Value) * (DgvFac.Rows(i).Cells(4).Value / 100)
             ivaTotal += ((DgvFac.Rows(i).Cells(3).Value * DgvFac.Rows(i).Cells(2).Value) -
                           ((DgvFac.Rows(i).Cells(3).Value * DgvFac.Rows(i).Cells(2).Value) * (DgvFac.Rows(i).Cells(4).Value / 100))) *
                           (DgvFac.Rows(i).Cells(5).Value / 100) ' se saca el subtotal menos el descuento y se multiplica por el iva
             total += DgvFac.Rows(i).Cells(6).Value
         Next
-        txtSub.Text = "$ " & subTotal.ToString("N2")
         txtIva.Text = "$ " & ivaTotal.ToString("N2")
         txtDesc.Text = "$ " & dscoTotal.ToString("N2")
         txtTotal.Text = "$ " & total.ToString("N2")
@@ -143,13 +142,13 @@
                 MsgBox("Debe ingresar un codigo de articulo")
                 Exit Function
             End If
+            If validarDataGrid(DgvFac.Rows(rowIndex).Cells(0).Value) = False Then Exit Function
 
             SQL = $"SELECT artId AS ID, artNom AS NOMBRE, precio AS VALOR, artIva AS IVA, artDescuento AS 'DT(%)', stock FROM articulo
                             WHERE  artEst = 'A' AND artId = {DgvFac.Rows(rowIndex).Cells(0).Value}"
             'MsgBox(SQL)
             rst = BaseDatos.leer_Registro(SQL)
             If rst.Read() Then
-                ' If validarDataGrid(rst("ID")) <> True Then Exit Function
                 DgvFac.Rows(rowIndex).Cells(1).Value = rst(1)
                 DgvFac.Rows(rowIndex).Cells(3).Value = rst(2)
                 DgvFac.Rows(rowIndex).Cells(4).Value = rst(3)
@@ -168,7 +167,7 @@
         If columnIndex = 2 Then
             DgvFac.CommitEdit(DataGridViewDataErrorContexts.Commit)
             DgvFac.EndEdit()
-            'If validarDataGrid(DgvFac.Rows(rowIndex).Cells(0).Value) <> True Then Exit Function
+            If validarDataGrid(DgvFac.Rows(rowIndex).Cells(0).Value) = False Then Exit Function
             sbtCant = DgvFac.Rows(rowIndex).Cells(3).Value * DgvFac.Rows(rowIndex).Cells(2).Value
             dscto = sbtCant * (DgvFac.Rows(rowIndex).Cells(4).Value / 100)
             'MsgBox(dscto)
@@ -183,24 +182,143 @@
         Return True
     End Function
 
-    'Function validarDataGrid(id)
-    'canCod = 0
-    'rst = BaseDatos.leer_Registro($"SELECT artId, stock from articulo WHERE artId={id}")
-    ' If rst.Read() Then
-    ' For i As Integer = 0 To DgvFac.RowCount - 1
-    ' If rst(0) = DgvFac.Rows(i).Cells(0).Value Then
-    ' If canCod <> 0 Then
-    '  MsgBox("Articulo ya a sido seleccionado, seleccione otro articulo")
-    ' Return False
-    ' End If
-    'canCod += 1
-    'End If
-    ' If DgvFac.Rows(i).Cells(2).Value > rst(1) And DgvFac.Rows(i).Cells(2).Value <> "" Then
-    ' MsgBox("se supera la cantidad de articulos disponibles")
-    ' Return False
-    'End If
-    ' Return True
-    ' Next
-    'End If
-    'End Function
+    Function validarIdCliente(tipoVal As Boolean) As Boolean ' solo valida los datos de identificacion 
+        If txtId.Text = "" Then
+            MsgBox("Debe ingresar un cliente para registrar la factura", MsgBoxStyle.Exclamation)
+            Return False
+        ElseIf Regex.IsMatch(txtId.Text, "^([0-9]+(\/{1}[0-9]+)*)+(?!([\/]{2}))$") = False Then
+            MsgBox("Solo ingresar datos numericos", MsgBoxStyle.Critical)
+            txtId.Text = ""
+            Return False
+        ElseIf clienteValido <> CInt(txtId.Text) And tipoVal = True Then
+            txtId.Focus()
+            SendKeys.Send("{ENTER}")
+            Return False
+        End If
+        Return True
+    End Function
+
+    Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
+        Try
+            If validarIdCliente(True) <> True Then Exit Sub ' si no pasa a la primera al segundo click si pasa, si la funcion retorna true 
+            If MsgBox("¿Desea registrar la factura?" & vbCrLf &
+                      "Se eliminaran todas las filas que no esten diligenciadas de la cuadricula",
+                      MsgBoxStyle.YesNo Or MsgBoxStyle.Information, "Confirmar") = vbNo Then Exit Sub
+            SQL = $"INSERT INTO factura (facFec,facTolIva, facTolDsc, facTol, cliCedFk, usuIdFk, facEst, facObs) VALUES
+            (NOW() ,
+            {Convert.ToDouble(ivaTotal).ToString(CultureInfo.InvariantCulture)}, 
+            {Convert.ToDouble(dscoTotal).ToString(CultureInfo.InvariantCulture)}, 
+            {Convert.ToDouble(total).ToString(CultureInfo.InvariantCulture)}, 
+            {txtId.Text}, 
+            {codusuario}, 
+            'REGISTRADO', 
+            '{txtObs.Text}');"
+            'MsgBox(SQL)
+            eliminarFilasVacias() ' si la fila del datagrid no tiene codigo de articulo se eliminara
+            If BaseDatos.ingresar_registros(SQL, "registrar") Then
+                rst = BaseDatos.leer_Registro("SELECT MAX(facId) FROM factura")
+                If rst.Read() Then idFactura = rst(0)
+                For i As Integer = 0 To DgvFac.RowCount - 2
+                    Try
+                        SQL = $"INSERT INTO detFac (facIdFk, artIdFk, artPre, detCant, detDesc, detIva,detSub) VALUES
+                        ({idFactura}, 
+                        {CInt(DgvFac.Rows(i).Cells(0).Value)}, 
+                        {Convert.ToDouble(DgvFac.Rows(i).Cells(3).Value).ToString(CultureInfo.InvariantCulture)}, 
+                        {CInt(DgvFac.Rows(i).Cells(2).Value)}, 
+                        {CInt(DgvFac.Rows(i).Cells(4).Value)}, 
+                        {CInt(DgvFac.Rows(i).Cells(5).Value)}, 
+                        {Convert.ToDouble(DgvFac.Rows(i).Cells(6).Value).ToString(CultureInfo.InvariantCulture)});"
+                        ' MsgBox(SQL)
+                        BaseDatos.ingresar_registros(SQL, "registrar")
+                    Catch ex As Exception
+                        MsgBox(i.ToString & " - " & ex.Message)
+                        cambiarEstado(1)
+                    End Try
+                Next
+                MsgBox($"La factura con el codigo {idFactura} se registro con exito", MsgBoxStyle.Information)
+                cambiarEstado(0)
+            Else
+                Exit Sub
+            End If
+            limpiarFactura()
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            cambiarEstado(1)
+        End Try
+    End Sub
+
+    Function cambiarEstado(evento As Integer)
+        If evento = 0 Then msjErr.Text = "Registrado"
+        If evento = 1 Then msjErr.Text = "Anulado"
+        If evento > 1 Then msjErr.Text = "En ejecución"
+    End Function
+
+    Function eliminarFilasVacias()
+
+        'Recorrer desde la última fila hacia arriba
+        For i As Integer = DgvFac.Rows.Count - 1 To 0 Step -1
+
+            Dim fila = DgvFac.Rows(i)
+
+            'Evitar la fila nueva vacía del DataGridView
+            If fila.IsNewRow Then Continue For
+
+            'Evitar celdas no inicializadas
+            If fila.Cells(0).Value Is Nothing Then
+                DgvFac.Rows.RemoveAt(i)
+                Continue For
+            End If
+
+            'Si hay texto vacío o espacios → eliminar
+            If fila.Cells(0).Value.ToString().Trim() = "" Then
+                DgvFac.Rows.RemoveAt(i)
+            End If
+
+        Next
+
+        Return True
+    End Function
+
+    Function validarDataGrid(codArt As Integer) As Boolean
+        For i As Integer = 0 To DgvFac.RowCount - 1
+            ' verificar si el articulo ya fue ingresado en la factura
+            If DgvFac.Rows(i).Cells(0).Value = codArt And DgvFac.CurrentRow.Index <> i Then
+                MsgBox("El articulo ya fue ingresado en la factura")
+                DgvFac.Rows(DgvFac.CurrentRow.Index).Cells(0).Value = ""
+                DgvFac.CurrentCell = DgvFac.Rows(DgvFac.CurrentRow.Index).Cells(0)
+                Return False
+            End If
+            ' verificar si la cantidad solicitada no supera el stock disponible
+            rst = BaseDatos.leer_Registro($"SELECT stock FROM articulo WHERE artId = {codArt}")
+            If rst.Read() Then
+                canCod = rst(0)
+                If DgvFac.Rows(DgvFac.CurrentRow.Index).Cells(2).Value > canCod Then
+                    MsgBox("La cantidad solicitada supera el stock disponible: " & canCod)
+                    DgvFac.Rows(DgvFac.CurrentRow.Index).Cells(2).Value = 0
+                    DgvFac.CurrentCell = DgvFac.Rows(DgvFac.CurrentRow.Index).Cells(2)
+                    Return False
+                End If
+            End If
+        Next
+        Return True
+    End Function
+
+    Function limpiarFactura()
+        txtId.Clear()
+        txtNom.Clear()
+        txtTel.Clear()
+        txtCor.Clear()
+        txtIva.Clear()
+        txtDesc.Clear()
+        txtTotal.Clear()
+        txtObs.Clear()
+        DgvFac.Rows.Clear()
+        txtId.Focus()
+        cambiarEstado(2)
+        Return True
+    End Function
+
+    Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
+        limpiarFactura()
+    End Sub
 End Class
