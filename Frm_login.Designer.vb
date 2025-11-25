@@ -57,7 +57,7 @@ Partial Class Frm_login
         UsernameLabel.Name = "UsernameLabel"
         UsernameLabel.Size = New Size(220, 23)
         UsernameLabel.TabIndex = 0
-        UsernameLabel.Text = "&Identificacion del usuario"
+        UsernameLabel.Text = "&Identificacion del usuario*"
         UsernameLabel.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' PasswordLabel
@@ -66,7 +66,7 @@ Partial Class Frm_login
         PasswordLabel.Name = "PasswordLabel"
         PasswordLabel.Size = New Size(220, 23)
         PasswordLabel.TabIndex = 2
-        PasswordLabel.Text = "&Contraseña"
+        PasswordLabel.Text = "&Contraseña*"
         PasswordLabel.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' txtusuid
@@ -134,7 +134,7 @@ Partial Class Frm_login
         MinimizeBox = False
         Name = "Frm_login"
         SizeGripStyle = SizeGripStyle.Hide
-        StartPosition = FormStartPosition.CenterParent
+        StartPosition = FormStartPosition.CenterScreen
         Text = "Login"
         CType(LogoPictureBox, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)

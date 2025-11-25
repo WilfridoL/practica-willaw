@@ -78,9 +78,9 @@ Partial Class FrmUsuario
         lbId.ForeColor = SystemColors.Desktop
         lbId.Location = New Point(12, 50)
         lbId.Name = "lbId"
-        lbId.Size = New Size(82, 23)
+        lbId.Size = New Size(96, 23)
         lbId.TabIndex = 12
-        lbId.Text = "&Identificacion:"
+        lbId.Text = "&Identificacion*"
         lbId.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' txtNomUsu
@@ -100,7 +100,7 @@ Partial Class FrmUsuario
         lbNom.Name = "lbNom"
         lbNom.Size = New Size(63, 23)
         lbNom.TabIndex = 14
-        lbNom.Text = "&Nombres"
+        lbNom.Text = "&Nombres*"
         lbNom.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' txtApeUsu
@@ -120,7 +120,7 @@ Partial Class FrmUsuario
         lbApe.Name = "lbApe"
         lbApe.Size = New Size(63, 23)
         lbApe.TabIndex = 16
-        lbApe.Text = "&Apellidos"
+        lbApe.Text = "&Apellidos*"
         lbApe.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' txtEma
@@ -141,7 +141,7 @@ Partial Class FrmUsuario
         lbCorr.Name = "lbCorr"
         lbCorr.Size = New Size(63, 23)
         lbCorr.TabIndex = 18
-        lbCorr.Text = "&Correo"
+        lbCorr.Text = "&Correo*"
         lbCorr.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' lbRol
@@ -152,7 +152,7 @@ Partial Class FrmUsuario
         lbRol.Name = "lbRol"
         lbRol.Size = New Size(42, 23)
         lbRol.TabIndex = 21
-        lbRol.Text = "&Rol"
+        lbRol.Text = "&Rol*"
         lbRol.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' txtRolUsu
@@ -271,7 +271,7 @@ Partial Class FrmUsuario
         lbDep.Name = "lbDep"
         lbDep.Size = New Size(96, 23)
         lbDep.TabIndex = 28
-        lbDep.Text = "&Departamentos"
+        lbDep.Text = "&Departamentos*"
         lbDep.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' txtDepa
@@ -292,7 +292,7 @@ Partial Class FrmUsuario
         lbMun.Name = "lbMun"
         lbMun.Size = New Size(63, 23)
         lbMun.TabIndex = 30
-        lbMun.Text = "&Municipio"
+        lbMun.Text = "&Municipio*"
         lbMun.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' txtMun
@@ -342,7 +342,7 @@ Partial Class FrmUsuario
         lbCon.Name = "lbCon"
         lbCon.Size = New Size(82, 23)
         lbCon.TabIndex = 44
-        lbCon.Text = "&Contraseña"
+        lbCon.Text = "&Contraseña*"
         lbCon.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' lbEst
@@ -385,7 +385,7 @@ Partial Class FrmUsuario
         lbConCont.Name = "lbConCont"
         lbConCont.Size = New Size(128, 23)
         lbConCont.TabIndex = 48
-        lbConCont.Text = "&Confrimar Contraseña"
+        lbConCont.Text = "&Confrimar Contraseña*"
         lbConCont.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' camCont

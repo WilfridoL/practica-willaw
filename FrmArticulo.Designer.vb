@@ -156,7 +156,7 @@ Partial Class FrmArticulo
         lbPre.Name = "lbPre"
         lbPre.Size = New Size(63, 23)
         lbPre.TabIndex = 52
-        lbPre.Text = "&Precio"
+        lbPre.Text = "&Precio*"
         lbPre.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' txtNom
@@ -175,7 +175,7 @@ Partial Class FrmArticulo
         lbNom.Name = "lbNom"
         lbNom.Size = New Size(63, 23)
         lbNom.TabIndex = 50
-        lbNom.Text = "&Nombre"
+        lbNom.Text = "&Nombre*"
         lbNom.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' txtStockNum
@@ -194,7 +194,7 @@ Partial Class FrmArticulo
         lbSto.Name = "lbSto"
         lbSto.Size = New Size(82, 23)
         lbSto.TabIndex = 67
-        lbSto.Text = "&Stock"
+        lbSto.Text = "&Stock*"
         lbSto.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' StatusStrip1
@@ -229,7 +229,7 @@ Partial Class FrmArticulo
         lbCat.Name = "lbCat"
         lbCat.Size = New Size(63, 23)
         lbCat.TabIndex = 71
-        lbCat.Text = "&Categoria"
+        lbCat.Text = "&Categoria*"
         lbCat.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' addCat
@@ -261,7 +261,7 @@ Partial Class FrmArticulo
         lbIva.Name = "lbIva"
         lbIva.Size = New Size(82, 23)
         lbIva.TabIndex = 73
-        lbIva.Text = "&IVA"
+        lbIva.Text = "&IVA*"
         lbIva.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' TxtDesNum
@@ -301,7 +301,7 @@ Partial Class FrmArticulo
         lbDes.Name = "lbDes"
         lbDes.Size = New Size(82, 23)
         lbDes.TabIndex = 75
-        lbDes.Text = "&Descuento"
+        lbDes.Text = "&Descuento*"
         lbDes.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' FrmArticulo

@@ -46,17 +46,17 @@ Public Class FrmFactura
                             FrmConsulta2.ShowDialog()
                             If sw_regreso = 1 Then
                                 DgvFac.Item(0, DgvFac.CurrentRow.Index).Value = vec(0) ' rellena la columna seleccionada (0 = Codigo) con los datos de vec
-                                If validarDataGrid(DgvFac.Item(0, DgvFac.CurrentRow.Index).Value) = False Then Exit Sub
+                                If validarDataGrid(DgvFac.Item(0, DgvFac.CurrentRow.Index).Value) = False Then DgvFac.CurrentCell = DgvFac.Rows(DgvFac.CurrentRow.Index - 1).Cells(0) : Exit Sub
                                 DgvFac.Item(1, DgvFac.CurrentRow.Index).Value = vec(1) ' rellena la columna seleccionada (1 = Nombre) con los datos de vec
                                 DgvFac.Item(3, DgvFac.CurrentRow.Index).Value = vec(2) ' rellena la columna seleccionada (2 = Valor) con los datos de vec
                                 DgvFac.Item(5, DgvFac.CurrentRow.Index).Value = vec(3) ' rellena la columna seleccionada (3 = IVA) con los datos de vec
                                 DgvFac.Item(4, DgvFac.CurrentRow.Index).Value = vec(4) ' rellena la columna seleccionada (4 = Descuento) con los datos de vec
                                 DgvFac.CurrentCell = DgvFac.Rows(DgvFac.CurrentRow.Index - 1).Cells(2) ' mover el focus a la siguiente fila en la misma columna
-                                ' MsgBox(DgvFac.CurrentCell.RowIndex)
+                                MsgBox(DgvFac.CurrentCell.RowIndex) ' el indece 0 aparece pero en realidad es la fila 2
                                 'If DgvFac.CurrentCell.RowIndex = 0 Then
-                                'MsgBox("a")
+                                '    MsgBox("a")
 
-                                ' End If
+                                'End If
                             Else
                                 DgvFac.CurrentCell = DgvFac.Rows(DgvFac.CurrentRow.Index).Cells(1)
                             End If
@@ -149,7 +149,7 @@ Public Class FrmFactura
 
             SQL = $"SELECT artId AS ID, artNom AS NOMBRE, precio AS VALOR, artIva AS IVA, artDescuento AS 'DT(%)', stock FROM articulo
                             WHERE  artEst = 'A' AND artId = {DgvFac.Rows(rowIndex).Cells(0).Value}"
-            'MsgBox(SQL)
+            MsgBox(rowIndex)
             rst = BaseDatos.leer_Registro(SQL)
             If rst.Read() Then
                 DgvFac.Rows(rowIndex).Cells(1).Value = rst(1)
@@ -323,7 +323,7 @@ Public Class FrmFactura
     End Function
 
     Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
-        limpiarFilas()
+        'limpiarFilas()
     End Sub
 
     Private Sub FrmFactura_Closed(sender As Object, e As EventArgs) Handles Me.Closed
