@@ -103,6 +103,12 @@ Module Mprincipal
                     arrTxt(i).Focus()
                     cambiarColor(False, arrLabel(i))
                     Return False
+                ElseIf Regex.IsMatch(arrTxt(i).Text, "^[A-Za-z0-9\-\+\(\)\s]+$") = False And
+                arrTxt(i).Name.Substring(arrTxt(i).Name.Length - 3).ToLower() = "tel" Then ' valida formato de correo
+                    msjErr.Text = "Digite un numero de teléfono valido"
+                    arrTxt(i).Focus()
+                    cambiarColor(False, arrLabel(i))
+                    Return False
                 Else
                     cambiarColor(True, arrLabel(i))
                 End If

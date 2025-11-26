@@ -81,7 +81,7 @@ Public Class FrmUsuario
         limitModFrm = 2
         modInterfaz()
         limitModFrm = 1
-        'bloquearCampos(arrTextBox, 0)
+        bloquearCampos(arrTextBox, 0)
         Return True
     End Function
     Public Function BuscarUsuario(ByVal id As Integer)
@@ -105,8 +105,8 @@ Public Class FrmUsuario
             msjErr.Text = "Usuario encontrado"
             limitModFrm = 1
         Else
-            msjErr.Text = "El usuario con la identificacion " & id & " no se encuentra registrado"
-            'bloquearCampos(arrTextBox, 1)
+            If MsgBox("El usuario con la identificacion " & id & " no se encuentra registrado" & vbCrLf & "¿Desea crearlo?", MsgBoxStyle.YesNo + MsgBoxStyle.Information) <> vbYes Then Exit Function
+            bloquearCampos(arrTextBox, 1)
         End If
         Return True
     End Function
@@ -140,7 +140,7 @@ Public Class FrmUsuario
         cargar_combobox("Select * FROM estados", txtEstUsu, "idEst", "estNom")
         txtDepa.SelectedValue = 0
         txtRolUsu.SelectedValue = 0
-        'bloquearCampos(arrTextBox, 0)
+        bloquearCampos(arrTextBox, 0)
     End Sub
 
     Private Sub modInterfaz()
@@ -378,6 +378,15 @@ Public Class FrmUsuario
     Private Sub txtConContra_KeyDown(sender As Object, e As KeyEventArgs) Handles txtConContra.KeyDown
         If e.KeyCode = Keys.Enter Then
             SendKeys.Send("{TAB}")
+        End If
+    End Sub
+
+    Private Sub txtIdNum_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtIdNum.KeyPress
+        If Not Char.IsDigit(e.KeyChar) AndAlso
+      e.KeyChar <> ControlChars.Back AndAlso
+      e.KeyChar <> ControlChars.Cr Then
+            e.Handled = True
+            MsgBox("Solo se permiten números")
         End If
     End Sub
 End Class

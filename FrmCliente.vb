@@ -21,21 +21,57 @@ Public Class FrmCliente
         For Each lb As Label In arrLabel
             cambiarColor(True, lb)
         Next
+        bloqueaCliente("")
         Return True
     End Function
 
+    Function bloqueaCliente(est As String)
+        If est = "BLOQUEADO" Then
+            MsgBox("El cliente esta bloqueado")
+            For Each ctrl As Control In arrText
+                ctrl.Enabled = False
+            Next
+            msjErr.Text = "Cliente bloqueado"
+            btnDel.Enabled = False
+            btnUpd.Enabled = False
+            Button1.Enabled = False
+
+        End If
+        If est = "ACTIVO" Then
+            'MsgBox("activo")
+            Button1.Enabled = False
+            For Each ctrl As Control In arrText
+                ctrl.Enabled = True
+            Next
+            If btnDel.Enabled <> True Or btnUpd.Enabled <> True Then btnAdd.Enabled = True
+        End If
+        If est = "" Then
+            'MsgBox("err")
+            For Each ctrl As Control In arrText
+                ctrl.Enabled = False
+            Next
+            txtIdNum.Enabled = True
+            btnAdd.Enabled = False
+            Button1.Enabled = True
+            txtIdNum.Focus()
+        End If
+    End Function
+
     Private Sub FrmCliente_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        txtIdNum.Focus()
         BaseDatos.conectar("root", "")
+        txtIdNum.Focus()
         cargar_combobox("SELECT * FROM departamentos;", txtDepa, "DepId", "DepNom")
         txtDepa.SelectedValue = 0
         arrText = {txtIdNum, txtNom, txtApe, txtEma, txtTel, txtDepa, txtMun}
         arrBtn = {btnAdd}
         arrLabel = {lbId, lbNom, lbApe, lbCor, lbTel, lbDep, lbMun}
+        bloqueaCliente("")
         If FocusFactura = 1 Then
-            txtIdNum.Enabled = False
+            bloqueaCliente("ACTIVO")
             ToolStripButton1.Enabled = False
             btnLim.Enabled = False
+            txtIdNum.Enabled = False
+            Button1.Enabled = False
         End If
 
         'MsgBox(Regex.IsMatch("+57-344488", "^\+[0-9]{1,3}-[0-9]{5,15}$"))
@@ -58,10 +94,15 @@ Public Class FrmCliente
             btnAdd.Enabled = False
             btnDel.Enabled = True
             btnUpd.Enabled = True
-            txtIdNum.Enabled = False
             msjErr.Text = "Cliente encontrado"
+            bloqueaCliente(rst("cliEst"))
+            txtIdNum.Enabled = False
+            txtNom.Focus()
         Else
-            msjErr.Text = "El usuario con la identificacion " & id & " no se encuentra registrado"
+            If MsgBox("El cliente con la identificacion " & id & " no se encuentra registrado" & vbCrLf & "¿Desea crearlo?", MsgBoxStyle.YesNo + MsgBoxStyle.Information) <> vbYes Then Exit Function
+            bloqueaCliente("ACTIVO")
+            txtIdNum.Enabled = False
+            txtNom.Focus()
         End If
         Return True
     End Function
@@ -108,10 +149,11 @@ Public Class FrmCliente
     End Sub
 
     Private Sub ToolStripButton5_Click(sender As Object, e As EventArgs) Handles btnDel.Click
-        SQL = "DELETE FROM cliente WHERE cliCed=" & txtIdNum.Text
+        SQL = "UPDATE cliente SET cliEst = 'BLOQUEADO' WHERE cliCed=" & txtIdNum.Text
+        If MsgBox("Desea bloquear este usuario", MsgBoxStyle.YesNo + MsgBoxStyle.Critical) <> vbYes Then Exit Sub
         If BaseDatos.ingresar_registros(SQL, "Eliminar") Then
             limpiar(1)
-            msjErr.Text = "datos eliminados"
+            msjErr.Text = "Cliente bloqueado"
         Else
             msjErr.Text = "No se pudo eliminar el usuario"
         End If
@@ -169,7 +211,6 @@ Public Class FrmCliente
         If sw_regreso = 1 Then
             txtIdNum.Text = CedCli
             BuscarCliente(CedCli)
-            SendKeys.Send("{ENTER}")
         Else
             txtIdNum.Focus()
         End If
@@ -232,6 +273,25 @@ Public Class FrmCliente
         If e.KeyCode = Keys.Enter Then
             If btnAdd.Enabled = True Then btnAdd.PerformClick()
             If btnUpd.Enabled = True Then btnUpd.PerformClick()
+        End If
+    End Sub
+
+    Private Sub txtIdNum_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtIdNum.KeyPress
+        If Not Char.IsDigit(e.KeyChar) AndAlso
+       e.KeyChar <> ControlChars.Back AndAlso
+       e.KeyChar <> ControlChars.Cr Then
+            e.Handled = True
+            MsgBox("Solo se permiten números")
+        End If
+    End Sub
+
+    Private Sub txtTel_TextChanged(sender As Object, e As EventArgs) Handles txtTel.TextChanged
+        Dim patron As String = "^[A-Za-z0-9\-\+\(\)\s]+$"
+
+        If txtTel.Text <> "" AndAlso Not Regex.IsMatch(txtTel.Text, patron) Then
+            MsgBox("Formato inválido. Solo se permiten valores alfanuméricos y símbolos de teléfono.")
+            txtTel.Text = Regex.Replace(txtTel.Text, "[^A-Za-z0-9\-\+\(\)\s]", "")
+            txtTel.SelectionStart = txtTel.Text.Length
         End If
     End Sub
 End Class
