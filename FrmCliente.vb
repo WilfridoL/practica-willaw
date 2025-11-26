@@ -147,17 +147,6 @@ Public Class FrmCliente
         End If
     End Sub
 
-    Private Sub txtIdCli_TextChanged(sender As Object, e As KeyEventArgs) Handles txtIdNum.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            If txtIdNum.Text = "" Then
-                msjErr.Text = "Ingrese una identificacion"
-            Else
-                BuscarCliente(txtIdNum.Text)
-                msjErr.Text = ""
-            End If
-        End If
-    End Sub
-
     Private Sub txtDepa_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles txtDepa.SelectionChangeCommitted
         cargar_combobox("Select * FROM municipios WHERE depIdFk=" & txtDepa.SelectedValue, txtMun, "munId", "munNom")
     End Sub
@@ -173,6 +162,9 @@ Public Class FrmCliente
         frmConsulta.DgvConsulta.Columns(2).Width = 150
         frmConsulta.DgvConsulta.Columns(3).Width = 150
         frmConsulta.DgvConsulta.Columns(4).Width = 120
+        For Each ctrl In frmConsulta.DgvConsulta.Columns
+            ctrl.readOnly = True
+        Next
         frmConsulta.ShowDialog()
         If sw_regreso = 1 Then
             txtIdNum.Text = CedCli
@@ -187,5 +179,59 @@ Public Class FrmCliente
         limpiar(1)
         FocusFactura = 0
         seleccionar.Show()
+    End Sub
+
+    ' -------- ENTER EVENT ------
+    Private Sub txtIdCli_TextChanged(sender As Object, e As KeyEventArgs) Handles txtIdNum.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            If txtIdNum.Text = "" Then
+                msjErr.Text = "Ingrese una identificacion"
+            Else
+                BuscarCliente(txtIdNum.Text)
+                msjErr.Text = ""
+            End If
+        End If
+    End Sub
+
+    Private Sub txtNom_KeyDown(sender As Object, e As KeyEventArgs) Handles txtNom.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            If btnAdd.Enabled = True Then btnAdd.PerformClick()
+            If btnUpd.Enabled = True Then btnUpd.PerformClick()
+        End If
+    End Sub
+
+    Private Sub txtApe_KeyDown(sender As Object, e As KeyEventArgs) Handles txtApe.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            If btnAdd.Enabled = True Then btnAdd.PerformClick()
+            If btnUpd.Enabled = True Then btnUpd.PerformClick()
+        End If
+    End Sub
+
+    Private Sub txtEma_KeyDown(sender As Object, e As KeyEventArgs) Handles txtEma.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            If btnAdd.Enabled = True Then btnAdd.PerformClick()
+            If btnUpd.Enabled = True Then btnUpd.PerformClick()
+        End If
+    End Sub
+
+    Private Sub txtTel_KeyDown(sender As Object, e As KeyEventArgs) Handles txtTel.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            If btnAdd.Enabled = True Then btnAdd.PerformClick()
+            If btnUpd.Enabled = True Then btnUpd.PerformClick()
+        End If
+    End Sub
+
+    Private Sub txtDepa_KeyDown(sender As Object, e As KeyEventArgs) Handles txtDepa.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            If btnAdd.Enabled = True Then btnAdd.PerformClick()
+            If btnUpd.Enabled = True Then btnUpd.PerformClick()
+        End If
+    End Sub
+
+    Private Sub txtMun_KeyDown(sender As Object, e As KeyEventArgs) Handles txtMun.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            If btnAdd.Enabled = True Then btnAdd.PerformClick()
+            If btnUpd.Enabled = True Then btnUpd.PerformClick()
+        End If
     End Sub
 End Class

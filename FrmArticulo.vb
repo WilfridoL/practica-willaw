@@ -90,6 +90,10 @@ Public Class FrmArticulo
         frmConsulta.DgvConsulta.Columns(2).Width = 150
         frmConsulta.DgvConsulta.Columns(3).Width = 150
         frmConsulta.DgvConsulta.Columns(4).Width = 120
+        For Each ctrl In frmConsulta.DgvConsulta.Columns
+            ctrl.readOnly = True
+        Next
+        'MsgBox(frmConsulta.DgvConsulta.ColumnCount)
         frmConsulta.ShowDialog()
         If sw_regreso = 1 Then
             txtId.Text = CedCli
@@ -141,11 +145,70 @@ Public Class FrmArticulo
     End Sub
 
     Private Sub addCat_Click(sender As Object, e As EventArgs) Handles addCat.Click
-        FrmCategoria.Show()
-        Me.Close()
+        FrmCategoria.ShowDialog()
     End Sub
 
     Private Sub FrmArticulo_Closed(sender As Object, e As EventArgs) Handles Me.Closed
         seleccionar.Show()
+    End Sub
+
+    Private Sub txtPreNum_LostFocus(sender As Object, e As EventArgs) Handles txtPreNum.LostFocus
+        'If txtPreNum.Text 
+        Dim converPrecio = CInt(txtPreNum.Text).ToString("N0")
+        txtPreNum.Text = converPrecio
+        's MsgBox("a")
+    End Sub
+
+    'Private Sub txtNom_Enter(sender As Object, e As EventArgs) Handles txtNom.Enter
+    'End Sub
+
+    ' ------ ENTER EVENT ---------
+    Private Sub txtNom_KeyDown(sender As Object, e As KeyEventArgs) Handles txtNom.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            If btnAdd.Enabled = True Then btnAdd.PerformClick()
+            If btnUpd.Enabled = True Then btnUpd.PerformClick()
+        End If
+    End Sub
+
+    Private Sub txtPreNum_KeyDown(sender As Object, e As KeyEventArgs) Handles txtPreNum.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            If btnAdd.Enabled = True Then btnAdd.PerformClick()
+            If btnUpd.Enabled = True Then btnUpd.PerformClick()
+        End If
+    End Sub
+
+    Private Sub txtStockNum_KeyDown(sender As Object, e As KeyEventArgs) Handles txtStockNum.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            If btnAdd.Enabled = True Then btnAdd.PerformClick()
+            If btnUpd.Enabled = True Then btnUpd.PerformClick()
+        End If
+    End Sub
+
+    Private Sub txtIvaNum_KeyDown(sender As Object, e As KeyEventArgs) Handles txtIvaNum.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            If btnAdd.Enabled = True Then btnAdd.PerformClick()
+            If btnUpd.Enabled = True Then btnUpd.PerformClick()
+        End If
+    End Sub
+
+    Private Sub TxtDesNum_KeyDown(sender As Object, e As KeyEventArgs) Handles TxtDesNum.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            If btnAdd.Enabled = True Then btnAdd.PerformClick()
+            If btnUpd.Enabled = True Then btnUpd.PerformClick()
+        End If
+    End Sub
+
+    Private Sub txtDesc_KeyDown(sender As Object, e As KeyEventArgs) Handles txtDesc.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            If btnAdd.Enabled = True Then btnAdd.PerformClick()
+            If btnUpd.Enabled = True Then btnUpd.PerformClick()
+        End If
+    End Sub
+
+    Private Sub comCat_KeyDown(sender As Object, e As KeyEventArgs) Handles comCat.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            If btnAdd.Enabled = True Then btnAdd.PerformClick()
+            If btnUpd.Enabled = True Then btnUpd.PerformClick()
+        End If
     End Sub
 End Class

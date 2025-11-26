@@ -124,7 +124,7 @@ Partial Class FrmArticulo
         ' 
         lbDesc.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         lbDesc.ForeColor = SystemColors.Desktop
-        lbDesc.Location = New Point(19, 167)
+        lbDesc.Location = New Point(19, 172)
         lbDesc.Name = "lbDesc"
         lbDesc.Size = New Size(199, 23)
         lbDesc.TabIndex = 59
@@ -152,7 +152,7 @@ Partial Class FrmArticulo
         ' 
         lbPre.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         lbPre.ForeColor = SystemColors.Desktop
-        lbPre.Location = New Point(19, 78)
+        lbPre.Location = New Point(19, 85)
         lbPre.Name = "lbPre"
         lbPre.Size = New Size(63, 23)
         lbPre.TabIndex = 52
@@ -161,7 +161,7 @@ Partial Class FrmArticulo
         ' 
         ' txtNom
         ' 
-        txtNom.Location = New Point(245, 60)
+        txtNom.Location = New Point(245, 61)
         txtNom.MaxLength = 150
         txtNom.Name = "txtNom"
         txtNom.Size = New Size(220, 23)
@@ -171,7 +171,7 @@ Partial Class FrmArticulo
         ' 
         lbNom.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         lbNom.ForeColor = SystemColors.Desktop
-        lbNom.Location = New Point(245, 34)
+        lbNom.Location = New Point(245, 42)
         lbNom.Name = "lbNom"
         lbNom.Size = New Size(63, 23)
         lbNom.TabIndex = 50
@@ -190,7 +190,7 @@ Partial Class FrmArticulo
         ' 
         lbSto.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         lbSto.ForeColor = SystemColors.Desktop
-        lbSto.Location = New Point(245, 78)
+        lbSto.Location = New Point(245, 85)
         lbSto.Name = "lbSto"
         lbSto.Size = New Size(82, 23)
         lbSto.TabIndex = 67
@@ -225,7 +225,7 @@ Partial Class FrmArticulo
         ' 
         lbCat.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         lbCat.ForeColor = SystemColors.Desktop
-        lbCat.Location = New Point(19, 35)
+        lbCat.Location = New Point(19, 41)
         lbCat.Name = "lbCat"
         lbCat.Size = New Size(63, 23)
         lbCat.TabIndex = 71
@@ -257,7 +257,7 @@ Partial Class FrmArticulo
         lbIva.BackColor = Color.Transparent
         lbIva.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         lbIva.ForeColor = SystemColors.Desktop
-        lbIva.Location = New Point(19, 123)
+        lbIva.Location = New Point(19, 129)
         lbIva.Name = "lbIva"
         lbIva.Size = New Size(82, 23)
         lbIva.TabIndex = 73
@@ -266,7 +266,7 @@ Partial Class FrmArticulo
         ' 
         ' TxtDesNum
         ' 
-        TxtDesNum.Location = New Point(245, 147)
+        TxtDesNum.Location = New Point(245, 148)
         TxtDesNum.MaxLength = 15
         TxtDesNum.Name = "TxtDesNum"
         TxtDesNum.Size = New Size(220, 23)
@@ -276,7 +276,7 @@ Partial Class FrmArticulo
         ' 
         txtId.AutoSize = True
         txtId.Font = New Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        txtId.Location = New Point(437, 22)
+        txtId.Location = New Point(437, 26)
         txtId.Name = "txtId"
         txtId.Size = New Size(23, 25)
         txtId.TabIndex = 78
@@ -287,7 +287,7 @@ Partial Class FrmArticulo
         Label7.AutoSize = True
         Label7.BackColor = Color.Transparent
         Label7.Font = New Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label7.Location = New Point(405, 20)
+        Label7.Location = New Point(405, 24)
         Label7.Name = "Label7"
         Label7.Size = New Size(38, 30)
         Label7.TabIndex = 79
@@ -297,7 +297,7 @@ Partial Class FrmArticulo
         ' 
         lbDes.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         lbDes.ForeColor = SystemColors.Desktop
-        lbDes.Location = New Point(245, 122)
+        lbDes.Location = New Point(245, 128)
         lbDes.Name = "lbDes"
         lbDes.Size = New Size(82, 23)
         lbDes.TabIndex = 75
@@ -309,6 +309,8 @@ Partial Class FrmArticulo
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(491, 262)
+        Controls.Add(txtDesc)
+        Controls.Add(comCat)
         Controls.Add(txtPreNum)
         Controls.Add(txtStockNum)
         Controls.Add(txtId)
@@ -319,10 +321,8 @@ Partial Class FrmArticulo
         Controls.Add(lbIva)
         Controls.Add(addCat)
         Controls.Add(lbCat)
-        Controls.Add(comCat)
         Controls.Add(ToolStrip1)
         Controls.Add(lbDesc)
-        Controls.Add(txtDesc)
         Controls.Add(lbPre)
         Controls.Add(txtNom)
         Controls.Add(lbNom)

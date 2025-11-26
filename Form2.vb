@@ -30,6 +30,9 @@
         frmConsulta.Height = 200
         frmConsulta.DgvConsulta.RowTemplate.Height = 17
         frmConsulta.DgvConsulta.DataSource = BaseDatos.Listar_datos(SQL)
+        For Each ctrl In frmConsulta.DgvConsulta.Columns
+            ctrl.readOnly = True
+        Next
         frmConsulta.ShowDialog()
         If sw_regreso = 1 Then
             txtId.Text = CedCli

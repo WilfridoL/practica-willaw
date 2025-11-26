@@ -235,7 +235,7 @@ Public Class FrmUsuario
 
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
         SQL = "INSERT tb_usuarios (usuId, nombre, apellido, contraseña, correo, departamento, municipio, rol, estado) " & "
-        VALUE (" & txtIdNum.Text & ", '" & txtNomUsu.Text.ToUpper() & "', '" & txtApeUsu.Text.ToUpper() & "', '" & txtConUsu.Text & "', '" & txtEma.Text &
+        VALUE (" & txtIdNum.Text & ", '" & txtNomUsu.Text.ToUpper() & "', '" & txtApeUsu.Text.ToUpper() & "', '" & txtConUsu.Text.ToLower() & "', '" & txtEma.Text &
         "', " & txtDepa.SelectedValue & ", " & txtMun.SelectedValue & ", " & txtRolUsu.SelectedValue & ", " & txtEstUsu.SelectedValue & ");"
         If validacion() <> True Then Exit Sub
         'MsgBox(SQL)
@@ -289,6 +289,9 @@ Public Class FrmUsuario
         frmConsulta.DgvConsulta.Columns(2).Width = 150
         frmConsulta.DgvConsulta.Columns(3).Width = 150
         frmConsulta.DgvConsulta.Columns(4).Width = 120
+        For Each ctrl In frmConsulta.DgvConsulta.Columns
+            ctrl.readOnly = True
+        Next
         frmConsulta.ShowDialog()
         If sw_regreso = 1 Then
             txtIdNum.Text = CedCli
@@ -330,5 +333,51 @@ Public Class FrmUsuario
 
     Private Sub FrmUsuario_Closed(sender As Object, e As EventArgs) Handles Me.Closed
         seleccionar.Show()
+    End Sub
+
+    Private Sub txtNom_KeyDown(sender As Object, e As KeyEventArgs) Handles txtNomUsu.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            If btnAdd.Enabled = True Then btnAdd.PerformClick()
+            If btnUpd.Enabled = True Then btnUpd.PerformClick()
+        End If
+    End Sub
+
+    Private Sub txtApe_KeyDown(sender As Object, e As KeyEventArgs) Handles txtApeUsu.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            SendKeys.Send("{TAB}")
+        End If
+    End Sub
+
+    Private Sub txtEma_KeyDown(sender As Object, e As KeyEventArgs) Handles txtEma.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            If btnAdd.Enabled = True Then btnAdd.PerformClick()
+            If btnUpd.Enabled = True Then btnUpd.PerformClick()
+        End If
+    End Sub
+
+    Private Sub txtDepa_KeyDown(sender As Object, e As KeyEventArgs) Handles txtDepa.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            If btnAdd.Enabled = True Then btnAdd.PerformClick()
+            If btnUpd.Enabled = True Then btnUpd.PerformClick()
+        End If
+    End Sub
+
+    Private Sub txtMun_KeyDown(sender As Object, e As KeyEventArgs) Handles txtMun.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            If btnAdd.Enabled = True Then btnAdd.PerformClick()
+            If btnUpd.Enabled = True Then btnUpd.PerformClick()
+        End If
+    End Sub
+
+    Private Sub txtConUsu_KeyDown(sender As Object, e As KeyEventArgs) Handles txtConUsu.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            SendKeys.Send("{TAB}")
+        End If
+    End Sub
+
+    Private Sub txtConContra_KeyDown(sender As Object, e As KeyEventArgs) Handles txtConContra.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            SendKeys.Send("{TAB}")
+        End If
     End Sub
 End Class
