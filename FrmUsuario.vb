@@ -17,11 +17,13 @@ Public Class FrmUsuario
                 MsgBox("El usuario " & name & " Se encuentra inactivo")
             Else
                 For Each ctrl As Control In arrTextBox
-                    If TypeOf ctrl Is TextBox Then CType(ctrl, TextBox).ReadOnly = True
+                    If TypeOf ctrl Is TextBox Or TypeOf ctrl Is RichTextBox Then ctrl.Enabled = False
                     If TypeOf ctrl Is ComboBox Then ctrl.Enabled = False
                     If TypeOf ctrl Is TextBox = True Then ctrl.Cursor = Cursors.No ' cambia el cursor a no disponible
                 Next
-                txtEstUsu.Enabled = True
+                btnDel.Enabled = False
+                btnUpd.Enabled = False
+                camCont.Visible = False
                 MsgBox("El usuario " & name & " Se encuentra bloqueado por el motivo " & ob, MsgBoxStyle.Critical)
             End If
         Else
@@ -91,17 +93,17 @@ Public Class FrmUsuario
         rst = BaseDatos.leer_Registro(SQL)
         If rst.Read() Then
             resetCampo()
-            'bloquearCampos(arrTextBox, 1)
+            bloquearCampos(arrTextBox, 1)
             limitModFrm = 0
             municipios(rst("departamento"))
             buscar(SQL, arrTextBox)
             txtEstUsu.Enabled = True
             txtObsUsu.ReadOnly = False
-            btnAdd.Enabled = False
             btnDel.Enabled = True
             btnUpd.Enabled = True
             modInterfaz()
             VerEstado(rst("estado"), rst("nombre") & " " & rst("apellido"), rst("observacion"))
+            btnAdd.Enabled = False
             msjErr.Text = "Usuario encontrado"
             limitModFrm = 1
         Else
@@ -319,16 +321,19 @@ Public Class FrmUsuario
             If tip = 1 Then ctrl.Enabled = True
         Next
         If tip = 1 Then
+            txtIdNum.Enabled = False
+            Button1.Enabled = False
             btnAdd.Enabled = True
             txtConUsu.Enabled = True
             txtConContra.Enabled = True
         End If
         If tip = 0 Then
             btnAdd.Enabled = False
+            txtIdNum.Enabled = True
             txtConUsu.Enabled = False
             txtConContra.Enabled = False
+            Button1.Enabled = True
         End If
-        txtIdNum.Enabled = True
     End Function
 
     Private Sub FrmUsuario_Closed(sender As Object, e As EventArgs) Handles Me.Closed
