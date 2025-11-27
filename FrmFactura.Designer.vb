@@ -26,9 +26,9 @@ Partial Class FrmFactura
         ToolStrip1 = New ToolStrip()
         btnAdd = New ToolStripButton()
         ToolStripButton1 = New ToolStripButton()
+        btnBuscar = New ToolStripButton()
         ToolStripButton3 = New ToolStripButton()
         btnDel = New ToolStripButton()
-        btnBuscar = New ToolStripButton()
         btnSalir = New ToolStripButton()
         dateMenu = New DateTimePicker()
         Label1 = New Label()
@@ -69,7 +69,7 @@ Partial Class FrmFactura
         ' 
         ' ToolStrip1
         ' 
-        ToolStrip1.Items.AddRange(New ToolStripItem() {btnAdd, ToolStripButton1, ToolStripButton3, btnDel, btnBuscar, btnSalir})
+        ToolStrip1.Items.AddRange(New ToolStripItem() {btnAdd, ToolStripButton1, btnBuscar, ToolStripButton3, btnDel, btnSalir})
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
         ToolStrip1.Size = New Size(583, 25)
@@ -95,6 +95,15 @@ Partial Class FrmFactura
         ToolStripButton1.Size = New Size(23, 22)
         ToolStripButton1.Text = "Limpiar"
         ' 
+        ' btnBuscar
+        ' 
+        btnBuscar.DisplayStyle = ToolStripItemDisplayStyle.Image
+        btnBuscar.Image = CType(resources.GetObject("btnBuscar.Image"), Image)
+        btnBuscar.ImageTransparentColor = Color.Magenta
+        btnBuscar.Name = "btnBuscar"
+        btnBuscar.Size = New Size(23, 22)
+        btnBuscar.Text = "Buscar cliente"
+        ' 
         ' ToolStripButton3
         ' 
         ToolStripButton3.DisplayStyle = ToolStripItemDisplayStyle.Image
@@ -115,16 +124,6 @@ Partial Class FrmFactura
         btnDel.Size = New Size(23, 22)
         btnDel.Text = "Eliminar"
         ' 
-        ' btnBuscar
-        ' 
-        btnBuscar.DisplayStyle = ToolStripItemDisplayStyle.Image
-        btnBuscar.Enabled = False
-        btnBuscar.Image = CType(resources.GetObject("btnBuscar.Image"), Image)
-        btnBuscar.ImageTransparentColor = Color.Magenta
-        btnBuscar.Name = "btnBuscar"
-        btnBuscar.Size = New Size(23, 22)
-        btnBuscar.Text = "Buscar"
-        ' 
         ' btnSalir
         ' 
         btnSalir.DisplayStyle = ToolStripItemDisplayStyle.Image
@@ -136,6 +135,7 @@ Partial Class FrmFactura
         ' 
         ' dateMenu
         ' 
+        dateMenu.Enabled = False
         dateMenu.Location = New Point(12, 28)
         dateMenu.Name = "dateMenu"
         dateMenu.Size = New Size(229, 23)

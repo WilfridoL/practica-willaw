@@ -76,6 +76,7 @@ Partial Class FrmConsulta2
         Controls.Add(cbbFiltro)
         Controls.Add(Label1)
         Name = "FrmConsulta2"
+        StartPosition = FormStartPosition.CenterScreen
         CType(grd, ComponentModel.ISupportInitialize).EndInit()
         CType(bind, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)

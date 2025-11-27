@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ApplicationServices
+﻿Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices
 
 Namespace My
     ' The following events are available for MyApplication:
@@ -25,5 +26,12 @@ Namespace My
 
     Partial Friend Class MyApplication
 
+    End Class
+
+
+    Partial Friend Class MyApplication
+        Private Sub MyApplication_Startup(sender As Object, e As Microsoft.VisualBasic.ApplicationServices.StartupEventArgs) Handles Me.Startup
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance)
+        End Sub
     End Class
 End Namespace

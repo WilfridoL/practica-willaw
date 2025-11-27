@@ -221,7 +221,7 @@ Partial Class FrmCliente
         ' 
         txtTel.Cursor = Cursors.IBeam
         txtTel.Location = New Point(112, 154)
-        txtTel.MaxLength = 15
+        txtTel.MaxLength = 30
         txtTel.Name = "txtTel"
         txtTel.Size = New Size(220, 23)
         txtTel.TabIndex = 5

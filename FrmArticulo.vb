@@ -101,30 +101,28 @@ Public Class FrmArticulo
 
     Private Sub btnBuscar_Click(sender As Object, e As EventArgs) Handles btnBuscar.Click
         'Dim btnArr() As Control = {btnAdd, btnUpd, btnDel}
-        frmConsulta.Text = "Buscar Cliente"
-        frmConsulta.DgvConsulta.DataSource = ""
-        SQL = "
-        SELECT artId AS Id, artNom AS 'Nombre del articulo', precio AS Precio, stock AS Cantidad, 
+        FrmConsulta2.Text = "Plantilla de Articulos"
+        FrmConsulta2.grd.DataSource = Nothing
+        SQL = "SELECT artId AS Id, artNom AS 'Nombre del articulo', precio AS Precio, stock AS Cantidad, 
         catNom AS Categoria FROM articulo
         JOIN categorias ON catidFk = catId"
-        frmConsulta.DgvConsulta.RowTemplate.Height = 17
-        frmConsulta.DgvConsulta.DataSource = BaseDatos.Listar_datos(SQL)
-        frmConsulta.DgvConsulta.Columns(0).Width = 70
-        frmConsulta.DgvConsulta.Columns(1).Width = 150
-        frmConsulta.DgvConsulta.Columns(2).Width = 150
-        frmConsulta.DgvConsulta.Columns(3).Width = 150
-        frmConsulta.DgvConsulta.Columns(4).Width = 120
-        For Each ctrl In frmConsulta.DgvConsulta.Columns
-            ctrl.readOnly = True
+        FrmConsulta2.bind.DataSource = BaseDatos.Listar_datos(SQL)
+        FrmConsulta2.grd.DataSource = FrmConsulta2.bind.DataSource
+        FrmConsulta2.grd.RowTemplate.Height = 17
+        FrmConsulta2.Size = New Size(600, 300)
+        FrmConsulta2.grd.Size = New Size(570, 200)
+        For Each ctrl In FrmConsulta2.grd.Columns
+            ctrl.readonly = True
         Next
+        FrmConsulta2.ShowDialog()
         'MsgBox(frmConsulta.DgvConsulta.ColumnCount)
-        frmConsulta.ShowDialog()
         If sw_regreso = 1 Then
-            txtId.Text = CedCli
+            txtId.Text = vec(0)
             'MsgBox(txtboxArr)
             limpiar(txtboxArr, btnArr, 0)
-            buscarDatos("SELECT catIdFk, artnom, precio, stock, artIva, artDescuento, artDesc FROM articulo WHERE artId=" & CedCli, txtboxArr)
-            rst = BaseDatos.leer_Registro("SELECT artEst FROM articulo WHERE artId=" & CedCli)
+            buscarDatos("SELECT catIdFk, artnom, precio, stock, artIva, artDescuento, artDesc FROM articulo WHERE artId=" & vec(0), txtboxArr)
+            'MsgBox(vec(0))
+            rst = BaseDatos.leer_Registro("SELECT artEst FROM articulo WHERE artId=" & vec(0))
             If rst.Read() Then
                 If rst(0) = "E" Then
                     msjErr.Text = "Este articulo se encuentra eliminado, no se puede modificar"

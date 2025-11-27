@@ -87,6 +87,8 @@ Public Class FrmUsuario
         bloquearCampos(arrTextBox, 0)
         cambiarColor(True, lbCon)
         cambiarColor(True, lbConCont)
+        frmConsulta.DgvConsulta.DataSource = ""
+
         Return True
     End Function
     Public Function BuscarUsuario(ByVal id As Integer)
@@ -194,6 +196,10 @@ Public Class FrmUsuario
     End Sub
 
     Private Sub ToolStripButton5_Click(sender As Object, e As EventArgs) Handles btnDel.Click
+        If txtIdNum.Text = codusuario Then
+            MsgBox("No puedes bloquear el usuario de esta sesión", MsgBoxStyle.Critical)
+            Exit Sub
+        End If
         SQL = "UPDATE tb_usuarios Set estado=3  WHERE usuId=" & txtIdNum.Text
         'MsgBox(SQL)
         If MsgBox("Desea bloquear este usuario", MsgBoxStyle.YesNo + MsgBoxStyle.Critical) <> vbYes Then Exit Sub
@@ -216,9 +222,9 @@ Public Class FrmUsuario
 
     Private Sub ToolStripButton4_Click(sender As Object, e As EventArgs) Handles btnUpd.Click
         SQL = "UPDATE tb_usuarios Set " &
-        "nombre = '" & txtNomUsu.Text & "', " &
-        "apellido = '" & txtApeUsu.Text & "', " &
-        "correo = '" & txtEma.Text & "', " &
+        "nombre = '" & txtNomUsu.Text.ToUpper() & "', " &
+        "apellido = '" & txtApeUsu.Text.ToUpper() & "', " &
+        "correo = '" & txtEma.Text.ToLower() & "', " &
         "rol = '" & txtRolUsu.SelectedValue & "', " &
         "estado = '" & txtEstUsu.SelectedValue & "', " &
         "departamento = " & txtDepa.SelectedValue & ", " &
@@ -250,7 +256,7 @@ Public Class FrmUsuario
 
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
         SQL = "INSERT tb_usuarios (usuId, nombre, apellido, contraseña, correo, departamento, municipio, rol, estado) " & "
-        VALUE (" & txtIdNum.Text & ", '" & txtNomUsu.Text.ToUpper() & "', '" & txtApeUsu.Text.ToUpper() & "', '" & txtConUsu.Text.ToLower() & "', '" & txtEma.Text &
+        VALUE (" & txtIdNum.Text & ", '" & txtNomUsu.Text.ToUpper() & "', '" & txtApeUsu.Text.ToUpper() & "', '" & txtConUsu.Text & "', '" & txtEma.Text.ToLower() &
         "', " & txtDepa.SelectedValue & ", " & txtMun.SelectedValue & ", " & txtRolUsu.SelectedValue & ", " & txtEstUsu.SelectedValue & ");"
         If validacion() <> True Then Exit Sub
         'MsgBox(SQL)
@@ -296,29 +302,36 @@ Public Class FrmUsuario
     End Sub
 
     Private Sub btnBuscar_Click(sender As Object, e As EventArgs) Handles btnBuscar.Click
-        frmConsulta.Text = "Buscar usuario"
-        frmConsulta.DgvConsulta.DataSource = ""
-        SQL = "SELECT usuId as cedula ,nombre, apellido, correo, nomrol AS rol, estNom AS estado FROM tb_usuarios  
-        JOIN rol ON rol = idRol
-        JOIN estados ON estado = idEst"
-        frmConsulta.DgvConsulta.RowTemplate.Height = 17
-        frmConsulta.DgvConsulta.DataSource = BaseDatos.Listar_datos(SQL)
-        frmConsulta.DgvConsulta.Columns(0).Width = 70
-        frmConsulta.DgvConsulta.Columns(1).Width = 150
-        frmConsulta.DgvConsulta.Columns(2).Width = 150
-        frmConsulta.DgvConsulta.Columns(3).Width = 150
-        frmConsulta.DgvConsulta.Columns(4).Width = 120
-        For Each ctrl In frmConsulta.DgvConsulta.Columns
-            ctrl.readOnly = True
+        FrmConsulta2.Text = "Buscar usuario"
+        FrmConsulta2.grd.DataSource = Nothing
+
+        SQL = "SELECT usuId AS Cedula, nombre AS Nombres, apellido AS Apellidos, correo AS Correo, " &
+              "nomrol AS Rol, estNom AS Estado " &
+              "FROM tb_usuarios " &
+              "JOIN rol ON rol = idRol " &
+              "JOIN estados ON estado = idEst"
+
+        FrmConsulta2.bind.DataSource = BaseDatos.Listar_datos(SQL)
+        FrmConsulta2.grd.DataSource = FrmConsulta2.bind.DataSource
+
+        FrmConsulta2.grd.RowTemplate.Height = 17
+        FrmConsulta2.Size = New Size(700, 320)
+        FrmConsulta2.grd.Size = New Size(660, 200)
+
+        ' Columnas solo lectura
+        For Each ctrl In FrmConsulta2.grd.Columns
+            ctrl.ReadOnly = True
         Next
-        frmConsulta.ShowDialog()
+
+        FrmConsulta2.ShowDialog()
+
         If sw_regreso = 1 Then
-            txtIdNum.Text = CedCli
-            BuscarUsuario(CedCli)
-            'SendKeys.Send("{ENTER}")
+            txtIdNum.Text = vec(0)   ' vec(0) sería usuId devuelto desde la consulta
+            BuscarUsuario(vec(0))
         Else
             txtIdNum.Focus()
         End If
+
     End Sub
     ' Cambiar contraseña
     Private Sub camCont_Click(sender As Object, e As EventArgs) Handles camCont.Click

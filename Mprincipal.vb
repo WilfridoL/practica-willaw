@@ -1,4 +1,5 @@
 ﻿Imports System.Reflection
+Imports System.Text
 Imports System.Text.RegularExpressions
 
 Module Mprincipal
@@ -165,4 +166,6 @@ Module Mprincipal
     '    SendKeys.Send("{ENTER}")
     'End If
     'End Function
+
+
 End Module

@@ -19,10 +19,6 @@ Public Class FrmFactura
     Sub buscarArticulo(sql As String)
         rst = BaseDatos.leer_Registro(sql)
     End Sub
-
-    ' ----------------------
-    ' EVENT: KeyDown (selección por búsqueda)
-    ' ----------------------
     Private Sub DgvFac_KeyDown(sender As Object, e As KeyEventArgs) Handles DgvFac.KeyDown
         If e.KeyCode <> Keys.Enter Then
             If e.KeyCode = Keys.Insert Then
@@ -45,6 +41,7 @@ Public Class FrmFactura
                 FrmConsulta2.grd.DataSource = FrmConsulta2.bind.DataSource
                 FrmConsulta2.grd.RowTemplate.Height = 17
                 FrmConsulta2.Size = New Size(500, 300)
+                FrmConsulta2.grd.Size = New Size(454, 186)
                 For Each ctrl In FrmConsulta2.grd.Columns
                     ctrl.readonly = True
                 Next
@@ -69,14 +66,14 @@ Public Class FrmFactura
                 ' rellenar
                 SafeEnsureRowExists(row)
                 DgvFac.Item(0, row).Value = codigoSel
+                DgvFac.Item(0, row).ReadOnly = True
                 DgvFac.Item(1, row).Value = vec(1)
                 DgvFac.Item(2, row).Value = 1
                 DgvFac.Item(3, row).Value = vec(2)
                 DgvFac.Item(4, row).Value = vec(4)
                 DgvFac.Item(5, row).Value = vec(3)
                 recorrerDataGrid()
-                ' mover seguro a cantidad (col 2)
-                MoverAFilaReal(row, 2)
+                MoverAFilaReal(row, 2) ' mover seguro a cantidad (col 2)
 
             Case 2, 3
                 e.Handled = True
@@ -84,9 +81,7 @@ Public Class FrmFactura
         End Select
     End Sub
 
-    ' ----------------------
     ' LOAD
-    ' ----------------------
     Private Sub FrmFactura_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         BaseDatos.conectar("root", "")
         usuNom.Text = "Usuario: " & usuNombres
@@ -99,9 +94,7 @@ Public Class FrmFactura
         Me.Close()
     End Sub
 
-    ' ----------------------
     ' Buscar cliente por id
-    ' ----------------------
     Private Sub txtId_KeyDown(sender As Object, e As KeyEventArgs) Handles txtId.KeyDown
         If e.KeyCode <> Keys.Enter Then Return
         If validarIdCliente(False) <> True Then Exit Sub
@@ -139,9 +132,7 @@ Public Class FrmFactura
         clienteValido = CLng(txtId.Text)
     End Sub
 
-    ' ----------------------
-    ' Recorrer datagrid para totales (robusto)
-    ' ----------------------
+    ' Recorrer datagrid para totales
     Sub recorrerDataGrid()
         dscoTotal = 0
         ivaTotal = 0
@@ -180,10 +171,6 @@ Public Class FrmFactura
         txtDesc.Text = "$ " & dscoTotal.ToString("N2")
         txtTotal.Text = "$ " & total.ToString("N2")
     End Sub
-
-    ' ----------------------
-    ' ProcessCmdKey seguro (Enter dentro de edición)
-    ' ----------------------
     Protected Overrides Function ProcessCmdKey(ByRef msg As System.Windows.Forms.Message, ByVal keyData As System.Windows.Forms.Keys) As Boolean
         If (Not DgvFac.IsCurrentCellInEditMode) Then Return MyBase.ProcessCmdKey(msg, keyData)
         If (keyData <> Keys.Return) Then Return MyBase.ProcessCmdKey(msg, keyData)
@@ -192,7 +179,6 @@ Public Class FrmFactura
         Dim columnIndex As Int32 = cell.ColumnIndex
         Dim rowIndex As Int32 = cell.RowIndex
 
-        ' confirmar edición actual
         DgvFac.CommitEdit(DataGridViewDataErrorContexts.Commit)
         DgvFac.EndEdit()
 
@@ -222,6 +208,7 @@ Public Class FrmFactura
                 DgvFac.Rows(rowIndex).Cells(4).Value = rst("DT(%)")
                 DgvFac.Rows(rowIndex).Cells(5).Value = rst("IVA")
                 DgvFac.CurrentCell = DgvFac.Rows(rowIndex).Cells(2)
+                DgvFac.Rows(rowIndex).Cells(0).ReadOnly = True
                 recorrerDataGrid()
                 Return True
             Else
@@ -234,7 +221,7 @@ Public Class FrmFactura
         End If
 
         If columnIndex = 2 Then
-            ' al ingresar cantidad -> recalcular fila y totales
+            ' al ingresar cantidad recalcular fila y totales
             DgvFac.CommitEdit(DataGridViewDataErrorContexts.Commit)
             DgvFac.EndEdit()
 
@@ -246,7 +233,6 @@ Public Class FrmFactura
             End If
             If Not validarDataGrid(codVal, rowIndex) Then Return True
 
-            ' obtener valores seguros
             Dim cantidad As Double = 0
             Dim precio As Double = 0
             Dim porcDesc As Double = 0
@@ -279,9 +265,7 @@ Public Class FrmFactura
         Return True
     End Function
 
-    ' ----------------------
     ' validar id cliente
-    ' ----------------------
     Function validarIdCliente(tipoVal As Boolean) As Boolean
         If txtId.Text = "" Then
             MsgBox("Debe ingresar un cliente para registrar la factura", MsgBoxStyle.Exclamation)
@@ -298,9 +282,7 @@ Public Class FrmFactura
         Return True
     End Function
 
-    ' ----------------------
     ' Registrar factura
-    ' ----------------------
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
         Try
             If validarIdCliente(True) <> True Then Exit Sub
@@ -375,9 +357,7 @@ Public Class FrmFactura
         Return True
     End Function
 
-    ' ----------------------
-    ' validarDataGrid ahora recibe filaActual
-    ' ----------------------
+    ' validar DataGrid 
     Function validarDataGrid(codArt As Integer, filaActual As Integer) As Boolean
         For i As Integer = 0 To DgvFac.RowCount - 1
             If DgvFac.Rows(i).IsNewRow Then Continue For
@@ -418,7 +398,7 @@ Public Class FrmFactura
 
             Dim txt As TextBox = CType(e.Control, TextBox)
 
-            'Eliminar cualquier controlador anterior (evita duplicación)
+            'Eliminar cualquier controlador anterior para evita duplicación
             RemoveHandler txt.KeyPress, AddressOf validarSoloNumeros
 
             'Activar solo si está editando las columnas 0 = Cod o 2 = Cant
@@ -464,9 +444,6 @@ Public Class FrmFactura
         limpiarFactura()
     End Sub
 
-    ' ----------------------
-    ' Helpers (navegación segura y conversiones)
-    ' ----------------------
     Private Sub MoverAFilaReal(filaActual As Integer, columnaDestino As Integer)
         Dim fila As Integer = filaActual
         If fila < 0 Then fila = 0
@@ -495,7 +472,6 @@ Public Class FrmFactura
             End If
             DgvFac.CurrentCell = DgvFac.Rows(fila).Cells(col)
         Catch ex As Exception
-            ' no bloquear la app: solo reportar
             MsgBox("Error navegando: " & ex.Message, MsgBoxStyle.Exclamation)
         End Try
     End Sub
@@ -503,7 +479,7 @@ Public Class FrmFactura
     Private Sub SafeEnsureRowExists(fila As Integer)
         If fila < 0 Then Return
         If fila > DgvFac.RowCount - 2 Then
-            ' agregar filas hasta tener la fila requerida (sin sobrepasar)
+            ' agregar filas hasta tener la fila requerida
             Do While DgvFac.RowCount - 2 < fila
                 DgvFac.Rows.Add()
             Loop
@@ -529,7 +505,7 @@ Public Class FrmFactura
     End Sub
 
     Private Sub txtIdNum_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtId.KeyPress
-        ' Solo permitir números, Backspace y Enter
+        ' Solo permitir números, espacios y Enter
         If Not Char.IsDigit(e.KeyChar) AndAlso
        e.KeyChar <> ControlChars.Back AndAlso
        e.KeyChar <> ControlChars.Cr Then
@@ -544,5 +520,41 @@ Public Class FrmFactura
             e.Handled = True
             Exit Sub
         End If
+    End Sub
+
+    Private Sub btnBuscar_Click(sender As Object, e As EventArgs) Handles btnBuscar.Click
+        FrmConsulta2.Text = "Buscar de cliente"
+        FrmConsulta2.grd.DataSource = Nothing
+
+        SQL = "
+SELECT 
+    cliCed AS Cedula,
+    cliNom AS Nombres,
+    cliApe AS Apellidos,
+    cliEma AS Correo,
+    cliTel AS Telefono
+FROM cliente
+WHERE cliEst = 'ACTIVO'
+"
+
+        FrmConsulta2.bind.DataSource = BaseDatos.Listar_datos(SQL)
+        FrmConsulta2.grd.DataSource = FrmConsulta2.bind.DataSource
+
+        FrmConsulta2.grd.RowTemplate.Height = 17
+        FrmConsulta2.Size = New Size(600, 320)
+        FrmConsulta2.grd.Size = New Size(565, 200)
+
+        For Each ctrl In FrmConsulta2.grd.Columns
+            ctrl.ReadOnly = True
+        Next
+
+        FrmConsulta2.ShowDialog()
+
+        If sw_regreso = 1 Then
+            txtId.Text = vec(0)
+            txtId.Focus()
+            SendKeys.Send("{ENTER}")
+        End If
+
     End Sub
 End Class

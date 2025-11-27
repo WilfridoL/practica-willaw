@@ -1,3 +1,5 @@
+Imports System.Text
+
 Public Class Frm_login
     Function validacion() As Boolean
         If txtusuid.Text = "" Then
@@ -43,6 +45,7 @@ Public Class Frm_login
 
     Private Sub Frm_login_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         BaseDatos.conectar("root", "")
+        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance)
     End Sub
 
     Private Sub txtusuid_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtusuid.KeyPress

@@ -110,7 +110,7 @@ Public Class FrmCliente
     Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
         SQL = "INSERT cliente (cliCed, cliNom, cliApe, cliEma, cliTel, cliDep, cliMun) 
         VALUE (" & txtIdNum.Text & ", '" & txtNom.Text.ToUpper & "', '" & txtApe.Text.ToUpper &
-        "', '" & txtEma.Text & "', '" & txtTel.Text & "', " & txtDepa.SelectedValue & ", " & txtMun.SelectedValue & ");"
+        "', '" & txtEma.Text.ToLower & "', '" & txtTel.Text & "', " & txtDepa.SelectedValue & ", " & txtMun.SelectedValue & ");"
         'MsgBox(SQL)
         If validacionGlobal(arrText, arrLabel, msjErr, "") <> True Then Exit Sub ' validacion general
         ' validacion id existente
@@ -163,7 +163,7 @@ Public Class FrmCliente
         SQL = "UPDATE cliente SET " &
        "clinom = '" & txtNom.Text.ToUpper() & "', " &
        "cliape = '" & txtApe.Text.ToUpper() & "', " &
-       "cliEma = '" & txtEma.Text & "', " &
+       "cliEma = '" & txtEma.Text.ToLower() & "', " &
        "cliTel = '" & txtTel.Text & "', " &
        "cliDep = " & txtDepa.SelectedValue & ", " &
        "cliMun = " & txtMun.SelectedValue &
@@ -193,26 +193,35 @@ Public Class FrmCliente
     End Sub
 
     Private Sub ToolStripButton1_Click_1(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
-        frmConsulta.Text = "Buscar Cliente"
-        frmConsulta.DgvConsulta.DataSource = ""
-        SQL = "SELECT cliCed as Cedula, cliNom AS Nombres, cliApe as Apellidos, cliEma as Correo, cliTel as Telefono FROM cliente"
-        frmConsulta.DgvConsulta.RowTemplate.Height = 17
-        frmConsulta.DgvConsulta.DataSource = BaseDatos.Listar_datos(SQL)
-        frmConsulta.DgvConsulta.Columns(0).Width = 70
-        frmConsulta.DgvConsulta.Columns(1).Width = 150
-        frmConsulta.DgvConsulta.Columns(2).Width = 150
-        frmConsulta.DgvConsulta.Columns(3).Width = 150
-        frmConsulta.DgvConsulta.Columns(4).Width = 120
-        For Each ctrl In frmConsulta.DgvConsulta.Columns
-            ctrl.readOnly = True
+        FrmConsulta2.Text = "Buscar Cliente"
+        FrmConsulta2.grd.DataSource = Nothing
+
+        SQL = "SELECT cliCed AS Cedula, cliNom AS Nombres, cliApe AS Apellidos, " &
+      "cliEma AS Correo, cliTel AS Telefono " &
+      "FROM cliente"
+
+        FrmConsulta2.bind.DataSource = BaseDatos.Listar_datos(SQL)
+        FrmConsulta2.grd.DataSource = FrmConsulta2.bind.DataSource
+
+        FrmConsulta2.grd.RowTemplate.Height = 17
+        FrmConsulta2.Size = New Size(600, 320)
+        FrmConsulta2.grd.Size = New Size(565, 200)
+
+        ' Columnas solo lectura
+        For Each ctrl In FrmConsulta2.grd.Columns
+            ctrl.ReadOnly = True
         Next
-        frmConsulta.ShowDialog()
+
+        FrmConsulta2.ShowDialog()
+
         If sw_regreso = 1 Then
-            txtIdNum.Text = CedCli
-            BuscarCliente(CedCli)
+            txtIdNum.Text = vec(0)   ' vec(0) = cliCed devuelto desde la consulta
+            BuscarCliente(vec(0))
         Else
             txtIdNum.Focus()
         End If
+
+        frmConsulta.Dispose()
     End Sub
 
     Private Sub FrmCliente_Closing(sender As Object, e As CancelEventArgs) Handles MyBase.Closing

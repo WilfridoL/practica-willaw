@@ -25,4 +25,8 @@ Public Class frmConsulta
                 Me.Close()
         End Select
     End Sub
+
+    Private Sub frmConsulta_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+        DgvConsulta.DataSource = ""
+    End Sub
 End Class
