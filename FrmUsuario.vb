@@ -48,6 +48,7 @@ Public Class FrmUsuario
             msjErr.Text = "El campo " & lbCon.Text & " es obligatorio"
             txtConUsu.Focus()
             cambiarColor(False, lbCon)
+            cambiarColor(False, lbConCont)
             Return False
         ElseIf txtConUsu.Text <> txtConContra.Text And txtConUsu.Visible = True Then
             msjErr.Text = "La contraseña no coiciden"
@@ -84,6 +85,8 @@ Public Class FrmUsuario
         modInterfaz()
         limitModFrm = 1
         bloquearCampos(arrTextBox, 0)
+        cambiarColor(True, lbCon)
+        cambiarColor(True, lbConCont)
         Return True
     End Function
     Public Function BuscarUsuario(ByVal id As Integer)
@@ -109,6 +112,8 @@ Public Class FrmUsuario
         Else
             If MsgBox("El usuario con la identificacion " & id & " no se encuentra registrado" & vbCrLf & "¿Desea crearlo?", MsgBoxStyle.YesNo + MsgBoxStyle.Information) <> vbYes Then Exit Function
             bloquearCampos(arrTextBox, 1)
+            txtEstUsu.Enabled = False
+
         End If
         Return True
     End Function
@@ -142,6 +147,7 @@ Public Class FrmUsuario
         cargar_combobox("Select * FROM estados", txtEstUsu, "idEst", "estNom")
         txtDepa.SelectedValue = 0
         txtRolUsu.SelectedValue = 0
+
         bloquearCampos(arrTextBox, 0)
     End Sub
 
@@ -179,7 +185,7 @@ Public Class FrmUsuario
 
     Public Function municipios(ByVal depa As Integer) ' cargar municipios segun el departamento seleccionado
         cargar_combobox("Select * FROM municipios WHERE depIdFk=" & depa, txtMun, "munId", "munNom")
-        txtMun.SelectedValue = 0
+        'txtMun.SelectedValue = 0
         Return True
     End Function
 
@@ -188,12 +194,20 @@ Public Class FrmUsuario
     End Sub
 
     Private Sub ToolStripButton5_Click(sender As Object, e As EventArgs) Handles btnDel.Click
-        SQL = "DELETE FROM observaciones WHERE idUsuFk=" & txtIdNum.Text
+        SQL = "UPDATE tb_usuarios Set estado=3  WHERE usuId=" & txtIdNum.Text
         'MsgBox(SQL)
+        If MsgBox("Desea bloquear este usuario", MsgBoxStyle.YesNo + MsgBoxStyle.Critical) <> vbYes Then Exit Sub
+        Dim obs As String = InputBox("Ingrese el motivo por el cual se bloquea el usuario", "Motivo de bloqueo", "")
+        If obs = "" Then
+            msjErr.Text = "Debe ingresar un motivo para bloquear el usuario"
+            Exit Sub
+        End If
         If BaseDatos.ingresar_registros(SQL, "Eliminar") Then
-            SQL = "DELETE FROM tb_usuarios WHERE usuId=" & txtIdNum.Text
-            BaseDatos.ingresar_registros(SQL, "Eliminar")
-            msjErr.Text = "datos eliminados"
+            SQL = "UPDATE observaciones SET " &
+                        "observacion= '" & obs & "' " &
+                        "WHERE idUsuFK=" & txtIdNum.Text
+            controlObservaciones(SQL)
+            msjErr.Text = "Usuario bloqueado"
             resetCampo()
         Else
             msjErr.Text = "No se pudo eliminar el usuario"
@@ -231,7 +245,6 @@ Public Class FrmUsuario
     End Sub
 
     Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
-        seleccionar.Show()
         Me.Close()
     End Sub
 
@@ -275,6 +288,10 @@ Public Class FrmUsuario
             txtObsUsu.ReadOnly = False
         Else
             txtObsUsu.ReadOnly = True
+        End If
+        If txtEstUsu.SelectedValue = 3 Then
+            txtEstUsu.SelectedValue = 2
+            MsgBox("No se puede seleccionar el estado bloqueado desde este campo, para bloquear el usuario utilice el boton 'Bloquear Usuario'", MsgBoxStyle.Critical)
         End If
     End Sub
 
@@ -336,9 +353,6 @@ Public Class FrmUsuario
         End If
     End Function
 
-    Private Sub FrmUsuario_Closed(sender As Object, e As EventArgs) Handles Me.Closed
-        seleccionar.Show()
-    End Sub
 
     Private Sub txtNom_KeyDown(sender As Object, e As KeyEventArgs) Handles txtNomUsu.KeyDown
         If e.KeyCode = Keys.Enter Then
@@ -349,6 +363,10 @@ Public Class FrmUsuario
 
     Private Sub txtApe_KeyDown(sender As Object, e As KeyEventArgs) Handles txtApeUsu.KeyDown
         If e.KeyCode = Keys.Enter Then
+            If txtApeUsu.Text <> "" Then
+                cambiarColor(True, lbApe)
+            Else Exit Sub
+            End If
             SendKeys.Send("{TAB}")
         End If
     End Sub
@@ -376,12 +394,24 @@ Public Class FrmUsuario
 
     Private Sub txtConUsu_KeyDown(sender As Object, e As KeyEventArgs) Handles txtConUsu.KeyDown
         If e.KeyCode = Keys.Enter Then
+            If txtConUsu.Text <> "" Then
+                cambiarColor(True, lbCon)
+            Else
+                cambiarColor(False, lbCon)
+                Exit Sub
+            End If
             SendKeys.Send("{TAB}")
         End If
     End Sub
 
     Private Sub txtConContra_KeyDown(sender As Object, e As KeyEventArgs) Handles txtConContra.KeyDown
         If e.KeyCode = Keys.Enter Then
+            If txtConContra.Text <> "" Then
+                cambiarColor(True, lbConCont)
+            Else
+                cambiarColor(False, lbConCont)
+                Exit Sub
+            End If
             SendKeys.Send("{TAB}")
         End If
     End Sub
@@ -393,5 +423,27 @@ Public Class FrmUsuario
             e.Handled = True
             MsgBox("Solo se permiten números")
         End If
+        If txtIdNum.Text.Length > 10 AndAlso e.KeyChar <> ControlChars.Back Then
+            e.Handled = True
+            Exit Sub
+        End If
+    End Sub
+
+    Private Sub txtRolUsu_KeyDown(sender As Object, e As KeyEventArgs) Handles txtRolUsu.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            If btnAdd.Enabled = True Then btnAdd.PerformClick()
+            If btnUpd.Enabled = True Then btnUpd.PerformClick()
+        End If
+    End Sub
+
+    Private Sub txtObsUsu_KeyDown(sender As Object, e As KeyEventArgs) Handles txtObsUsu.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            If btnAdd.Enabled = True Then btnAdd.PerformClick()
+            If btnUpd.Enabled = True Then btnUpd.PerformClick()
+        End If
+    End Sub
+
+    Private Sub FrmUsuario_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+        ToolStripButton3.PerformClick()
     End Sub
 End Class

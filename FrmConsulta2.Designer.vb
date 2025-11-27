@@ -44,18 +44,19 @@ Partial Class FrmConsulta2
         ' 
         ' cbbFiltro
         ' 
+        cbbFiltro.DropDownStyle = ComboBoxStyle.DropDownList
         cbbFiltro.FormattingEnabled = True
         cbbFiltro.Location = New Point(12, 24)
         cbbFiltro.Name = "cbbFiltro"
         cbbFiltro.Size = New Size(148, 23)
-        cbbFiltro.TabIndex = 1
+        cbbFiltro.TabIndex = 2
         ' 
         ' txtFiltro
         ' 
         txtFiltro.Location = New Point(166, 24)
         txtFiltro.Name = "txtFiltro"
         txtFiltro.Size = New Size(297, 23)
-        txtFiltro.TabIndex = 2
+        txtFiltro.TabIndex = 3
         ' 
         ' grd
         ' 
@@ -63,7 +64,7 @@ Partial Class FrmConsulta2
         grd.Location = New Point(9, 53)
         grd.Name = "grd"
         grd.Size = New Size(454, 186)
-        grd.TabIndex = 3
+        grd.TabIndex = 1
         ' 
         ' FrmConsulta2
         ' 

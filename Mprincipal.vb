@@ -13,13 +13,7 @@ Module Mprincipal
     Public vec() As String
     'And Regex.IsMatch(arrTxt(i).Text, "[^\w]") = True
     Function controlObservaciones(ByVal SQL As String) As Boolean
-        If FrmUsuario.txtEstUsu.SelectedValue <> 1 Then
-            'MsgBox(SQL)
-            BaseDatos.ingresar_registros(SQL, "manipulacion obs")
-            Return True
-        Else
-            Return False
-        End If
+        BaseDatos.ingresar_registros(SQL, "manipulacion obs")
     End Function
 
     Function cargar_combobox(sql, combo, id, name)
@@ -103,12 +97,12 @@ Module Mprincipal
                     arrTxt(i).Focus()
                     cambiarColor(False, arrLabel(i))
                     Return False
-                ElseIf Regex.IsMatch(arrTxt(i).Text, "^[A-Za-z0-9\-\+\(\)\s]+$") = False And
-                arrTxt(i).Name.Substring(arrTxt(i).Name.Length - 3).ToLower() = "tel" Then ' valida formato de correo
-                    msjErr.Text = "Digite un numero de teléfono valido"
-                    arrTxt(i).Focus()
-                    cambiarColor(False, arrLabel(i))
-                    Return False
+                    'ElseIf Regex.IsMatch(arrTxt(i).Text, "[^0-9\-\+\(\)\s]") = False And
+                    'arrTxt(i).Name.Substring(arrTxt(i).Name.Length - 3).ToLower() = "tel" Then ' valida formato de correo
+                    '    msjErr.Text = "Digite un numero de teléfono valido"
+                    '    arrTxt(i).Focus()
+                    '    cambiarColor(False, arrLabel(i))
+                    '    Return False
                 Else
                     cambiarColor(True, arrLabel(i))
                 End If
@@ -126,6 +120,35 @@ Module Mprincipal
             End If
         Next
     End Function
+
+
+    Function validarPorcentaje(ctrl As TextBox, msjerr As ToolStripStatusLabel) As Boolean
+        Dim valor As Integer
+
+        ' Campo vacío
+        If ctrl.Text.Trim() = "" Then
+            msjerr.Text = $"El campo {ctrl.Name} no puede estar vacío"
+            ctrl.Focus()
+            Return False
+        End If
+
+        ' No es número
+        If Integer.TryParse(ctrl.Text, valor) = False Then
+            msjerr.Text = $"El campo {ctrl.Name} solo permite números enteros"
+            ctrl.Focus()
+            Return False
+        End If
+
+        ' Rango válido
+        If valor < 0 Or valor > 100 Then
+            msjerr.Text = $"El valor  debe estar entre 0 y 100"
+            ctrl.Focus()
+            Return False
+        End If
+
+        Return True
+    End Function
+
 
     ' Public Function mostrarDataGridView(SQL1 As String, SQL2 As String, txtTitle As String, )
     'Dim btnArr() As Control = {btnAdd, btnUpd, btnDel}

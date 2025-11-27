@@ -150,7 +150,7 @@ Public Class FrmCliente
 
     Private Sub ToolStripButton5_Click(sender As Object, e As EventArgs) Handles btnDel.Click
         SQL = "UPDATE cliente SET cliEst = 'BLOQUEADO' WHERE cliCed=" & txtIdNum.Text
-        If MsgBox("Desea bloquear este usuario", MsgBoxStyle.YesNo + MsgBoxStyle.Critical) <> vbYes Then Exit Sub
+        If MsgBox("Desea bloquear este cliente", MsgBoxStyle.YesNo + MsgBoxStyle.Critical) <> vbYes Then Exit Sub
         If BaseDatos.ingresar_registros(SQL, "Eliminar") Then
             limpiar(1)
             msjErr.Text = "Cliente bloqueado"
@@ -177,7 +177,6 @@ Public Class FrmCliente
     End Sub
 
     Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles btnSal.Click
-        seleccionar.Show()
         Me.Close()
     End Sub
 
@@ -219,7 +218,6 @@ Public Class FrmCliente
     Private Sub FrmCliente_Closing(sender As Object, e As CancelEventArgs) Handles MyBase.Closing
         limpiar(1)
         FocusFactura = 0
-        seleccionar.Show()
     End Sub
 
     ' -------- ENTER EVENT ------
@@ -277,21 +275,32 @@ Public Class FrmCliente
     End Sub
 
     Private Sub txtIdNum_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtIdNum.KeyPress
+        ' Solo permitir números, Backspace y Enter
         If Not Char.IsDigit(e.KeyChar) AndAlso
        e.KeyChar <> ControlChars.Back AndAlso
        e.KeyChar <> ControlChars.Cr Then
+
             e.Handled = True
             MsgBox("Solo se permiten números")
+            Exit Sub
+        End If
+
+        ' Limitar a 10 caracteres
+        If txtIdNum.Text.Length > 10 AndAlso e.KeyChar <> ControlChars.Back Then
+            e.Handled = True
+            Exit Sub
         End If
     End Sub
 
-    Private Sub txtTel_TextChanged(sender As Object, e As EventArgs) Handles txtTel.TextChanged
-        Dim patron As String = "^[A-Za-z0-9\-\+\(\)\s]+$"
 
-        If txtTel.Text <> "" AndAlso Not Regex.IsMatch(txtTel.Text, patron) Then
-            MsgBox("Formato inválido. Solo se permiten valores alfanuméricos y símbolos de teléfono.")
-            txtTel.Text = Regex.Replace(txtTel.Text, "[^A-Za-z0-9\-\+\(\)\s]", "")
+    Private Sub txtTel_TextChanged(sender As Object, e As EventArgs) Handles txtTel.TextChanged
+        Dim patronInvalidos As String = "[^0-9\-\+\(\)\s]"
+
+        If Regex.IsMatch(txtTel.Text, patronInvalidos) Then
+            MsgBox("Formato inválido. Solo se permiten números y símbolos de teléfono.")
+            txtTel.Text = Regex.Replace(txtTel.Text, patronInvalidos, "")
             txtTel.SelectionStart = txtTel.Text.Length
         End If
     End Sub
+
 End Class

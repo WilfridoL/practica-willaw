@@ -10,7 +10,7 @@
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
         SQL = "INSERT categorias (catnom)
         VALUE ('" & txtNom.Text & "');"
-        MsgBox(SQL)
+        'sgBox(SQL)
         If BaseDatos.ingresar_registros(SQL, "insertar") Then
             limpiar(txtboxArr, btnArr, 0)
             MsgBox("Se insertaron los datos correctamente")
@@ -19,6 +19,9 @@
 
     Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
         limpiar(txtboxArr, btnArr, 1)
+        btnAdd.Enabled = True
+        btnDel.Enabled = False
+        btnUpd.Enabled = False
     End Sub
 
     Private Sub btnBuscar_Click(sender As Object, e As EventArgs) Handles btnBuscar.Click
@@ -71,5 +74,10 @@
     Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
         FrmArticulo.Show()
         Me.Close()
+    End Sub
+
+    Private Sub FrmCategoria_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+        c_Varias.llena_combo(FrmArticulo.comCat, "Select * FROM categorias", "catId", "catNom")
+        ToolStripButton3.PerformClick()
     End Sub
 End Class

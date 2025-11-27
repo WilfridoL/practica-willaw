@@ -23,13 +23,17 @@ Public Class Frm_login
         ' MsgBox(SQL)
         rst = BaseDatos.leer_Registro(SQL)
         If rst.Read Then
+            If rst("estado") = 3 Then
+                MsgBox("Usuario bloqueado, por favor comuníquese con el administrador", MsgBoxStyle.Critical)
+                Exit Sub
+            End If
             codusuario = rst(0)
             usuNombres = rst(1) & " " & rst(2)
             usuContra = txtclave.Text
             seleccionar.Show()
             Me.Close()
         Else
-            MsgBox("Usuario no existe en la base de datos", MsgBoxStyle.Critical)
+            MsgBox("Credenciales incorrectas", MsgBoxStyle.Critical)
         End If
     End Sub
 
@@ -39,5 +43,14 @@ Public Class Frm_login
 
     Private Sub Frm_login_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         BaseDatos.conectar("root", "")
+    End Sub
+
+    Private Sub txtusuid_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtusuid.KeyPress
+        If Not Char.IsDigit(e.KeyChar) AndAlso
+       e.KeyChar <> ControlChars.Back AndAlso
+       e.KeyChar <> ControlChars.Cr Then
+            e.Handled = True
+            MsgBox("Solo se permiten números")
+        End If
     End Sub
 End Class

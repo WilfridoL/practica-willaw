@@ -15,11 +15,14 @@ Public Class FrmArticulo
                     ctrl.Focus()
                     Return False
                 End If
-                If CType(ctrl, TextBox).Name.Substring(CType(ctrl, TextBox).Name.Length - 3).ToLower() = "num" And
-                    Regex.IsMatch(CType(ctrl, TextBox).Text, "^([0-9]+(\/{1}[0-9]+)*)+(?!([\/]{2}))$") = False Then
-                    msjErr.Text = "Este campo no permite datos no numericos"
-                    ctrl.Focus()
-                    Return False
+                If CType(ctrl, TextBox).Name.Substring(CType(ctrl, TextBox).Name.Length - 3).ToLower() = "num" Then
+                    Dim temp As Decimal
+                    If Not Decimal.TryParse(CType(ctrl, TextBox).Text, Globalization.NumberStyles.Any,
+                             Globalization.CultureInfo.CurrentCulture, temp) Then
+                        msjErr.Text = "Este campo solo permite valores numéricos"
+                        ctrl.Focus()
+                        Return False
+                    End If
                 End If
             ElseIf TypeOf ctrl Is ComboBox Then
                 If CType(ctrl, ComboBox).SelectedValue = 0 Then
@@ -50,14 +53,31 @@ Public Class FrmArticulo
         arrLabel = {lbCat, lbNom, lbPre, lbSto, lbIva, lbDes, lbDesc}
         btnArr = {btnAdd, btnUpd, btnDel}
         cargar_id()
+        comCat.Focus()
     End Sub
 
+    Function convertirDecimal(txt) As String
+        Dim precioDecimal As Decimal
+
+        If Decimal.TryParse(txt.Text,
+                    Globalization.NumberStyles.Any,
+                    Globalization.CultureInfo.CurrentCulture,
+                    precioDecimal) = False Then
+            MsgBox("El precio no es válido")
+            Exit Function
+        End If
+
+        Dim precioSQL As String = precioDecimal.ToString(Globalization.CultureInfo.InvariantCulture)
+        Return precioSQL
+    End Function
+
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
+
         If val() <> True Then Exit Sub
         SQL = "INSERT articulo (artnom, artdesc, precio, stock, catIdFk, artIva, artDescuento)
-        VALUE ('" & txtNom.Text & "', '" & txtDesc.Text & "', " & txtPreNum.Text & ", " &
+        VALUE ('" & txtNom.Text & "', '" & txtDesc.Text & "', " & convertirDecimal(txtPreNum) & ", " &
         txtStockNum.Text & ", " & comCat.SelectedValue & ", " & txtIvaNum.Text & ", " & TxtDesNum.Text & ");"
-        ' MsgBox(SQL)
+        'MsgBox(SQL)
         If BaseDatos.ingresar_registros(SQL, "insertar") Then
             msjErr.Text = "Se insertaron los datos correctamente"
             limpiar(txtboxArr, btnArr, 0)
@@ -71,6 +91,10 @@ Public Class FrmArticulo
         btnAdd.Enabled = True
         btnDel.Enabled = False
         btnUpd.Enabled = False
+        bloquecampos(False)
+        txtIvaNum.Text = 19
+        TxtDesNum.Text = 0
+        txtStockNum.Text = 1
     End Sub
 
     ' mover este codigo a una funcion para poder reutilizarlo en otros formularios
@@ -99,26 +123,86 @@ Public Class FrmArticulo
             txtId.Text = CedCli
             'MsgBox(txtboxArr)
             limpiar(txtboxArr, btnArr, 0)
-            buscar("SELECT catIdFk, artnom, precio, stock, artIva, artDescuento, artDesc FROM articulo WHERE artId=" & CedCli, txtboxArr)
-            SendKeys.Send("{ENTER}")
+            buscarDatos("SELECT catIdFk, artnom, precio, stock, artIva, artDescuento, artDesc FROM articulo WHERE artId=" & CedCli, txtboxArr)
+            rst = BaseDatos.leer_Registro("SELECT artEst FROM articulo WHERE artId=" & CedCli)
+            If rst.Read() Then
+                If rst(0) = "E" Then
+                    msjErr.Text = "Este articulo se encuentra eliminado, no se puede modificar"
+                    bloquecampos(True)
+                    btnAdd.Enabled = False
+                    btnDel.Enabled = False
+                    btnUpd.Enabled = False
+                    Exit Sub
+                Else
+                    bloquecampos(False)
+                End If
+            End If
+            'SendKeys.Send("{ENTER}")
             btnAdd.Enabled = False
             btnDel.Enabled = True
             btnUpd.Enabled = True
         End If
     End Sub
+    Public Function buscarDatos(sql As String, campos() As Control)
+        rst = BaseDatos.leer_Registro(sql)
+
+        If rst.Read() Then
+            For i As Integer = 0 To campos.Length - 1
+
+                Dim ctrl = campos(i)
+                Dim valorSQL = rst(i)
+
+                If TypeOf ctrl Is TextBox Then
+
+                    Dim txt As TextBox = CType(ctrl, TextBox)
+
+                    ' ----- CAMPOS ESPECIALES -----
+                    If txt.Name = "txtPreNum" Then
+                        ' convertir 30000.00 → 30.000,00
+                        Dim valDec As Decimal = Convert.ToDecimal(valorSQL)
+                        txt.Text = valDec.ToString("N2")
+                        Continue For
+                    End If
+
+                    If txt.Name = "txtStockNum" Then
+                        txt.Text = Convert.ToInt32(valorSQL).ToString()
+                        Continue For
+                    End If
+                    ' --------------------------------
+
+                    ' Cualquier TextBox normal
+                    txt.Text = valorSQL.ToString()
+
+                ElseIf TypeOf ctrl Is ComboBox Then
+                    CType(ctrl, ComboBox).SelectedValue = valorSQL
+
+                ElseIf TypeOf ctrl Is RichTextBox Then
+                    CType(ctrl, RichTextBox).Text = valorSQL.ToString()
+
+                End If
+
+            Next
+
+            Return True
+        Else
+            msjErr.Text = "No se encontró el registro"
+            Return False
+        End If
+
+    End Function
 
     Private Sub btnUpd_Click(sender As Object, e As EventArgs) Handles btnUpd.Click
         If val() = False Then Exit Sub
         SQL = "UPDATE  articulo SET 
         artNom='" & txtNom.Text & "', " &
         "artDesc='" & txtDesc.Text & "', " &
-        " precio=" & txtPreNum.Text.Replace(",", ".") & ", " &
+        " precio=" & convertirDecimal(txtPreNum) & ", " &
         "stock=" & txtStockNum.Text & ", " &
         "catIdFk=" & comCat.SelectedValue & "," &
         "artDescuento=" & TxtDesNum.Text & ", " &
         "artIva=" & txtIvaNum.Text &
         " WHERE artId=" & txtId.Text
-        MsgBox(SQL)
+        ' MsgBox(SQL)
         If BaseDatos.ingresar_registros(SQL, "Actualizar") Then
             limpiar(txtboxArr, btnArr, 1)
             msjErr.Text = "Articulo actualizado con exito"
@@ -128,7 +212,7 @@ Public Class FrmArticulo
     End Sub
 
     Private Sub btnDel_Click(sender As Object, e As EventArgs) Handles btnDel.Click
-        SQL = "DELETE FROM articulo WHERE artId=" & txtId.Text
+        SQL = "UPDATE  articulo SET artEst='E' WHERE artId=" & txtId.Text
         If MsgBox("Quiere eliminar este articulo", MsgBoxStyle.YesNo) = vbYes Then
             If BaseDatos.ingresar_registros(SQL, "Eliminar") Then
                 limpiar(txtboxArr, btnArr, 1)
@@ -140,6 +224,13 @@ Public Class FrmArticulo
         End If
     End Sub
 
+    Function bloquecampos(valor As Boolean)
+        For Each ctrl As Control In txtboxArr
+            If valor = True Then ctrl.Enabled = False
+            If valor = False Then ctrl.Enabled = True
+        Next
+    End Function
+
     Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
         Me.Close()
     End Sub
@@ -148,16 +239,20 @@ Public Class FrmArticulo
         FrmCategoria.ShowDialog()
     End Sub
 
-    Private Sub FrmArticulo_Closed(sender As Object, e As EventArgs) Handles Me.Closed
-        seleccionar.Show()
+    Private Sub txtPreNum_LostFocus(sender As Object, e As EventArgs) Handles txtPreNum.LostFocus
+        If txtPreNum.Text.Trim() = "" Then Exit Sub
+
+        Dim valor As Decimal
+
+        ' Convertir respetando comas y puntos según cultura
+        If Decimal.TryParse(txtPreNum.Text, valor) Then
+            txtPreNum.Text = valor.ToString("N2") ' formato monetario con 2 decimales
+        Else
+            MsgBox("Ingrese un valor válido", MsgBoxStyle.Exclamation)
+            txtPreNum.Focus()
+        End If
     End Sub
 
-    Private Sub txtPreNum_LostFocus(sender As Object, e As EventArgs) Handles txtPreNum.LostFocus
-        'If txtPreNum.Text 
-        Dim converPrecio = CInt(txtPreNum.Text).ToString("N0")
-        txtPreNum.Text = converPrecio
-        's MsgBox("a")
-    End Sub
 
     'Private Sub txtNom_Enter(sender As Object, e As EventArgs) Handles txtNom.Enter
     'End Sub
@@ -210,5 +305,55 @@ Public Class FrmArticulo
             If btnAdd.Enabled = True Then btnAdd.PerformClick()
             If btnUpd.Enabled = True Then btnUpd.PerformClick()
         End If
+    End Sub
+
+    Private Sub txtIvaNum_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtIvaNum.KeyPress
+        If Not Char.IsDigit(e.KeyChar) AndAlso e.KeyChar <> ChrW(Keys.Back) Then
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub TxtDesNum_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TxtDesNum.KeyPress
+        If Not Char.IsDigit(e.KeyChar) AndAlso e.KeyChar <> ChrW(Keys.Back) Then
+            e.Handled = True
+        End If
+    End Sub
+
+    ' ------ TEXT CHANGED EVENT ---------
+
+    Private Sub validarNumeros_Auto(sender As Object, e As EventArgs) _
+Handles txtIvaNum.TextChanged, TxtDesNum.TextChanged, txtPreNum.TextChanged, txtStockNum.TextChanged
+
+        Dim ctrl As TextBox = CType(sender, TextBox)
+
+        If ctrl.Text.Trim() = "" Then Exit Sub
+
+        Dim valor As Decimal
+        If Decimal.TryParse(ctrl.Text, valor) = False Then
+            ctrl.Text = ""
+            Exit Sub
+        End If
+
+        Select Case ctrl.Name
+
+            Case "txtIvaNum", "TxtDesNum"
+                If valor < 0 Then
+                    ctrl.Text = "0"
+                ElseIf valor > 100 Then
+                    MsgBox("El valor no puede ser mayor a 100", MsgBoxStyle.Exclamation)
+                    ctrl.Text = "100"
+                End If
+
+            Case "txtPreNum", "txtStockNum"
+                If valor < 0 Then ctrl.Text = "0"
+
+        End Select
+
+        ctrl.SelectionStart = ctrl.Text.Length
+    End Sub
+
+
+    Private Sub FrmArticulo_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+        ToolStripButton3.PerformClick()
     End Sub
 End Class

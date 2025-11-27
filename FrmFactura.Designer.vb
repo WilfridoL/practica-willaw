@@ -25,6 +25,7 @@ Partial Class FrmFactura
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmFactura))
         ToolStrip1 = New ToolStrip()
         btnAdd = New ToolStripButton()
+        ToolStripButton1 = New ToolStripButton()
         ToolStripButton3 = New ToolStripButton()
         btnDel = New ToolStripButton()
         btnBuscar = New ToolStripButton()
@@ -39,6 +40,13 @@ Partial Class FrmFactura
         txtTel = New TextBox()
         Label4 = New Label()
         DgvFac = New DataGridView()
+        artid = New DataGridViewTextBoxColumn()
+        artNom = New DataGridViewTextBoxColumn()
+        artCant = New DataGridViewTextBoxColumn()
+        artPre = New DataGridViewTextBoxColumn()
+        Descuento = New DataGridViewTextBoxColumn()
+        Iva = New DataGridViewTextBoxColumn()
+        sb = New DataGridViewTextBoxColumn()
         txtIva = New TextBox()
         Label8 = New Label()
         txtDesc = New TextBox()
@@ -54,13 +62,6 @@ Partial Class FrmFactura
         msjErr = New ToolStripStatusLabel()
         txtObs = New RichTextBox()
         Label6 = New Label()
-        artid = New DataGridViewTextBoxColumn()
-        artNom = New DataGridViewTextBoxColumn()
-        artCant = New DataGridViewTextBoxColumn()
-        artPre = New DataGridViewTextBoxColumn()
-        Descuento = New DataGridViewTextBoxColumn()
-        Iva = New DataGridViewTextBoxColumn()
-        sb = New DataGridViewTextBoxColumn()
         ToolStrip1.SuspendLayout()
         CType(DgvFac, ComponentModel.ISupportInitialize).BeginInit()
         StatusStrip1.SuspendLayout()
@@ -68,7 +69,7 @@ Partial Class FrmFactura
         ' 
         ' ToolStrip1
         ' 
-        ToolStrip1.Items.AddRange(New ToolStripItem() {btnAdd, ToolStripButton3, btnDel, btnBuscar, btnSalir})
+        ToolStrip1.Items.AddRange(New ToolStripItem() {btnAdd, ToolStripButton1, ToolStripButton3, btnDel, btnBuscar, btnSalir})
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
         ToolStrip1.Size = New Size(583, 25)
@@ -85,14 +86,24 @@ Partial Class FrmFactura
         btnAdd.Size = New Size(23, 22)
         btnAdd.Text = "Agregar"
         ' 
+        ' ToolStripButton1
+        ' 
+        ToolStripButton1.DisplayStyle = ToolStripItemDisplayStyle.Image
+        ToolStripButton1.Image = CType(resources.GetObject("ToolStripButton1.Image"), Image)
+        ToolStripButton1.ImageTransparentColor = Color.Magenta
+        ToolStripButton1.Name = "ToolStripButton1"
+        ToolStripButton1.Size = New Size(23, 22)
+        ToolStripButton1.Text = "Limpiar"
+        ' 
         ' ToolStripButton3
         ' 
         ToolStripButton3.DisplayStyle = ToolStripItemDisplayStyle.Image
+        ToolStripButton3.Enabled = False
         ToolStripButton3.Image = CType(resources.GetObject("ToolStripButton3.Image"), Image)
         ToolStripButton3.ImageTransparentColor = Color.Magenta
         ToolStripButton3.Name = "ToolStripButton3"
         ToolStripButton3.Size = New Size(23, 22)
-        ToolStripButton3.Text = "Editar"
+        ToolStripButton3.Text = "Limpiar"
         ' 
         ' btnDel
         ' 
@@ -107,6 +118,7 @@ Partial Class FrmFactura
         ' btnBuscar
         ' 
         btnBuscar.DisplayStyle = ToolStripItemDisplayStyle.Image
+        btnBuscar.Enabled = False
         btnBuscar.Image = CType(resources.GetObject("btnBuscar.Image"), Image)
         btnBuscar.ImageTransparentColor = Color.Magenta
         btnBuscar.Name = "btnBuscar"
@@ -141,6 +153,7 @@ Partial Class FrmFactura
         ' txtId
         ' 
         txtId.Location = New Point(97, 66)
+        txtId.MaxLength = 10
         txtId.Name = "txtId"
         txtId.Size = New Size(68, 23)
         txtId.TabIndex = 65
@@ -204,6 +217,53 @@ Partial Class FrmFactura
         DgvFac.Name = "DgvFac"
         DgvFac.Size = New Size(554, 174)
         DgvFac.TabIndex = 74
+        ' 
+        ' artid
+        ' 
+        artid.HeaderText = "Cod"
+        artid.Name = "artid"
+        artid.Width = 50
+        ' 
+        ' artNom
+        ' 
+        artNom.HeaderText = "Articulo"
+        artNom.Name = "artNom"
+        artNom.ReadOnly = True
+        artNom.Width = 150
+        ' 
+        ' artCant
+        ' 
+        artCant.HeaderText = "Cant"
+        artCant.Name = "artCant"
+        artCant.Width = 50
+        ' 
+        ' artPre
+        ' 
+        artPre.HeaderText = "Precio"
+        artPre.Name = "artPre"
+        artPre.ReadOnly = True
+        artPre.Width = 80
+        ' 
+        ' Descuento
+        ' 
+        Descuento.HeaderText = "DSC (%)"
+        Descuento.Name = "Descuento"
+        Descuento.ReadOnly = True
+        Descuento.Width = 50
+        ' 
+        ' Iva
+        ' 
+        Iva.HeaderText = "IVA (%)"
+        Iva.Name = "Iva"
+        Iva.ReadOnly = True
+        Iva.Width = 50
+        ' 
+        ' sb
+        ' 
+        sb.HeaderText = "SubTotal"
+        sb.Name = "sb"
+        sb.ReadOnly = True
+        sb.Width = 80
         ' 
         ' txtIva
         ' 
@@ -323,53 +383,6 @@ Partial Class FrmFactura
         Label6.TabIndex = 85
         Label6.Text = "Observación"
         ' 
-        ' artid
-        ' 
-        artid.HeaderText = "Cod"
-        artid.Name = "artid"
-        artid.Width = 50
-        ' 
-        ' artNom
-        ' 
-        artNom.HeaderText = "Articulo"
-        artNom.Name = "artNom"
-        artNom.ReadOnly = True
-        artNom.Width = 150
-        ' 
-        ' artCant
-        ' 
-        artCant.HeaderText = "Cant"
-        artCant.Name = "artCant"
-        artCant.Width = 50
-        ' 
-        ' artPre
-        ' 
-        artPre.HeaderText = "Precio"
-        artPre.Name = "artPre"
-        artPre.ReadOnly = True
-        artPre.Width = 80
-        ' 
-        ' Descuento
-        ' 
-        Descuento.HeaderText = "DSC (%)"
-        Descuento.Name = "Descuento"
-        Descuento.ReadOnly = True
-        Descuento.Width = 50
-        ' 
-        ' Iva
-        ' 
-        Iva.HeaderText = "IVA (%)"
-        Iva.Name = "Iva"
-        Iva.ReadOnly = True
-        Iva.Width = 50
-        ' 
-        ' sb
-        ' 
-        sb.HeaderText = "SubTotal"
-        sb.Name = "sb"
-        sb.ReadOnly = True
-        sb.Width = 80
-        ' 
         ' FrmFactura
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -445,4 +458,5 @@ Partial Class FrmFactura
     Friend WithEvents Descuento As DataGridViewTextBoxColumn
     Friend WithEvents Iva As DataGridViewTextBoxColumn
     Friend WithEvents sb As DataGridViewTextBoxColumn
+    Friend WithEvents ToolStripButton1 As ToolStripButton
 End Class

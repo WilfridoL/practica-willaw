@@ -70,4 +70,5 @@ Public Class FrmConsulta2
                 Me.Close()
         End Select
     End Sub
+
 End Class

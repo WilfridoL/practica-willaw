@@ -247,10 +247,11 @@ Partial Class FrmArticulo
         ' txtIvaNum
         ' 
         txtIvaNum.Location = New Point(19, 148)
-        txtIvaNum.MaxLength = 15
+        txtIvaNum.MaxLength = 3
         txtIvaNum.Name = "txtIvaNum"
         txtIvaNum.Size = New Size(220, 23)
         txtIvaNum.TabIndex = 5
+        txtIvaNum.Text = "19"
         ' 
         ' lbIva
         ' 
@@ -261,16 +262,17 @@ Partial Class FrmArticulo
         lbIva.Name = "lbIva"
         lbIva.Size = New Size(82, 23)
         lbIva.TabIndex = 73
-        lbIva.Text = "&IVA*"
+        lbIva.Text = "&IVA (%)*"
         lbIva.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' TxtDesNum
         ' 
         TxtDesNum.Location = New Point(245, 148)
-        TxtDesNum.MaxLength = 15
+        TxtDesNum.MaxLength = 3
         TxtDesNum.Name = "TxtDesNum"
         TxtDesNum.Size = New Size(220, 23)
         TxtDesNum.TabIndex = 6
+        TxtDesNum.Text = "0"
         ' 
         ' txtId
         ' 
@@ -299,9 +301,9 @@ Partial Class FrmArticulo
         lbDes.ForeColor = SystemColors.Desktop
         lbDes.Location = New Point(245, 128)
         lbDes.Name = "lbDes"
-        lbDes.Size = New Size(82, 23)
+        lbDes.Size = New Size(100, 23)
         lbDes.TabIndex = 75
-        lbDes.Text = "&Descuento*"
+        lbDes.Text = "&Descuento (%)*"
         lbDes.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' FrmArticulo
