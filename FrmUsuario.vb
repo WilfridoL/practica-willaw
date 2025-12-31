@@ -76,6 +76,7 @@ Public Class FrmUsuario
         txtConUsu.ReadOnly = False
         txtConUsu.Text = ""
         txtEstUsu.SelectedValue = 1
+        tipId.SelectedValue = 1
         btnAdd.Enabled = True
         btnDel.Enabled = False
         btnUpd.Enabled = False
@@ -92,21 +93,24 @@ Public Class FrmUsuario
         Return True
     End Function
     Public Function BuscarUsuario(ByVal id As Integer)
-        SQL = "SELECT usuId, nombre, apellido, correo, departamento, municipio, rol, estado, observacion FROM tb_usuarios  
+        SQL = "SELECT usuId, usutipId, nombre, nombre2, apellido, apellido2, correo, 
+        departamento, municipio, direccion, rol, estado, observacion 
+        FROM tb_usuarios  
         LEFT JOIN observaciones ON idUsuFk = usuId  
-        WHERE usuId = " & id
+        WHERE usuId =  " & id
+        Dim arrRecortado() As Control = arrTextBox.Skip(2).ToArray()
         rst = BaseDatos.leer_Registro(SQL)
         If rst.Read() Then
             resetCampo()
             bloquearCampos(arrTextBox, 1)
             limitModFrm = 0
+            modInterfaz()
             municipios(rst("departamento"))
             buscar(SQL, arrTextBox)
             txtEstUsu.Enabled = True
             txtObsUsu.ReadOnly = False
             btnDel.Enabled = True
             btnUpd.Enabled = True
-            modInterfaz()
             VerEstado(rst("estado"), rst("nombre") & " " & rst("apellido"), rst("observacion"))
             btnAdd.Enabled = False
             msjErr.Text = "Usuario encontrado"
@@ -141,10 +145,13 @@ Public Class FrmUsuario
         BaseDatos.conectar("root", "")
         txtIdNum.Focus()
         ' rellenar arreglos
-        arrTextBox = {txtIdNum, txtNomUsu, txtApeUsu, txtEma, txtDepa, txtMun, txtRolUsu, txtEstUsu, txtObsUsu}
-        arrLabel = {lbId, lbNom, lbApe, lbCorr, lbDep, lbMun, lbRol, lbEst, lbObs}
+        arrTextBox = {txtIdNum, tipId, txtNomUsu, txtNom2Usu, txtApeUsu, txtApe2Usu, txtEma, txtDepa, txtMun, txtDir, txtRolUsu, txtEstUsu, txtObsUsu}
+        arrLabel = {lbId, lbNom, lbNom2, lbApe, lbApe2, lbCorr, lbDep, lbMun, lbDir, lbRol, lbEst, lbObs}
         arrBtn = {btnAdd, btnUpd, btnDel}
+        'MsgBox(arrTextBox.Skip(6).ToArray().Length)
+
         cargar_combobox("Select * FROM departamentos", txtDepa, "depId", "DepNom")
+        cargar_combobox("SELECT * FROM tipo_identificacion", tipId, "tipId", "tipNom")
         cargar_combobox("Select * FROM rol", txtRolUsu, "idRol", "nomRol")
         cargar_combobox("Select * FROM estados", txtEstUsu, "idEst", "estNom")
         txtDepa.SelectedValue = 0
@@ -152,32 +159,33 @@ Public Class FrmUsuario
 
         bloquearCampos(arrTextBox, 0)
     End Sub
-
+    Private Function mostrarContra(e As Boolean, c As Boolean)
+        txtConUsu.Visible = e
+        txtConContra.Visible = e
+        lbCon.Visible = e
+        lbConCont.Visible = e
+        camCont.Visible = c
+    End Function
     Private Sub modInterfaz()
-        ' interfaz para busqueda de usuario
+        Dim newArrText() As Control = arrTextBox.Skip(6).ToArray()
+        Dim newArrLabel() As Control = arrLabel.Skip(5).ToArray()
         If txtConUsu.Visible = True And limitModFrm = 0 Then
-            txtConUsu.Visible = False
-            txtConContra.Visible = False
-            lbCon.Visible = False
-            lbConCont.Visible = False
-            camCont.Visible = True
-            For i As Integer = 3 To arrTextBox.Length - 1 ' ajusta la posicion de los campos y labels
-                arrTextBox(i).Location = New Point(arrTextBox(i).Location.X, arrTextBox(i).Location.Y - (29 * 2))
-                arrLabel(i).Location = New Point(arrLabel(i).Location.X, arrLabel(i).Location.Y - (29 * 2))
+            mostrarContra(False, True)
+            For Each ctrl As Control In newArrText
+                ctrl.Location = New Point(ctrl.Location.X, ctrl.Location.Y - (29 * 2))
             Next
-        Else
-            ' interfaz de para crea un nuevo usuario o cambiar la contraseña
-            If txtConUsu.Visible = False And limitModFrm = 2 Then
-                txtConUsu.Visible = True
-                txtConContra.Visible = True
-                lbCon.Visible = True
-                lbConCont.Visible = True
-                camCont.Visible = False
-                For i As Integer = 3 To arrTextBox.Length - 1 ' ajusta la posicion de los campos y labels
-                    arrTextBox(i).Location = New Point(arrTextBox(i).Location.X, arrTextBox(i).Location.Y + (29 * 2))
-                    arrLabel(i).Location = New Point(arrLabel(i).Location.X, arrLabel(i).Location.Y + (29 * 2))
-                Next
-            End If
+            For Each ctrl As Control In newArrLabel
+                ctrl.Location = New Point(ctrl.Location.X, ctrl.Location.Y - (29 * 2))
+            Next
+        End If
+        If txtConUsu.Visible = False And limitModFrm = 2 Then
+            mostrarContra(True, False)
+            For Each ctrl As Control In newArrText
+                ctrl.Location = New Point(ctrl.Location.X, ctrl.Location.Y + (29 * 2))
+            Next
+            For Each ctrl As Control In newArrLabel
+                ctrl.Location = New Point(ctrl.Location.X, ctrl.Location.Y + (29 * 2))
+            Next
         End If
     End Sub
 
@@ -352,6 +360,7 @@ Public Class FrmUsuario
         Next
         If tip = 1 Then
             txtIdNum.Enabled = False
+            tipId.Enabled = False
             Button1.Enabled = False
             btnAdd.Enabled = True
             txtConUsu.Enabled = True
@@ -360,6 +369,7 @@ Public Class FrmUsuario
         If tip = 0 Then
             btnAdd.Enabled = False
             txtIdNum.Enabled = True
+            tipId.Enabled = True
             txtConUsu.Enabled = False
             txtConContra.Enabled = False
             Button1.Enabled = True
@@ -369,8 +379,8 @@ Public Class FrmUsuario
 
     Private Sub txtNom_KeyDown(sender As Object, e As KeyEventArgs) Handles txtNomUsu.KeyDown
         If e.KeyCode = Keys.Enter Then
-            If btnAdd.Enabled = True Then btnAdd.PerformClick()
-            If btnUpd.Enabled = True Then btnUpd.PerformClick()
+            If btnAdd.Enabled = True Then btnAdd.PerformClick
+            If btnUpd.Enabled = True Then btnUpd.PerformClick
         End If
     End Sub
 
@@ -386,8 +396,8 @@ Public Class FrmUsuario
 
     Private Sub txtEma_KeyDown(sender As Object, e As KeyEventArgs) Handles txtEma.KeyDown
         If e.KeyCode = Keys.Enter Then
-            If btnAdd.Enabled = True Then btnAdd.PerformClick()
-            If btnUpd.Enabled = True Then btnUpd.PerformClick()
+            If btnAdd.Enabled = True Then btnAdd.PerformClick
+            If btnUpd.Enabled = True Then btnUpd.PerformClick
         End If
     End Sub
 
@@ -442,14 +452,8 @@ Public Class FrmUsuario
         End If
     End Sub
 
-    Private Sub txtRolUsu_KeyDown(sender As Object, e As KeyEventArgs) Handles txtRolUsu.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            If btnAdd.Enabled = True Then btnAdd.PerformClick()
-            If btnUpd.Enabled = True Then btnUpd.PerformClick()
-        End If
-    End Sub
 
-    Private Sub txtObsUsu_KeyDown(sender As Object, e As KeyEventArgs) Handles txtObsUsu.KeyDown
+    Private Sub txtObsUsu_KeyDown(sender As Object, e As KeyEventArgs) Handles txtObsUsu.KeyDown, txtRolUsu.KeyDown
         If e.KeyCode = Keys.Enter Then
             If btnAdd.Enabled = True Then btnAdd.PerformClick()
             If btnUpd.Enabled = True Then btnUpd.PerformClick()
@@ -459,4 +463,5 @@ Public Class FrmUsuario
     Private Sub FrmUsuario_Closed(sender As Object, e As EventArgs) Handles Me.Closed
         ToolStripButton3.PerformClick()
     End Sub
+
 End Class

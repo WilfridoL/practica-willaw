@@ -48,7 +48,8 @@ Module Mprincipal
         If rst.Read() Then
             For i As Integer = 0 To campos.Length - 1
                 If TypeOf campos(i) Is TextBox Or TypeOf campos(i) Is RichTextBox Or TypeOf campos(i) Is Label Then
-                    campos(i).Text = rst(i)
+                    'If campos(i).Visible = False Then Continue For
+                    campos(i).Text = IIf(IsDBNull(rst(i)), "", rst(i))
                 ElseIf TypeOf campos(i) Is ComboBox Then
                     CType(campos(i), ComboBox).SelectedValue = rst(i)
                 End If

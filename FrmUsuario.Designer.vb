@@ -58,6 +58,13 @@ Partial Class FrmUsuario
         txtConContra = New TextBox()
         lbConCont = New Label()
         camCont = New Label()
+        tipId = New ComboBox()
+        txtApe2Usu = New TextBox()
+        lbApe2 = New Label()
+        txtNom2Usu = New TextBox()
+        lbNom2 = New Label()
+        txtDir = New TextBox()
+        lbDir = New Label()
         ToolStrip1.SuspendLayout()
         CType(BaseDatosBindingSource, ComponentModel.ISupportInitialize).BeginInit()
         StatusStrip1.SuspendLayout()
@@ -66,10 +73,10 @@ Partial Class FrmUsuario
         ' txtIdNum
         ' 
         txtIdNum.Cursor = Cursors.IBeam
-        txtIdNum.Location = New Point(137, 50)
+        txtIdNum.Location = New Point(190, 50)
         txtIdNum.MaxLength = 9
         txtIdNum.Name = "txtIdNum"
-        txtIdNum.Size = New Size(188, 23)
+        txtIdNum.Size = New Size(139, 23)
         txtIdNum.TabIndex = 0
         ' 
         ' lbId
@@ -94,50 +101,52 @@ Partial Class FrmUsuario
         ' 
         ' lbNom
         ' 
+        lbNom.AutoSize = True
         lbNom.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         lbNom.ForeColor = SystemColors.Desktop
-        lbNom.Location = New Point(12, 79)
+        lbNom.Location = New Point(12, 82)
         lbNom.Name = "lbNom"
-        lbNom.Size = New Size(63, 23)
+        lbNom.Size = New Size(94, 15)
         lbNom.TabIndex = 14
-        lbNom.Text = "&Nombres*"
+        lbNom.Text = "&Primer Nombre*"
         lbNom.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' txtApeUsu
         ' 
         txtApeUsu.Cursor = Cursors.IBeam
-        txtApeUsu.Location = New Point(137, 108)
+        txtApeUsu.Location = New Point(137, 142)
         txtApeUsu.MaxLength = 150
         txtApeUsu.Name = "txtApeUsu"
         txtApeUsu.Size = New Size(220, 23)
-        txtApeUsu.TabIndex = 3
+        txtApeUsu.TabIndex = 4
         ' 
         ' lbApe
         ' 
+        lbApe.AutoSize = True
         lbApe.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         lbApe.ForeColor = SystemColors.Desktop
-        lbApe.Location = New Point(12, 108)
+        lbApe.Location = New Point(12, 145)
         lbApe.Name = "lbApe"
-        lbApe.Size = New Size(63, 23)
+        lbApe.Size = New Size(92, 15)
         lbApe.TabIndex = 16
-        lbApe.Text = "&Apellidos*"
+        lbApe.Text = "&Primer apellido*"
         lbApe.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' txtEma
         ' 
         txtEma.Cursor = Cursors.IBeam
         txtEma.ImeMode = ImeMode.NoControl
-        txtEma.Location = New Point(137, 198)
+        txtEma.Location = New Point(137, 262)
         txtEma.MaxLength = 254
         txtEma.Name = "txtEma"
         txtEma.Size = New Size(220, 23)
-        txtEma.TabIndex = 6
+        txtEma.TabIndex = 8
         ' 
         ' lbCorr
         ' 
         lbCorr.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         lbCorr.ForeColor = SystemColors.Desktop
-        lbCorr.Location = New Point(12, 197)
+        lbCorr.Location = New Point(12, 264)
         lbCorr.Name = "lbCorr"
         lbCorr.Size = New Size(63, 23)
         lbCorr.TabIndex = 18
@@ -148,7 +157,7 @@ Partial Class FrmUsuario
         ' 
         lbRol.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         lbRol.ForeColor = SystemColors.Desktop
-        lbRol.Location = New Point(12, 284)
+        lbRol.Location = New Point(12, 383)
         lbRol.Name = "lbRol"
         lbRol.Size = New Size(42, 23)
         lbRol.TabIndex = 21
@@ -160,26 +169,26 @@ Partial Class FrmUsuario
         txtRolUsu.Cursor = Cursors.Hand
         txtRolUsu.DropDownStyle = ComboBoxStyle.DropDownList
         txtRolUsu.FormattingEnabled = True
-        txtRolUsu.Location = New Point(137, 285)
+        txtRolUsu.Location = New Point(137, 381)
         txtRolUsu.Name = "txtRolUsu"
         txtRolUsu.Size = New Size(220, 23)
-        txtRolUsu.TabIndex = 9
+        txtRolUsu.TabIndex = 12
         ' 
         ' txtObsUsu
         ' 
         txtObsUsu.BackColor = SystemColors.ControlLightLight
-        txtObsUsu.Location = New Point(137, 343)
+        txtObsUsu.Location = New Point(137, 439)
         txtObsUsu.Name = "txtObsUsu"
         txtObsUsu.ReadOnly = True
         txtObsUsu.Size = New Size(220, 96)
-        txtObsUsu.TabIndex = 11
+        txtObsUsu.TabIndex = 14
         txtObsUsu.Text = ""
         ' 
         ' lbObs
         ' 
         lbObs.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         lbObs.ForeColor = SystemColors.Desktop
-        lbObs.Location = New Point(12, 342)
+        lbObs.Location = New Point(12, 441)
         lbObs.Name = "lbObs"
         lbObs.Size = New Size(96, 23)
         lbObs.TabIndex = 23
@@ -201,7 +210,7 @@ Partial Class FrmUsuario
         ToolStrip1.Items.AddRange(New ToolStripItem() {btnAdd, ToolStripButton3, btnBuscar, btnUpd, btnDel, ToolStripButton2})
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
-        ToolStrip1.Size = New Size(396, 25)
+        ToolStrip1.Size = New Size(369, 25)
         ToolStrip1.TabIndex = 26
         ToolStrip1.TabStop = True
         ToolStrip1.Text = "ToolStrip1"
@@ -267,7 +276,7 @@ Partial Class FrmUsuario
         ' 
         lbDep.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         lbDep.ForeColor = SystemColors.Desktop
-        lbDep.Location = New Point(12, 226)
+        lbDep.Location = New Point(12, 293)
         lbDep.Name = "lbDep"
         lbDep.Size = New Size(96, 23)
         lbDep.TabIndex = 28
@@ -279,18 +288,19 @@ Partial Class FrmUsuario
         txtDepa.Cursor = Cursors.Hand
         txtDepa.DropDownStyle = ComboBoxStyle.DropDownList
         txtDepa.FormattingEnabled = True
-        txtDepa.Location = New Point(137, 227)
+        txtDepa.Location = New Point(137, 291)
         txtDepa.Name = "txtDepa"
         txtDepa.Size = New Size(220, 23)
-        txtDepa.TabIndex = 7
+        txtDepa.TabIndex = 9
         ' 
         ' lbMun
         ' 
+        lbMun.AutoSize = True
         lbMun.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         lbMun.ForeColor = SystemColors.Desktop
-        lbMun.Location = New Point(12, 255)
+        lbMun.Location = New Point(12, 322)
         lbMun.Name = "lbMun"
-        lbMun.Size = New Size(63, 23)
+        lbMun.Size = New Size(66, 15)
         lbMun.TabIndex = 30
         lbMun.Text = "&Municipio*"
         lbMun.TextAlign = ContentAlignment.MiddleLeft
@@ -300,10 +310,10 @@ Partial Class FrmUsuario
         txtMun.Cursor = Cursors.Hand
         txtMun.DropDownStyle = ComboBoxStyle.DropDownList
         txtMun.FormattingEnabled = True
-        txtMun.Location = New Point(137, 256)
+        txtMun.Location = New Point(137, 320)
         txtMun.Name = "txtMun"
         txtMun.Size = New Size(220, 23)
-        txtMun.TabIndex = 8
+        txtMun.TabIndex = 10
         ' 
         ' BaseDatosBindingSource
         ' 
@@ -312,9 +322,9 @@ Partial Class FrmUsuario
         ' StatusStrip1
         ' 
         StatusStrip1.Items.AddRange(New ToolStripItem() {msjErr})
-        StatusStrip1.Location = New Point(0, 441)
+        StatusStrip1.Location = New Point(0, 550)
         StatusStrip1.Name = "StatusStrip1"
-        StatusStrip1.Size = New Size(396, 22)
+        StatusStrip1.Size = New Size(369, 22)
         StatusStrip1.TabIndex = 43
         StatusStrip1.Text = "StatusStrip1"
         ' 
@@ -327,18 +337,18 @@ Partial Class FrmUsuario
         ' txtConUsu
         ' 
         txtConUsu.Cursor = Cursors.IBeam
-        txtConUsu.Location = New Point(137, 137)
+        txtConUsu.Location = New Point(137, 204)
         txtConUsu.MaxLength = 15
         txtConUsu.Name = "txtConUsu"
         txtConUsu.PasswordChar = "*"c
         txtConUsu.Size = New Size(220, 23)
-        txtConUsu.TabIndex = 4
+        txtConUsu.TabIndex = 6
         ' 
         ' lbCon
         ' 
         lbCon.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         lbCon.ForeColor = SystemColors.Desktop
-        lbCon.Location = New Point(12, 137)
+        lbCon.Location = New Point(12, 204)
         lbCon.Name = "lbCon"
         lbCon.Size = New Size(82, 23)
         lbCon.TabIndex = 44
@@ -349,7 +359,7 @@ Partial Class FrmUsuario
         ' 
         lbEst.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         lbEst.ForeColor = SystemColors.Desktop
-        lbEst.Location = New Point(12, 313)
+        lbEst.Location = New Point(12, 412)
         lbEst.Name = "lbEst"
         lbEst.Size = New Size(51, 23)
         lbEst.TabIndex = 47
@@ -362,26 +372,26 @@ Partial Class FrmUsuario
         txtEstUsu.DropDownStyle = ComboBoxStyle.DropDownList
         txtEstUsu.Enabled = False
         txtEstUsu.FormattingEnabled = True
-        txtEstUsu.Location = New Point(137, 314)
+        txtEstUsu.Location = New Point(137, 410)
         txtEstUsu.Name = "txtEstUsu"
         txtEstUsu.Size = New Size(220, 23)
-        txtEstUsu.TabIndex = 10
+        txtEstUsu.TabIndex = 13
         ' 
         ' txtConContra
         ' 
         txtConContra.Cursor = Cursors.IBeam
-        txtConContra.Location = New Point(137, 166)
+        txtConContra.Location = New Point(137, 233)
         txtConContra.MaxLength = 15
         txtConContra.Name = "txtConContra"
         txtConContra.PasswordChar = "*"c
         txtConContra.Size = New Size(220, 23)
-        txtConContra.TabIndex = 5
+        txtConContra.TabIndex = 7
         ' 
         ' lbConCont
         ' 
         lbConCont.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         lbConCont.ForeColor = SystemColors.Desktop
-        lbConCont.Location = New Point(12, 166)
+        lbConCont.Location = New Point(12, 233)
         lbConCont.Name = "lbConCont"
         lbConCont.Size = New Size(128, 23)
         lbConCont.TabIndex = 48
@@ -394,7 +404,7 @@ Partial Class FrmUsuario
         camCont.Cursor = Cursors.Hand
         camCont.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
         camCont.ForeColor = Color.LightCoral
-        camCont.Location = New Point(12, 416)
+        camCont.Location = New Point(12, 515)
         camCont.Name = "camCont"
         camCont.Size = New Size(199, 23)
         camCont.TabIndex = 12
@@ -402,11 +412,90 @@ Partial Class FrmUsuario
         camCont.TextAlign = ContentAlignment.MiddleLeft
         camCont.Visible = False
         ' 
+        ' tipId
+        ' 
+        tipId.DropDownStyle = ComboBoxStyle.DropDownList
+        tipId.FormattingEnabled = True
+        tipId.Location = New Point(137, 50)
+        tipId.Name = "tipId"
+        tipId.Size = New Size(47, 23)
+        tipId.TabIndex = 49
+        ' 
+        ' txtApe2Usu
+        ' 
+        txtApe2Usu.Cursor = Cursors.IBeam
+        txtApe2Usu.Location = New Point(137, 171)
+        txtApe2Usu.MaxLength = 150
+        txtApe2Usu.Name = "txtApe2Usu"
+        txtApe2Usu.Size = New Size(220, 23)
+        txtApe2Usu.TabIndex = 5
+        ' 
+        ' lbApe2
+        ' 
+        lbApe2.AutoSize = True
+        lbApe2.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        lbApe2.ForeColor = SystemColors.Desktop
+        lbApe2.Location = New Point(12, 177)
+        lbApe2.Name = "lbApe2"
+        lbApe2.Size = New Size(102, 15)
+        lbApe2.TabIndex = 53
+        lbApe2.Text = "&Segundo Apellido"
+        lbApe2.TextAlign = ContentAlignment.MiddleLeft
+        ' 
+        ' txtNom2Usu
+        ' 
+        txtNom2Usu.Cursor = Cursors.IBeam
+        txtNom2Usu.Location = New Point(137, 111)
+        txtNom2Usu.MaxLength = 150
+        txtNom2Usu.Name = "txtNom2Usu"
+        txtNom2Usu.Size = New Size(220, 23)
+        txtNom2Usu.TabIndex = 3
+        ' 
+        ' lbNom2
+        ' 
+        lbNom2.AutoSize = True
+        lbNom2.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        lbNom2.ForeColor = SystemColors.Desktop
+        lbNom2.Location = New Point(12, 114)
+        lbNom2.Name = "lbNom2"
+        lbNom2.Size = New Size(102, 15)
+        lbNom2.TabIndex = 52
+        lbNom2.Text = "&Segundo Nombre"
+        lbNom2.TextAlign = ContentAlignment.MiddleLeft
+        ' 
+        ' txtDir
+        ' 
+        txtDir.Cursor = Cursors.IBeam
+        txtDir.ImeMode = ImeMode.NoControl
+        txtDir.Location = New Point(137, 349)
+        txtDir.MaxLength = 254
+        txtDir.Name = "txtDir"
+        txtDir.Size = New Size(220, 23)
+        txtDir.TabIndex = 11
+        ' 
+        ' lbDir
+        ' 
+        lbDir.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
+        lbDir.ForeColor = SystemColors.Desktop
+        lbDir.Location = New Point(12, 351)
+        lbDir.Name = "lbDir"
+        lbDir.Size = New Size(63, 23)
+        lbDir.TabIndex = 55
+        lbDir.Text = "&Direccion*"
+        lbDir.TextAlign = ContentAlignment.MiddleLeft
+        ' 
         ' FrmUsuario
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(396, 463)
+        ClientSize = New Size(369, 572)
+        Controls.Add(txtDir)
+        Controls.Add(lbDir)
+        Controls.Add(txtApe2Usu)
+        Controls.Add(lbApe2)
+        Controls.Add(txtNom2Usu)
+        Controls.Add(lbNom2)
+        Controls.Add(tipId)
         Controls.Add(camCont)
         Controls.Add(txtConContra)
         Controls.Add(lbConCont)
@@ -479,4 +568,11 @@ Partial Class FrmUsuario
     Friend WithEvents txtConContra As TextBox
     Friend WithEvents lbConCont As Label
     Friend WithEvents camCont As Label
+    Friend WithEvents tipId As ComboBox
+    Friend WithEvents txtApe2Usu As TextBox
+    Friend WithEvents lbApe2 As Label
+    Friend WithEvents txtNom2Usu As TextBox
+    Friend WithEvents lbNom2 As Label
+    Friend WithEvents txtDir As TextBox
+    Friend WithEvents lbDir As Label
 End Class
