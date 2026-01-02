@@ -310,35 +310,43 @@ Public Class FrmUsuario
     End Sub
 
     Private Sub btnBuscar_Click(sender As Object, e As EventArgs) Handles btnBuscar.Click
-        FrmConsulta2.Text = "Buscar usuario"
-        FrmConsulta2.grd.DataSource = Nothing
+        SQL = "SELECT usuId AS Identificación, tipNom AS Tipo, 
+        CONCAT_WS(' ', nombre, nombre2) AS Nombres, CONCAT_WS(' ', apellido, apellido2) AS Apellidos, 
+        correo AS Correo_Electronico, DepNom AS Departamento, 
+        munNom AS Municipio, direccion AS Dirección, nomRol AS Rol, observacion AS Observacion
+        FROM tb_usuarios  
+        LEFT JOIN observaciones ON idUsuFk = usuId  
+        JOIN departamentos ON depID = departamento
+        JOIN municipios ON munId = municipio
+        JOIN tipo_identificacion ON tipId = usuTipId
+        JOIN rol ON rol = idRol 
+        WHERE estado != 3"
+        mostrarDataGridView(SQL, "Buscar Usuario", txtIdNum)
+        If sw_regreso = 1 Then BuscarUsuario(valDataGrid)
+        'FrmConsulta2.Text = "Buscar usuario"
+        'FrmConsulta2.grd.DataSource = Nothing
 
-        SQL = "SELECT usuId AS Cedula, nombre AS Nombres, apellido AS Apellidos, correo AS Correo, " &
-              "nomrol AS Rol, estNom AS Estado " &
-              "FROM tb_usuarios " &
-              "JOIN rol ON rol = idRol " &
-              "JOIN estados ON estado = idEst"
 
-        FrmConsulta2.bind.DataSource = BaseDatos.Listar_datos(SQL)
-        FrmConsulta2.grd.DataSource = FrmConsulta2.bind.DataSource
+        'FrmConsulta2.bind.DataSource = BaseDatos.Listar_datos(SQL)
+        'FrmConsulta2.grd.DataSource = FrmConsulta2.bind.DataSource
 
-        FrmConsulta2.grd.RowTemplate.Height = 17
-        FrmConsulta2.Size = New Size(700, 320)
-        FrmConsulta2.grd.Size = New Size(660, 200)
+        'FrmConsulta2.grd.RowTemplate.Height = 17
+        'FrmConsulta2.Size = New Size(700, 320)
+        'FrmConsulta2.grd.Size = New Size(660, 200)
 
-        ' Columnas solo lectura
-        For Each ctrl In FrmConsulta2.grd.Columns
-            ctrl.ReadOnly = True
-        Next
+        '' Columnas solo lectura
+        'For Each ctrl In FrmConsulta2.grd.Columns
+        '    ctrl.ReadOnly = True
+        'Next
 
-        FrmConsulta2.ShowDialog()
+        'FrmConsulta2.ShowDialog()
 
-        If sw_regreso = 1 Then
-            txtIdNum.Text = vec(0)   ' vec(0) sería usuId devuelto desde la consulta
-            BuscarUsuario(vec(0))
-        Else
-            txtIdNum.Focus()
-        End If
+        'If sw_regreso = 1 Then
+        '    txtIdNum.Text = vec(0)   ' vec(0) sería usuId devuelto desde la consulta
+        '    BuscarUsuario(vec(0))
+        'Else
+        '    txtIdNum.Focus()
+        'End If
 
     End Sub
     ' Cambiar contraseña

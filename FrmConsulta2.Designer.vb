@@ -60,9 +60,12 @@ Partial Class FrmConsulta2
         ' 
         ' grd
         ' 
+        grd.AllowUserToAddRows = False
+        grd.AllowUserToDeleteRows = False
         grd.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
         grd.Location = New Point(9, 53)
         grd.Name = "grd"
+        grd.ReadOnly = True
         grd.Size = New Size(454, 186)
         grd.TabIndex = 1
         ' 
@@ -76,6 +79,7 @@ Partial Class FrmConsulta2
         Controls.Add(cbbFiltro)
         Controls.Add(Label1)
         Name = "FrmConsulta2"
+        Padding = New Padding(0, 0, 10, 0)
         StartPosition = FormStartPosition.CenterScreen
         CType(grd, ComponentModel.ISupportInitialize).EndInit()
         CType(bind, ComponentModel.ISupportInitialize).EndInit()

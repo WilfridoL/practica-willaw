@@ -12,6 +12,7 @@ Module Mprincipal
     Public sw_regreso As Integer = 0
     Public c_Varias As New Varias
     Public vec() As String
+    Public valDataGrid As Integer
     'And Regex.IsMatch(arrTxt(i).Text, "[^\w]") = True
     Function controlObservaciones(ByVal SQL As String) As Boolean
         BaseDatos.ingresar_registros(SQL, "manipulacion obs")
@@ -152,21 +153,7 @@ Module Mprincipal
     End Function
 
 
-    ' Public Function mostrarDataGridView(SQL1 As String, SQL2 As String, txtTitle As String, )
-    'Dim btnArr() As Control = {btnAdd, btnUpd, btnDel}
-    '    frmConsulta.Text = txtTitle
-    '   frmConsulta.DgvConsulta.DataSource = ""
-    '  frmConsulta.DgvConsulta.RowTemplate.Height = 17
-    ' frmConsulta.DgvConsulta.DataSource = BaseDatos.Listar_datos(SQL1)
-    'frmConsulta.ShowDialog()
-    'If sw_regreso = 1 Then
-    '       txtId.Text = CedCli
-    'MsgBox(txtboxArr)
-    '      limpiar(txtboxArr, btnArr)
-    '     buscar(SQL2 & CedCli, txtboxArr)
-    '    SendKeys.Send("{ENTER}")
-    'End If
-    'End Function
+
 
 
 End Module
