@@ -10,6 +10,7 @@ Public Class FrmUsuario
     Dim arrLabel() As Label
     Dim arrBtn() As ToolStripButton
     Dim limitModFrm As Integer = 1
+    Dim idAnterior As Integer = 0
     Public Function VerEstado(ByVal est As String, ByVal name As String, ByVal ob As String)
         If est > 1 Then
             txtObsUsu.ReadOnly = False
@@ -23,13 +24,16 @@ Public Class FrmUsuario
                 Next
                 btnDel.Enabled = False
                 btnUpd.Enabled = False
-                camCont.Visible = False
+                btnCanContra.Enabled = False
+                btnDesBlo.Enabled = True
                 MsgBox("El usuario " & name & " Se encuentra bloqueado por el motivo " & ob, MsgBoxStyle.Critical)
             End If
         Else
             txtIdNum.ReadOnly = True
             txtIdNum.Cursor = Cursors.No
             txtObsUsu.ReadOnly = True
+            btnCanContra.Enabled = True
+            btnDesBlo.Enabled = False
         End If
         Return True
     End Function
@@ -82,6 +86,7 @@ Public Class FrmUsuario
         btnUpd.Enabled = False
         txtEstUsu.Enabled = False
         msjErr.Text = ""
+        menDes.Visible = False
         limitModFrm = 2
         modInterfaz()
         limitModFrm = 1
@@ -115,6 +120,7 @@ Public Class FrmUsuario
             btnAdd.Enabled = False
             msjErr.Text = "Usuario encontrado"
             limitModFrm = 1
+            menDes.Visible = True
         Else
             If MsgBox("El usuario con la identificacion " & id & " no se encuentra registrado" & vbCrLf & "¿Desea crearlo?", MsgBoxStyle.YesNo + MsgBoxStyle.Information) <> vbYes Then Exit Function
             bloquearCampos(arrTextBox, 1)
@@ -164,7 +170,6 @@ Public Class FrmUsuario
         txtConContra.Visible = e
         lbCon.Visible = e
         lbConCont.Visible = e
-        camCont.Visible = c
     End Function
     Private Sub modInterfaz()
         Dim newArrText() As Control = arrTextBox.Skip(6).ToArray()
@@ -231,12 +236,15 @@ Public Class FrmUsuario
     Private Sub ToolStripButton4_Click(sender As Object, e As EventArgs) Handles btnUpd.Click
         SQL = "UPDATE tb_usuarios Set " &
         "nombre = '" & txtNomUsu.Text.ToUpper() & "', " &
+        "nombre2 = '" & txtNom2Usu.Text.ToUpper() & "', " &
         "apellido = '" & txtApeUsu.Text.ToUpper() & "', " &
+        "apellido2 = '" & txtApe2Usu.Text.ToUpper() & "', " &
         "correo = '" & txtEma.Text.ToLower() & "', " &
         "rol = '" & txtRolUsu.SelectedValue & "', " &
         "estado = '" & txtEstUsu.SelectedValue & "', " &
         "departamento = " & txtDepa.SelectedValue & ", " &
-        "municipio = " & txtMun.SelectedValue & " " &
+        "municipio = " & txtMun.SelectedValue & ", " &
+        "direccion = '" & txtDir.Text & "' " &
         " WHERE usuId = " & txtIdNum.Text
         If validacion() <> True Then Exit Sub ' validar campos
         If BaseDatos.ingresar_registros(SQL, "actualizar") Then
@@ -263,11 +271,13 @@ Public Class FrmUsuario
     End Sub
 
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
-        SQL = "INSERT tb_usuarios (usuId, nombre, apellido, contraseña, correo, departamento, municipio, rol, estado) " & "
-        VALUE (" & txtIdNum.Text & ", '" & txtNomUsu.Text.ToUpper() & "', '" & txtApeUsu.Text.ToUpper() & "', '" & txtConUsu.Text & "', '" & txtEma.Text.ToLower() &
-        "', " & txtDepa.SelectedValue & ", " & txtMun.SelectedValue & ", " & txtRolUsu.SelectedValue & ", " & txtEstUsu.SelectedValue & ");"
+        SQL = $"INSERT tb_usuarios (usuId, usuTipId, nombre, nombre2, apellido, apellido2, 
+        contraseña, correo, departamento, municipio, direccion, rol, estado)
+        VALUE ({txtIdNum.Text}, {tipId.SelectedValue}, '{txtNomUsu.Text.ToString.ToUpper}', '{txtNom2Usu.Text.ToString.ToUpper}', 
+        '{txtApeUsu.Text.ToString.ToUpper}', '{txtApe2Usu.Text.ToString.ToUpper}', '{txtConUsu.Text}', '{txtEma.Text.ToString.ToLower}',
+        {txtDepa.SelectedValue}, {txtMun.SelectedValue}, '{txtDir.Text}', {txtRolUsu.SelectedValue}, {txtEstUsu.SelectedValue});"
         If validacion() <> True Then Exit Sub
-        'MsgBox(SQL)
+        MsgBox(SQL)
         ' validacion id existente
         rst = BaseDatos.leer_Registro("SELECT * FROM tb_usuarios WHERE usuId=" & txtIdNum.Text)
         If rst.Read() Then
@@ -321,38 +331,14 @@ Public Class FrmUsuario
         JOIN tipo_identificacion ON tipId = usuTipId
         JOIN rol ON rol = idRol 
         WHERE estado != 3"
-        mostrarDataGridView(SQL, "Buscar Usuario", txtIdNum)
-        If sw_regreso = 1 Then BuscarUsuario(valDataGrid)
-        'FrmConsulta2.Text = "Buscar usuario"
-        'FrmConsulta2.grd.DataSource = Nothing
-
-
-        'FrmConsulta2.bind.DataSource = BaseDatos.Listar_datos(SQL)
-        'FrmConsulta2.grd.DataSource = FrmConsulta2.bind.DataSource
-
-        'FrmConsulta2.grd.RowTemplate.Height = 17
-        'FrmConsulta2.Size = New Size(700, 320)
-        'FrmConsulta2.grd.Size = New Size(660, 200)
-
-        '' Columnas solo lectura
-        'For Each ctrl In FrmConsulta2.grd.Columns
-        '    ctrl.ReadOnly = True
-        'Next
-
-        'FrmConsulta2.ShowDialog()
-
-        'If sw_regreso = 1 Then
-        '    txtIdNum.Text = vec(0)   ' vec(0) sería usuId devuelto desde la consulta
-        '    BuscarUsuario(vec(0))
-        'Else
-        '    txtIdNum.Focus()
-        'End If
+        mostrarDataGridView(SQL, "Buscar Usuario", txtIdNum) ' mostar y calcular tamaño automatico del datagrid
+        If sw_regreso = 1 Then BuscarUsuario(valDataGrid) ' si la respuesta es la deseada ejecuta la funcion de busqueda
 
     End Sub
     ' Cambiar contraseña
-    Private Sub camCont_Click(sender As Object, e As EventArgs) Handles camCont.Click
+    Private Sub camCont_Click(sender As Object, e As EventArgs)
         If InputBox("Ingrese su contraseña de acceso, para habilitar el cambio de contraseña",
-                    "Cambiar Contraseña", "").ToString() = usuContra Then
+                    "Cambiar Contraseña", "").ToString = usuContra Then
             limitModFrm = 2
             modInterfaz()
             limitModFrm = 1
@@ -448,16 +434,7 @@ Public Class FrmUsuario
     End Sub
 
     Private Sub txtIdNum_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtIdNum.KeyPress
-        If Not Char.IsDigit(e.KeyChar) AndAlso
-      e.KeyChar <> ControlChars.Back AndAlso
-      e.KeyChar <> ControlChars.Cr Then
-            e.Handled = True
-            MsgBox("Solo se permiten números")
-        End If
-        If txtIdNum.Text.Length > 10 AndAlso e.KeyChar <> ControlChars.Back Then
-            e.Handled = True
-            Exit Sub
-        End If
+        SoloNumeros(sender, e)
     End Sub
 
 
@@ -472,4 +449,38 @@ Public Class FrmUsuario
         ToolStripButton3.PerformClick()
     End Sub
 
+    Private Sub camposSoloLetras(sender As Object, e As KeyPressEventArgs) Handles _
+        txtNomUsu.KeyPress, txtNom2Usu.KeyPress, txtApeUsu.KeyPress, txtApe2Usu.KeyPress
+        SoloLetras(sender, e)
+    End Sub
+
+    Private Sub btnCanContra_Click(sender As Object, e As EventArgs) Handles btnCanContra.Click, btnDesBlo.Click
+        If sender.name = "btnCanContra" And sender.enabled = True Then
+            If InputBox("Ingrese su contraseña de acceso, para habilitar el cambio de contraseña",
+                    "Cambiar Contraseña", "").ToString() = usuContra Then
+                limitModFrm = 2
+                modInterfaz()
+                limitModFrm = 1
+            Else
+                MsgBox("Contraseña incorrecta", MsgBoxStyle.Critical)
+            End If
+        End If
+        If sender.name = "btnDesBlo" And sender.enabled = True Then
+            If InputBox("Ingrese su contraseña de acceso, para continuar con el proceso",
+                    "Desbloquear usuario", "").ToString() = usuContra Then
+                If BaseDatos.ingresar_registros($"UPDATE tb_usuarios SET estado = 1 WHERE usuId={txtIdNum.Text} AND 
+                usuTipId={tipId.SelectedValue}", "actualizar") Then
+                    MsgBox($"El usuario {txtNomUsu.Text} {txtApeUsu.Text} ha sido desbloqueado", MsgBoxStyle.Information, "Usuario desbloqueado")
+                    BuscarUsuario(txtIdNum.Text)
+                End If
+            Else
+                MsgBox("Contraseña incorrecta", MsgBoxStyle.Critical)
+            End If
+        End If
+
+    End Sub
+
+    Private Sub txtEma_LostFocus(sender As Object, e As EventArgs) Handles txtEma.LostFocus
+        autoCompletarCorreo(sender, e)
+    End Sub
 End Class

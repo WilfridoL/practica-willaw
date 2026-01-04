@@ -1,0 +1,69 @@
+﻿Imports System.Reflection
+Imports System.Text
+Imports System.Text.RegularExpressions
+
+Module Mprincipal
+    Public SQL As String
+    Public rst As Odbc.OdbcDataReader
+    Public codusuario As String
+    Public usuContra As String
+    Public usuNombres As String
+    Public CedCli As String
+    Public sw_regreso As Integer = 0
+    Public c_Varias As New Varias
+    Public vec() As String
+    Public valDataGrid As Integer
+    'And Regex.IsMatch(arrTxt(i).Text, "[^\w]") = True
+    Function controlObservaciones(ByVal SQL As String) As Boolean
+        BaseDatos.ingresar_registros(SQL, "manipulacion obs")
+    End Function
+
+    Function cargar_combobox(sql, combo, id, name)
+        c_Varias.llena_combo(combo, sql, id, name)
+        Return True
+    End Function
+
+    Public Function limpiar(campos() As Control, btn() As ToolStripButton, tip As Integer)
+        For i As Integer = 0 To campos.Length - 1
+            If TypeOf campos(i) Is TextBox Or TypeOf campos(i) Is RichTextBox Then
+                campos(i).Text = ""
+            ElseIf TypeOf campos(i) Is ComboBox Then
+                CType(campos(i), ComboBox).SelectedValue = 0
+            End If
+        Next
+
+        If tip = 1 Then
+            For j As Integer = 0 To btn.Length - 1
+                If btn(j).Enabled = True Then
+                    btn(j).Enabled = False
+                Else
+                    btn(j).Enabled = True
+                End If
+            Next
+        End If
+        Return True
+    End Function
+
+    Public Function buscar(sql As String, campos() As Control)
+        rst = BaseDatos.leer_Registro(sql)
+        If rst.Read() Then
+            For i As Integer = 0 To campos.Length - 1
+                If TypeOf campos(i) Is TextBox Or TypeOf campos(i) Is RichTextBox Or TypeOf campos(i) Is Label Then
+                    'If campos(i).Visible = False Then Continue For
+                    campos(i).Text = IIf(IsDBNull(rst(i)), "", rst(i))
+                ElseIf TypeOf campos(i) Is ComboBox Then
+                    CType(campos(i), ComboBox).SelectedValue = rst(i)
+                End If
+            Next
+            Return True
+        Else
+            ' msjErr.Text = "No se encontro"
+            Return False
+        End If
+    End Function
+
+
+
+
+
+End Module

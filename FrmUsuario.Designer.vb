@@ -44,6 +44,9 @@ Partial Class FrmUsuario
         btnUpd = New ToolStripButton()
         btnDel = New ToolStripButton()
         ToolStripButton2 = New ToolStripButton()
+        menDes = New ToolStripSplitButton()
+        btnCanContra = New ToolStripMenuItem()
+        btnDesBlo = New ToolStripMenuItem()
         lbDep = New Label()
         txtDepa = New ComboBox()
         lbMun = New Label()
@@ -57,7 +60,6 @@ Partial Class FrmUsuario
         txtEstUsu = New ComboBox()
         txtConContra = New TextBox()
         lbConCont = New Label()
-        camCont = New Label()
         tipId = New ComboBox()
         txtApe2Usu = New TextBox()
         lbApe2 = New Label()
@@ -207,7 +209,7 @@ Partial Class FrmUsuario
         ' 
         ' ToolStrip1
         ' 
-        ToolStrip1.Items.AddRange(New ToolStripItem() {btnAdd, ToolStripButton3, btnBuscar, btnUpd, btnDel, ToolStripButton2})
+        ToolStrip1.Items.AddRange(New ToolStripItem() {btnAdd, ToolStripButton3, btnBuscar, btnUpd, btnDel, ToolStripButton2, menDes})
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
         ToolStrip1.Size = New Size(369, 25)
@@ -271,6 +273,26 @@ Partial Class FrmUsuario
         ToolStripButton2.Name = "ToolStripButton2"
         ToolStripButton2.Size = New Size(23, 22)
         ToolStripButton2.Text = "Salir"
+        ' 
+        ' menDes
+        ' 
+        menDes.DisplayStyle = ToolStripItemDisplayStyle.Text
+        menDes.DropDownItems.AddRange(New ToolStripItem() {btnCanContra, btnDesBlo})
+        menDes.ImageTransparentColor = Color.Magenta
+        menDes.Name = "menDes"
+        menDes.Size = New Size(16, 22)
+        ' 
+        ' btnCanContra
+        ' 
+        btnCanContra.Name = "btnCanContra"
+        btnCanContra.Size = New Size(183, 22)
+        btnCanContra.Text = "Cambiar Contraseña"
+        ' 
+        ' btnDesBlo
+        ' 
+        btnDesBlo.Name = "btnDesBlo"
+        btnDesBlo.Size = New Size(183, 22)
+        btnDesBlo.Text = "Desbloquear Usuario"
         ' 
         ' lbDep
         ' 
@@ -398,20 +420,6 @@ Partial Class FrmUsuario
         lbConCont.Text = "&Confrimar Contraseña*"
         lbConCont.TextAlign = ContentAlignment.MiddleLeft
         ' 
-        ' camCont
-        ' 
-        camCont.BackColor = Color.Transparent
-        camCont.Cursor = Cursors.Hand
-        camCont.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold)
-        camCont.ForeColor = Color.LightCoral
-        camCont.Location = New Point(12, 515)
-        camCont.Name = "camCont"
-        camCont.Size = New Size(199, 23)
-        camCont.TabIndex = 12
-        camCont.Text = "Quieres cambiar la contraseña?"
-        camCont.TextAlign = ContentAlignment.MiddleLeft
-        camCont.Visible = False
-        ' 
         ' tipId
         ' 
         tipId.DropDownStyle = ComboBoxStyle.DropDownList
@@ -496,7 +504,6 @@ Partial Class FrmUsuario
         Controls.Add(txtNom2Usu)
         Controls.Add(lbNom2)
         Controls.Add(tipId)
-        Controls.Add(camCont)
         Controls.Add(txtConContra)
         Controls.Add(lbConCont)
         Controls.Add(lbEst)
@@ -567,7 +574,6 @@ Partial Class FrmUsuario
     Friend WithEvents btnBuscar As ToolStripButton
     Friend WithEvents txtConContra As TextBox
     Friend WithEvents lbConCont As Label
-    Friend WithEvents camCont As Label
     Friend WithEvents tipId As ComboBox
     Friend WithEvents txtApe2Usu As TextBox
     Friend WithEvents lbApe2 As Label
@@ -575,4 +581,7 @@ Partial Class FrmUsuario
     Friend WithEvents lbNom2 As Label
     Friend WithEvents txtDir As TextBox
     Friend WithEvents lbDir As Label
+    Friend WithEvents menDes As ToolStripSplitButton
+    Friend WithEvents btnCanContra As ToolStripMenuItem
+    Friend WithEvents btnDesBlo As ToolStripMenuItem
 End Class

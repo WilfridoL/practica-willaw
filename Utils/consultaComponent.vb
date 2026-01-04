@@ -39,6 +39,7 @@
             Next
         Next
         For Each c In config
+            If c.columnSize = 0 Then c.columnSize = 3
             If c.columnSize < 4 Then c.columnSize = c.columnSize * 2
             If c.columnSize > 18 Then c.columnSize = 15
             element.Columns(c.columnNum).Width = c.columnSize * 10
@@ -50,7 +51,6 @@
     Function rellenarLista(dgv As DataGridView) As List(Of contrutorColumnAutoSize)
         Dim columnas As New List(Of contrutorColumnAutoSize)
         For Each col As DataGridViewColumn In dgv.Columns
-
             columnas.Add(New contrutorColumnAutoSize With {
                 .columnNum = col.Index,
                 .columnSize = 0
