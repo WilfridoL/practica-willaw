@@ -1,5 +1,4 @@
-﻿Imports System.Reflection.Metadata.Ecma335
-Imports System.Text.RegularExpressions
+﻿Imports System.Text.RegularExpressions
 
 Module validaciones
     Public Function cambiarColor(resultado As Boolean, label As Label)
@@ -11,68 +10,56 @@ Module validaciones
     End Function
 
     Public Function validacionGlobal(arrTxt() As Control, arrLabel() As Label, msjErr As ToolStripStatusLabel, sql As String) As Boolean
-        For Each ctrl As Control In arrTxt
-            If TypeOf ctrl Is TextBox Then
-                If ctrl.Text = "" Then
-                    ctrl.Focus()
+        For i As Integer = 0 To arrTxt.Length - 1
+            If TypeOf arrTxt(i) Is TextBox Then
+                If arrTxt(i).Text = "" Then ' campo obligatorio
+                    msjErr.Text = "El campo " & arrLabel(i).Text & " es obligatorio"
+                    arrTxt(i).Focus()
+                    cambiarColor(False, arrLabel(i))
                     Return False
-                    'ElseIf Regex.IsMatch(ctrl.Text, "^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$") = False And
-                    '    ctrl.Name.Substring(ctrl.Name.Length - 3).ToLower() = "ema" Then ' valida formato de correo
-                    '    msjErr.Text = "Digite un correo valido"
-                    '    ctrl.Focus()
-                    '    Return False
-                Else Return True
+                ElseIf Regex.IsMatch(arrTxt(i).Text, "^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$") = False And
+                    arrTxt(i).Name.Substring(arrTxt(i).Name.Length - 3).ToLower() = "ema" Then ' valida formato de correo
+                    msjErr.Text = "Digite un correo valido"
+                    arrTxt(i).Focus()
+                    cambiarColor(False, arrLabel(i))
+                    Return False
+                ElseIf arrTxt(i).name = "txtConUsu" And arrTxt(i).Visible = True Then
+                    If arrTxt(i + 1).Name = "txtConContra" Then
+                        If arrTxt(i).Text <> arrTxt(i + 1).Text Then
+                            msjErr.Text = "La contraseña no coinciden"
+                            cambiarColor(False, arrLabel(i))
+                            cambiarColor(False, arrLabel(i + 1))
+                            Return False
+                        Else
+                            cambiarColor(True, arrLabel(i))
+                            cambiarColor(True, arrLabel(i + 1))
+
+                        End If
+                    End If
+                ElseIf arrTxt(i).Name = "txtConContra" Then
+                    If arrTxt(i - 1).Text <> arrTxt(i).Text Then
+                        cambiarColor(False, arrLabel(i))
+                        cambiarColor(False, arrLabel(i - 1))
+                        Return False
+                    Else
+                        cambiarColor(True, arrLabel(i))
+                        cambiarColor(True, arrLabel(i - 1))
+                    End If
+                Else
+                        cambiarColor(True, arrLabel(i))
                 End If
-            End If
-            If TypeOf ctrl Is ComboBox Then
-                'MsgBox("a")
-                If CType(ctrl, ComboBox).SelectedValue = 0 Then
-                    ctrl.Focus()
+            ElseIf TypeOf arrTxt(i) Is ComboBox Then
+                If CType(arrTxt(i), ComboBox).SelectedValue = 0 Then
+                    msjErr.Text = "Seleccione una opcion en el campo " & arrLabel(i).Text
+                    arrTxt(i).Focus()
+                    cambiarColor(False, arrLabel(i))
                     Return False
                 Else
-                    Return True
+                    cambiarColor(True, arrLabel(i))
                 End If
             End If
         Next
-        'For i As Integer = 0 To arrTxt.Length - 1
-        '    If TypeOf ctrl Is TextBox Then
-        '        If ctrl.Text = "" Then ' campo obligatorio
-        '        ElseIf ctrl.Name.Substring(ctrl.Name.Length - 3).ToLower() = "num" And
-        '            Regex.IsMatch(ctrl.Text, "^([0-9]+(\/{1}[0-9]+)*)+(?!([\/]{2}))$") = False Then ' no permite letras y simbolos solo numeros
-        '            msjErr.Text = $"El campo {arrLabel(i).Text} no tiene que tener letras ni simbolos"
-        '            ctrl.Focus()
-        '            cambiarColor(False, arrLabel(i))
-        '            Return False
-        '        ElseIf Regex.IsMatch(ctrl.Text, "^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$") = False And
-        '            ctrl.Name.Substring(ctrl.Name.Length - 3).ToLower() = "ema" Then ' valida formato de correo
-        '            msjErr.Text = "Digite un correo valido"
-        '            ctrl.Focus()
-        '            cambiarColor(False, arrLabel(i))
-        '            Return False
-        '            'ElseIf Regex.IsMatch(ctrl.Text, "[^0-9\-\+\(\)\s]") = False And
-        '            'ctrl.Name.Substring(ctrl.Name.Length - 3).ToLower() = "tel" Then ' valida formato de correo
-        '            '    msjErr.Text = "Digite un numero de teléfono valido"
-        '            '    ctrl.Focus()
-        '            '    cambiarColor(False, arrLabel(i))
-        '            '    Return False
-        '        Else
-        '            cambiarColor(True, arrLabel(i))
-        '        End If
-        '    ElseIf TypeOf ctrl Is ComboBox Then
-        '        If CType(ctrl, ComboBox).SelectedValue = 0 Then
-        '            msjErr.Text = "Seleccione una opcion en el campo " & arrLabel(i).Text
-        '            ctrl.Focus()
-        '            cambiarColor(False, arrLabel(i))
-
-        '            Return False
-        '        Else
-        '            cambiarColor(True, arrLabel(i))
-        '            Return True
-        '        End If
-        '    End If
-        '    MsgBox(ctrl.Name)
-
-        'Next
+        Return True
     End Function
 
 

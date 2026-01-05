@@ -38,33 +38,8 @@ Public Class FrmUsuario
         Return True
     End Function
     Function validacion()
-        If validacionGlobal(arrTextBox, arrLabel, msjErr, "") = False Then Return False ' validacion de campos de texto, correo y numericos
-        'If txtRolUsu.SelectedValue = 0 Then
-        '    msjErr.Text = "Seleccione una opcion en el campo " & lbRol.Text
-        '    txtRolUsu.Focus()
-        '    cambiarColor(False, lbRol)
-        '    Return False
-        'Else
-        '    cambiarColor(True, lbRol)
-        'End If
-        '' validacion de la contraseña
-        'If txtConUsu.Text = "" And txtConUsu.Visible = True Then
-        '    msjErr.Text = "El campo " & lbCon.Text & " es obligatorio"
-        '    txtConUsu.Focus()
-        '    cambiarColor(False, lbCon)
-        '    cambiarColor(False, lbConCont)
-        '    Return False
-        'ElseIf txtConUsu.Text <> txtConContra.Text And txtConUsu.Visible = True Then
-        '    msjErr.Text = "La contraseña no coiciden"
-        '    txtConUsu.Focus()
-        '    cambiarColor(False, lbCon)
-        '    cambiarColor(False, lbConCont)
-        '    Return False
-        'Else
-        '    cambiarColor(True, lbCon)
-        '    cambiarColor(True, lbConCont)
-        '    Return True
-        'End If
+        If validacionGlobal(arrTextBox.Skip(2).ToArray, arrLabel.Skip(1).ToArray, msjErr, "") = False Then Return False ' validacion de campos de texto, correo y numericos
+        Return True
     End Function
     Public Function resetCampo()
         limpiar(arrTextBox, arrBtn, 0)
@@ -94,7 +69,7 @@ Public Class FrmUsuario
         cambiarColor(True, lbCon)
         cambiarColor(True, lbConCont)
         frmConsulta.DgvConsulta.DataSource = ""
-
+        txtIdNum.Focus()
         Return True
     End Function
     Public Function BuscarUsuario(ByVal id As Integer)
@@ -111,7 +86,7 @@ Public Class FrmUsuario
             limitModFrm = 0
             modInterfaz()
             municipios(rst("departamento"))
-            buscar(SQL, arrTextBox)
+            buscar(SQL, arrTextBox.Where(Function(ctrl, index) index <> 6 AndAlso index <> 7).ToArray())
             txtEstUsu.Enabled = True
             'txtObsUsu.ReadOnly = False
             btnDel.Enabled = True
@@ -122,7 +97,7 @@ Public Class FrmUsuario
             limitModFrm = 1
             menDes.Visible = True
         Else
-            If MsgBox("El usuario con la identificacion " & id & " no se encuentra registrado" & vbCrLf & "¿Desea crearlo?", MsgBoxStyle.YesNo + MsgBoxStyle.Information) <> vbYes Then Exit Function
+            'If MsgBox("El usuario con la identificacion " & id & " no se encuentra registrado" & vbCrLf & "¿Desea crearlo?", MsgBoxStyle.YesNo + MsgBoxStyle.Information) <> vbYes Then Exit Function
             bloquearCampos(arrTextBox, 1)
             txtEstUsu.Enabled = False
 
@@ -151,8 +126,8 @@ Public Class FrmUsuario
         BaseDatos.conectar("root", "")
         txtIdNum.Focus()
         ' rellenar arreglos
-        arrTextBox = {txtIdNum, tipId, txtNomUsu, txtNom2Usu, txtApeUsu, txtApe2Usu, txtEma, txtDepa, txtMun, txtDir, txtRolUsu, txtEstUsu, txtObsUsu}
-        arrLabel = {lbId, lbNom, lbNom2, lbApe, lbApe2, lbCorr, lbDep, lbMun, lbDir, lbRol, lbEst, lbObs}
+        arrTextBox = {txtIdNum, tipId, txtNomUsu, txtNom2Usu, txtApeUsu, txtApe2Usu, txtConUsu, txtConContra, txtEma, txtDepa, txtMun, txtDir, txtRolUsu, txtEstUsu, txtObsUsu}
+        arrLabel = {lbId, lbNom, lbNom2, lbApe, lbApe2, lbCon, lbConCont, lbCorr, lbDep, lbMun, lbDir, lbRol, lbEst, lbObs}
         arrBtn = {btnAdd, btnUpd, btnDel}
         'MsgBox(arrTextBox.Skip(6).ToArray().Length)
 
