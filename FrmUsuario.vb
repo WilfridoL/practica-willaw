@@ -13,7 +13,7 @@ Public Class FrmUsuario
     Dim idAnterior As Integer = 0
     Public Function VerEstado(ByVal est As String, ByVal name As String, ByVal ob As String)
         If est > 1 Then
-            txtObsUsu.ReadOnly = False
+            'txtObsUsu.ReadOnly = False
             If est = 2 Then
                 MsgBox("El usuario " & name & " Se encuentra inactivo")
             Else
@@ -31,7 +31,7 @@ Public Class FrmUsuario
         Else
             txtIdNum.ReadOnly = True
             txtIdNum.Cursor = Cursors.No
-            txtObsUsu.ReadOnly = True
+            'txtObsUsu.ReadOnly = True
             btnCanContra.Enabled = True
             btnDesBlo.Enabled = False
         End If
@@ -39,32 +39,32 @@ Public Class FrmUsuario
     End Function
     Function validacion()
         If validacionGlobal(arrTextBox, arrLabel, msjErr, "") = False Then Return False ' validacion de campos de texto, correo y numericos
-        If txtRolUsu.SelectedValue = 0 Then
-            msjErr.Text = "Seleccione una opcion en el campo " & lbRol.Text
-            txtRolUsu.Focus()
-            cambiarColor(False, lbRol)
-            Return False
-        Else
-            cambiarColor(True, lbRol)
-        End If
-        ' validacion de la contraseña
-        If txtConUsu.Text = "" And txtConUsu.Visible = True Then
-            msjErr.Text = "El campo " & lbCon.Text & " es obligatorio"
-            txtConUsu.Focus()
-            cambiarColor(False, lbCon)
-            cambiarColor(False, lbConCont)
-            Return False
-        ElseIf txtConUsu.Text <> txtConContra.Text And txtConUsu.Visible = True Then
-            msjErr.Text = "La contraseña no coiciden"
-            txtConUsu.Focus()
-            cambiarColor(False, lbCon)
-            cambiarColor(False, lbConCont)
-            Return False
-        Else
-            cambiarColor(True, lbCon)
-            cambiarColor(True, lbConCont)
-            Return True
-        End If
+        'If txtRolUsu.SelectedValue = 0 Then
+        '    msjErr.Text = "Seleccione una opcion en el campo " & lbRol.Text
+        '    txtRolUsu.Focus()
+        '    cambiarColor(False, lbRol)
+        '    Return False
+        'Else
+        '    cambiarColor(True, lbRol)
+        'End If
+        '' validacion de la contraseña
+        'If txtConUsu.Text = "" And txtConUsu.Visible = True Then
+        '    msjErr.Text = "El campo " & lbCon.Text & " es obligatorio"
+        '    txtConUsu.Focus()
+        '    cambiarColor(False, lbCon)
+        '    cambiarColor(False, lbConCont)
+        '    Return False
+        'ElseIf txtConUsu.Text <> txtConContra.Text And txtConUsu.Visible = True Then
+        '    msjErr.Text = "La contraseña no coiciden"
+        '    txtConUsu.Focus()
+        '    cambiarColor(False, lbCon)
+        '    cambiarColor(False, lbConCont)
+        '    Return False
+        'Else
+        '    cambiarColor(True, lbCon)
+        '    cambiarColor(True, lbConCont)
+        '    Return True
+        'End If
     End Function
     Public Function resetCampo()
         limpiar(arrTextBox, arrBtn, 0)
@@ -113,7 +113,7 @@ Public Class FrmUsuario
             municipios(rst("departamento"))
             buscar(SQL, arrTextBox)
             txtEstUsu.Enabled = True
-            txtObsUsu.ReadOnly = False
+            'txtObsUsu.ReadOnly = False
             btnDel.Enabled = True
             btnUpd.Enabled = True
             VerEstado(rst("estado"), rst("nombre") & " " & rst("apellido"), rst("observacion"))
@@ -249,8 +249,8 @@ Public Class FrmUsuario
         If validacion() <> True Then Exit Sub ' validar campos
         If BaseDatos.ingresar_registros(SQL, "actualizar") Then
             SQL = "UPDATE observaciones SET " &
-                        "observacion= '" & txtObsUsu.Text & "' " &
-                        "WHERE idUsuFK=" & txtIdNum.Text
+                        "observacion= " & IIf(txtObsUsu.Text = "", "'No tiene observaciones...'", $"'{txtObsUsu.Text}'") &
+                        " WHERE idUsuFK=" & txtIdNum.Text
             controlObservaciones(SQL)
             If txtConUsu.Visible = True Then ' actualizar contraseña si el campo es visible
                 SQL = "UPDATE tb_usuarios Set " &
@@ -277,7 +277,7 @@ Public Class FrmUsuario
         '{txtApeUsu.Text.ToString.ToUpper}', '{txtApe2Usu.Text.ToString.ToUpper}', '{txtConUsu.Text}', '{txtEma.Text.ToString.ToLower}',
         {txtDepa.SelectedValue}, {txtMun.SelectedValue}, '{txtDir.Text}', {txtRolUsu.SelectedValue}, {txtEstUsu.SelectedValue});"
         If validacion() <> True Then Exit Sub
-        MsgBox(SQL)
+        'MsgBox(SQL)
         ' validacion id existente
         rst = BaseDatos.leer_Registro("SELECT * FROM tb_usuarios WHERE usuId=" & txtIdNum.Text)
         If rst.Read() Then
@@ -299,20 +299,16 @@ Public Class FrmUsuario
         End If
         cambiarColor(True, lbCorr)
         If BaseDatos.ingresar_registros(SQL, "guardar") Then
-            SQL = "INSERT observaciones (idUsuFk, observacion)
-            VALUE (" & txtIdNum.Text & ", 'No tiene observaciones...');"
-            BaseDatos.ingresar_registros(SQL, "guardar")
+            SQL = $"INSERT observaciones (idUsuFk, observacion)
+            VALUE ({txtIdNum.Text}, {IIf(txtObsUsu.Text = "", "'No tiene observaciones...'", $"'{txtObsUsu.Text}'")});"
+            MsgBox(SQL)
+            BaseDatos.ingresar_registros(SQL, "guardar Observacion")
             resetCampo()
             msjErr.Text = "Datos guardados"
         End If
     End Sub
     ' habilitar o deshabilitar el campo de observaciones segun el estado seleccionado
     Private Sub txtEstUsu_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles txtEstUsu.SelectionChangeCommitted
-        If txtEstUsu.SelectedValue <> 1 Then
-            txtObsUsu.ReadOnly = False
-        Else
-            txtObsUsu.ReadOnly = True
-        End If
         If txtEstUsu.SelectedValue = 3 Then
             txtEstUsu.SelectedValue = 2
             MsgBox("No se puede seleccionar el estado bloqueado desde este campo, para bloquear el usuario utilice el boton 'Bloquear Usuario'", MsgBoxStyle.Critical)
@@ -371,10 +367,18 @@ Public Class FrmUsuario
     End Function
 
 
-    Private Sub txtNom_KeyDown(sender As Object, e As KeyEventArgs) Handles txtNomUsu.KeyDown
+    Private Sub txtNom_KeyDown(sender As Object, e As KeyEventArgs) Handles _
+        txtNomUsu.KeyDown, txtNom2Usu.KeyDown, txtApeUsu.KeyDown, txtApe2Usu.KeyDown, txtEma.KeyDown, txtDepa.KeyDown, txtMun.KeyDown,
+        txtConUsu.KeyDown, txtConContra.KeyDown, txtObsUsu.KeyDown, txtRolUsu.KeyDown, txtDir.KeyDown
+        'MsgBox(e.KeyCode)
         If e.KeyCode = Keys.Enter Then
-            If btnAdd.Enabled = True Then btnAdd.PerformClick
-            If btnUpd.Enabled = True Then btnUpd.PerformClick
+            If txtRolUsu.Focused Or txtObsUsu.Focused Then
+                If btnAdd.Enabled = True Then
+                    btnAdd.PerformClick()
+                Else btnUpd.PerformClick()
+                End If
+            Else SendKeys.Send("{TAB}")
+            End If
         End If
     End Sub
 
@@ -384,30 +388,10 @@ Public Class FrmUsuario
                 cambiarColor(True, lbApe)
             Else Exit Sub
             End If
-            SendKeys.Send("{TAB}")
         End If
     End Sub
 
-    Private Sub txtEma_KeyDown(sender As Object, e As KeyEventArgs) Handles txtEma.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            If btnAdd.Enabled = True Then btnAdd.PerformClick
-            If btnUpd.Enabled = True Then btnUpd.PerformClick
-        End If
-    End Sub
 
-    Private Sub txtDepa_KeyDown(sender As Object, e As KeyEventArgs) Handles txtDepa.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            If btnAdd.Enabled = True Then btnAdd.PerformClick()
-            If btnUpd.Enabled = True Then btnUpd.PerformClick()
-        End If
-    End Sub
-
-    Private Sub txtMun_KeyDown(sender As Object, e As KeyEventArgs) Handles txtMun.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            If btnAdd.Enabled = True Then btnAdd.PerformClick()
-            If btnUpd.Enabled = True Then btnUpd.PerformClick()
-        End If
-    End Sub
 
     Private Sub txtConUsu_KeyDown(sender As Object, e As KeyEventArgs) Handles txtConUsu.KeyDown
         If e.KeyCode = Keys.Enter Then
@@ -417,7 +401,6 @@ Public Class FrmUsuario
                 cambiarColor(False, lbCon)
                 Exit Sub
             End If
-            SendKeys.Send("{TAB}")
         End If
     End Sub
 
@@ -429,20 +412,11 @@ Public Class FrmUsuario
                 cambiarColor(False, lbConCont)
                 Exit Sub
             End If
-            SendKeys.Send("{TAB}")
         End If
     End Sub
 
     Private Sub txtIdNum_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtIdNum.KeyPress
         SoloNumeros(sender, e)
-    End Sub
-
-
-    Private Sub txtObsUsu_KeyDown(sender As Object, e As KeyEventArgs) Handles txtObsUsu.KeyDown, txtRolUsu.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            If btnAdd.Enabled = True Then btnAdd.PerformClick()
-            If btnUpd.Enabled = True Then btnUpd.PerformClick()
-        End If
     End Sub
 
     Private Sub FrmUsuario_Closed(sender As Object, e As EventArgs) Handles Me.Closed
@@ -453,6 +427,15 @@ Public Class FrmUsuario
         txtNomUsu.KeyPress, txtNom2Usu.KeyPress, txtApeUsu.KeyPress, txtApe2Usu.KeyPress
         SoloLetras(sender, e)
     End Sub
+
+    Private Sub direccionRectricion(sender As Object, e As KeyPressEventArgs) Handles txtDir.KeyPress
+        If Char.IsControl(e.KeyChar) Then Exit Sub
+        If Not Regex.IsMatch(e.KeyChar.ToString(), "[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s#\-,./°()]") Then
+            e.Handled = True
+        End If
+    End Sub
+
+
 
     Private Sub btnCanContra_Click(sender As Object, e As EventArgs) Handles btnCanContra.Click, btnDesBlo.Click
         If sender.name = "btnCanContra" And sender.enabled = True Then

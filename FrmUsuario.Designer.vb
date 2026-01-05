@@ -181,7 +181,6 @@ Partial Class FrmUsuario
         txtObsUsu.BackColor = SystemColors.ControlLightLight
         txtObsUsu.Location = New Point(137, 439)
         txtObsUsu.Name = "txtObsUsu"
-        txtObsUsu.ReadOnly = True
         txtObsUsu.Size = New Size(220, 96)
         txtObsUsu.TabIndex = 14
         txtObsUsu.Text = ""
@@ -263,7 +262,7 @@ Partial Class FrmUsuario
         btnDel.ImageTransparentColor = Color.Magenta
         btnDel.Name = "btnDel"
         btnDel.Size = New Size(23, 22)
-        btnDel.Text = "Eliminar"
+        btnDel.Text = "Bloquear usuario"
         ' 
         ' ToolStripButton2
         ' 
